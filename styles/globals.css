@@ -211,6 +211,10 @@ button:hover {
   letter-spacing: 0.04em;
   color: var(--black2);
   margin-bottom: 1rem;
+  font-family: 'aeonik-light';
+}
+.welcom__block h2 span {
+  font-family: 'aeonik-bold';
 }
 .welcom__block .subs {
   display: flex;
@@ -480,6 +484,7 @@ button:hover {
 ._tabs-wrapper {
   margin-top: 1.5rem;
   justify-content: space-between;
+  margin-bottom: 2.5rem;
 }
 ._tabs-wrapper .ant-btn {
   background: #faeff0;
@@ -606,5 +611,38 @@ button:hover {
   .home-graph {
     margin-bottom: 4rem;
     margin-top: 2rem;
+  }
+}
+.the-search .ant-input-group-addon {
+  display: none;
+}
+.the-search .ant-input-affix-wrapper {
+  border-radius: 24px !important;
+  padding: 8px 18px;
+  height: 48px;
+  width: 405px;
+}
+.filter-btn-wrapper .ant-btn span {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 25px;
+  color: #757575;
+  /* font-family: 'Avenir'; */
+}
+.filter-btn-wrapper .ant-btn {
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  width: 148px;
+  height: 48px;
+}
+.filter-btn-wrapper .ant-btn svg {
+  margin-right: 10px;
+}
+.search-filter .the-search {
+  margin-right: 1rem;
+}
+@media (min-width: 1000px) {
+  .search-filter .the-search {
+    margin-right: 4rem;
   }
 }

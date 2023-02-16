@@ -13,7 +13,8 @@ export default function Welcome() {
           </div>
         </div>
         <h2>
-          <span className="aeonik-light"> Welcome back,</span> Damilare
+          Welcome back,
+          <span> Damilare</span>
         </h2>
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
