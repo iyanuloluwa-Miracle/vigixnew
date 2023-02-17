@@ -6,11 +6,11 @@ import SettingsVector from './Vectors/Settings';
 export default function NavBar() {
   return (
     <header>
-      <nav class="container">
-        <div class="row justify-content-between gap-3 gap-lg-4">
+      <nav className="container">
+        <div className="row justify-content-between gap-3 gap-lg-4">
           <div className="col-auto">
             <Link href="#" passHref>
-              <button class="navbar-brand aeonik-bold">Vigilantapp</button>
+              <button className="navbar-brand aeonik-bold">Vigilantapp</button>
             </Link>
           </div>
 
