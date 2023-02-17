@@ -1,7 +1,7 @@
 import { Button, Input, Select, Space } from 'antd';
 import React from 'react';
 import Exportzone from './Exportzone';
-import { SearchIcon, FilterIcon } from '../utility/svg';
+import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 
 export default function Users() {
   const { Search } = Input;
@@ -30,7 +30,21 @@ export default function Users() {
               {/* <button className="btn">{FilterIcon} Filter by:</button> */}
             </div>
           </div>
-          <div className="col-md-auto d-flex justify-content-end">
+          <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
+            <div className="d-flex gap-lg-4 gap-3 align-items-center">
+              <p className="det">
+                Page <span className="our-color">2</span> of{' '}
+                <span className="our-color">1000</span>
+              </p>
+              <div className="dir">
+                <a href="">
+                  <span className="">{DirLeft}</span>
+                </a>
+                <a href="">
+                  <span className="">{DirRight}</span>
+                </a>
+              </div>
+            </div>
             <div>
               <Space wrap>
                 <Select
