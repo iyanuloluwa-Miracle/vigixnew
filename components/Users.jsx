@@ -1,4 +1,15 @@
-import { Button, Input, Select, Space, Checkbox, Table, Modal } from 'antd';
+import {
+  Button,
+  Input,
+  Select,
+  Space,
+  Checkbox,
+  Table,
+  Modal,
+  Form,
+  Radio,
+  DatePicker,
+} from 'antd';
 import React, { useState } from 'react';
 import Exportzone from './Exportzone';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
@@ -8,19 +19,23 @@ export default function Users() {
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [value, setValue] = useState('all');
 
   const onSearch = value => console.log(value);
   const handleChange = value => {
     console.log(`selected ${value}`);
   };
 
-  const onSelectChange = newSelectedRowKeys => {
-    console.log('selectedRowKeys changed: ', newSelectedRowKeys);
-    setSelectedRowKeys(newSelectedRowKeys);
-  };
-
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
+  };
+  const onFinish = values => {
+    console.log('Success:', values);
+  };
+
+  const onChangeCheck = e => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
   };
 
   const columns = [
@@ -206,7 +221,6 @@ export default function Users() {
               <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
               </Button>
-              {/* <button className="btn">{FilterIcon} Filter by:</button> */}
             </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
@@ -286,12 +300,79 @@ export default function Users() {
         className="filter-by"
         footer={null}
       >
-        <div className="d-flex">
-          <label htmlFor="">Status:</label>
-          <div className="col-auto"></div>
-        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="status" label="Status:">
+            <Radio.Group onChange={onChangeCheck} value={value}>
+              <Radio value={'all'}>All</Radio>
+              <Radio value={'active'}>Active</Radio>
+              <Radio value={'inactive'}>Inactive</Radio>
+            </Radio.Group>
+          </Form.Item>
+          <Form.Item
+            name="rangeFilter"
+            label="Date joined:"
+            className="date-filter"
+          >
+            <Space direction="" className="flex-wrap">
+              <DatePicker
+                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+              <DatePicker
+                onChange={onChange}
+                placeholder="To"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Space>
+          </Form.Item>
+          <Form.Item
+            name="rangeFilter"
+            label="No of reports:"
+            className="range-filter"
+          >
+            <Space wrap>
+              <Select
+                defaultValue="10 per page'"
+                style={{
+                  width: 270,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: '10',
+                    label: '10 per page',
+                  },
+                  {
+                    value: '100',
+                    label: '100 per page',
+                  },
+                  {
+                    value: '1000',
+                    label: '1000 per page',
+                  },
+                ]}
+              />
+            </Space>
+          </Form.Item>
 
-        <p>some contents...</p>
+          <Form.Item>
+            <Button
+              // type="primary"
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+            >
+              Apply
+            </Button>
+            <Button type="primary" onClick={() => setModalOpen(false)}>
+              Clear
+            </Button>
+          </Form.Item>
+        </Form>
       </Modal>
     </section>
   );
