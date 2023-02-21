@@ -56,7 +56,7 @@ export const options = {
 
   elements: {
     line: {
-      tension: 0.5, // smooth lines
+      tension: 0.4, // smooth lines
     },
   },
 
