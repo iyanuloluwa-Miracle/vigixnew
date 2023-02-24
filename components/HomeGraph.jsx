@@ -115,7 +115,12 @@ const labels = [
   'Dec',
 ];
 
-const labels2 = ['Users', 'Reports', 'Recoveries', 'Admin Members'];
+const labels2 = [
+  'Total active users',
+  'Total Blocked Users',
+  'Total Reports',
+  'Total recoveries',
+];
 
 export const data = {
   labels,
@@ -178,19 +183,19 @@ export default function HomeGraph() {
             <div className="legends">
               <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#F6C789' }} />
-                <p>Users</p>
+                <p>Total active users</p>
               </div>
               <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#FFA500' }} />
-                <p>Recoveries</p>
+                <p>Total Blocked Users</p>
               </div>
               <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#FFC0CB' }} />
-                <p>Reports</p>
+                <p>Total Reports</p>
               </div>
               <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#F36D56' }} />
-                <p>Admin Members</p>
+                <p>Total recoveries</p>
               </div>
             </div>
           </div>
