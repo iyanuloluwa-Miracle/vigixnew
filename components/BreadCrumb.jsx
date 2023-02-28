@@ -23,16 +23,31 @@ export default function BreadCrumb({ tab }) {
                 <Link href={'/'}>{HomeNav}</Link>
               </li>
               <li className={tab == 'users' ? 'nav-item active' : 'nav-item'}>
-                <Link href={''}>Users</Link>
+                <div className="parent">
+                  <Link href={''}>Users</Link>
+                  <div className="children">
+                    <ul className="px-0">
+                      <li>
+                        <Link href={''}>Manage Users</Link>
+                      </li>
+                      <li>
+                        <Link href={''}>Users</Link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </li>
               <li className={tab == 'reports' ? 'nav-item active' : 'nav-item'}>
-                <Link href={''}>Reports</Link>
+                <div className="parent">
+                  <Link href={''}>Reports</Link>
+                </div>
               </li>
               <li
                 className={
                   tab == 'pageManagement' ? 'nav-item active' : 'nav-item'
                 }
               >
+                <div className="parent"></div>
                 <Link href={''}>Page Management</Link>
               </li>
               <li
@@ -40,31 +55,41 @@ export default function BreadCrumb({ tab }) {
                   tab == 'adminMembers' ? 'nav-item active' : 'nav-item'
                 }
               >
-                <Link href={''}>Admin Members</Link>
+                <div className="parent">
+                  <Link href={''}>Admin Members</Link>
+                </div>
               </li>
               <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
-                <Link href={''}>Roles</Link>
+                <div className="parent">
+                  <Link href={''}>Roles</Link>
+                </div>
               </li>
               <li
                 className={
                   tab == 'communications' ? 'nav-item active' : 'nav-item '
                 }
               >
-                <Link href={''}>Communications</Link>
+                <div className="parent">
+                  <Link href={''}>Communications</Link>
+                </div>
               </li>
               <li
                 className={
                   tab == 'notifications' ? 'nav-item active' : 'nav-item '
                 }
               >
-                <Link href={''}>Notifications</Link>
+                <div className="parent">
+                  <Link href={''}>Notifications</Link>
+                </div>
               </li>
               <li
                 className={
                   tab == 'configurations' ? 'nav-item active' : 'nav-item '
                 }
               >
-                <Link href={''}>Configurations</Link>
+                <div className="parent">
+                  <Link href={''}>Configurations</Link>
+                </div>
               </li>
             </ul>
           </div>

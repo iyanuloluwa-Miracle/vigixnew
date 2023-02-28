@@ -9,7 +9,7 @@ import {
   lows,
 } from '../utility/svg';
 
-export default function Crads() {
+export default function Cards() {
   return (
     <div className="container">
       <div className="row carding my-4">

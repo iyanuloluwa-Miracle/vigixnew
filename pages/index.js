@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import BreadCrumb from '../components/BreadCrumb';
-import Crads from '../components/Crads';
+import Cards from '../components/Cards';
 import HomeGraph from '../components/HomeGraph';
 import HomeTable from '../components/HomeTable';
 import Welcome from '../components/Welcome';
@@ -11,7 +11,7 @@ export default function Home() {
     <>
       <Welcome />
       <BreadCrumb tab={'home'} />
-      <Crads />
+      <Cards />
       <HomeGraph />
       <HomeTable />
     </>

@@ -825,3 +825,30 @@ button:hover {
     margin-bottom: 2.5rem;
   }
 }
+
+.page-navigation .nav-item .parent {
+  position: relative;
+}
+.page-navigation .nav-item .parent .children {
+  /* visibility: hidden; */
+  position: absolute;
+  background-color: white;
+}
+.page-navigation .nav-item .parent .children ul {
+  list-style: none;
+}
+
+.page-navigation .nav-item .parent:hover .children {
+  visibility: visible;
+}
+.page-navigation .nav-item .parent .children a {
+  color: #1c1c1c !important;
+  color: #1c1c1c;
+}
+
+@media (min-width: 1000px) {
+  .page-navigation .nav-item .parent .children {
+    width: 220px;
+    max-width: 100vw;
+  }
+}
