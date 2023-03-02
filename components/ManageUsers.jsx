@@ -13,8 +13,9 @@ import {
 import React, { useState } from 'react';
 import Exportzone from './Exportzone';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import Link from 'next/link';
 
-export default function Users() {
+export default function ManageUsers() {
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -91,12 +92,6 @@ export default function Users() {
       title: ' ',
       dataIndex: 'views',
       key: 'views',
-      render: text => (
-        <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
-          <Button className="view-report">View reports</Button>
-        </div>
-      ),
     },
   ];
 
@@ -110,6 +105,14 @@ export default function Users() {
       dateRegistered: 'Sept 17, 2022',
       report: 45,
       status: 'Active',
+      views: (
+        <div className="view-btn">
+          <Link href={'/user-details'} passHref>
+            <Button className="view-profle">View profile</Button>
+          </Link>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '2',
@@ -120,6 +123,12 @@ export default function Users() {
       dateRegistered: 'Jun 12, 2020',
       report: 2,
       status: 'Inactive',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '3',
@@ -130,6 +139,12 @@ export default function Users() {
       dateRegistered: 'May 8, 2021',
       report: 10,
       status: 'Active',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '4',
@@ -140,6 +155,12 @@ export default function Users() {
       dateRegistered: 'Aug 16, 2020',
       report: 22,
       status: 'Inactive',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '5',
@@ -150,6 +171,12 @@ export default function Users() {
       dateRegistered: 'Sept 17, 2022',
       report: 45,
       status: 'Active',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '6',
@@ -160,6 +187,12 @@ export default function Users() {
       dateRegistered: 'Jun 12, 2020',
       report: 2,
       status: 'Inactive',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '7',
@@ -170,6 +203,12 @@ export default function Users() {
       dateRegistered: '12345678901234567890',
       report: 10,
       status: 'Active',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '8',
@@ -180,6 +219,12 @@ export default function Users() {
       dateRegistered: '12345678901234567890',
       report: 22,
       status: 'Inactive',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '9',
@@ -190,6 +235,12 @@ export default function Users() {
       dateRegistered: '12345678901234567890',
       report: 42,
       status: 'Active',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
     {
       key: '10',
@@ -200,6 +251,12 @@ export default function Users() {
       dateRegistered: '12345678901234567890',
       report: 2,
       status: 'Inactive',
+      views: (
+        <div className="view-btn">
+          <Button className="view-profle">View profile</Button>
+          <Button className="view-report">View reports</Button>
+        </div>
+      ),
     },
   ];
 
@@ -265,7 +322,7 @@ export default function Users() {
             </div>
           </div>
           <div className="select-all">
-            <Checkbox onChange={onChange}>Select All</Checkbox>
+            {/* <Checkbox onChange={onChange}>Select All</Checkbox> */}
           </div>
         </div>
       </div>

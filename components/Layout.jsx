@@ -33,8 +33,6 @@ const Layout = ({ children }) => {
   const [info, setInfo] = useState(null);
   const router = useRouter();
 
-  console.log(router.pathname);
-
   return (
     <OverlayContext.Provider
       value={{

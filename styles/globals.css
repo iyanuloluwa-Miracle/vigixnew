@@ -350,6 +350,7 @@ button:hover {
   padding: 20px 4px;
   padding: 20px 20px;
   display: inline-block;
+  z-index: 5;
 }
 
 .page-navigation .nav-item a:hover,
@@ -828,11 +829,13 @@ button:hover {
 
 .page-navigation .nav-item .parent {
   position: relative;
+  z-index: 4;
 }
 .page-navigation .nav-item .parent .children {
-  /* visibility: hidden; */
+  visibility: hidden;
   position: absolute;
   background-color: white;
+  z-index: 4;
 }
 .page-navigation .nav-item .parent .children ul {
   list-style: none;
@@ -841,14 +844,81 @@ button:hover {
 .page-navigation .nav-item .parent:hover .children {
   visibility: visible;
 }
+
 .page-navigation .nav-item .parent .children a {
   color: #1c1c1c !important;
   color: #1c1c1c;
+}
+
+.page-navigation .nav-item .parent .backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: #bfbfbf;
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+  visibility: hidden;
+  opacity: 0.2;
+}
+.page-navigation .nav-item .parent:hover .backdrop {
+  /* display: block; */
+  /* visibility: visible; */
+}
+.page-navigation .nav-item .parent .backdrop:hover {
+  /* display: none; */
+  /* visibility: hidden; */
+}
+/* user details  */
+.details-header {
+  margin-top: 40px;
+  margin-bottom: 32px;
+}
+.go-back a {
+  padding: 0.5rem 1rem;
+  color: var(--primary) !important;
+  font-weight: 900;
+  font-size: 14.4px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #faeff0;
+  border-radius: 4px;
+}
+.user-details-content .ant-tabs-nav {
+  padding-left: 20px;
+}
+
+.user-details-content
+  :where(.css-dev-only-do-not-override-j0nf2s).ant-tabs
+  .ant-tabs-tab {
+  font-size: 1rem;
+  line-height: 25px;
+  color: var(--black2);
+}
+.user-details-content
+  :where(.css-dev-only-do-not-override-j0nf2s).ant-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .ant-tabs-tab-btn {
+  color: var(--primary);
+  /* font-weight: 900; */
+  font-size: 1rem;
+  line-height: 25px;
+  font-family: 'dm-sans-medium';
+}
+.user-details-content
+  :where(.css-dev-only-do-not-override-j0nf2s).ant-tabs
+  .ant-tabs-tab:hover {
+  color: var(--primary);
 }
 
 @media (min-width: 1000px) {
   .page-navigation .nav-item .parent .children {
     width: 220px;
     max-width: 100vw;
+  }
+  .user-details-content .ant-tabs-nav {
+    padding-left: 40px;
   }
 }

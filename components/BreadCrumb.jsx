@@ -1,16 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Breadcrumb } from 'antd';
 import { HomeNav } from '../utility/svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-export default function BreadCrumb({ tab }) {
+export default function BreadCrumb({ tab, location }) {
   const router = useRouter();
+  const [backdrop, setBackdrop] = useState(false);
+
+  function MouseOver() {
+    setBackdrop(true);
+  }
+  function MouseOut() {
+    setBackdrop(false);
+  }
 
   return (
     <>
       <section className="primary-bg">
         <div className="container">
+          {/* <div
+            className={backdrop ? 'backdrop d-block' : 'backdrop d-none'}
+          ></div> */}
+
           <div className="row page-navigation align-items-center">
             <ul className="navbar-nav flex-row col">
               <li
@@ -24,22 +36,36 @@ export default function BreadCrumb({ tab }) {
               </li>
               <li className={tab == 'users' ? 'nav-item active' : 'nav-item'}>
                 <div className="parent">
-                  <Link href={''}>Users</Link>
-                  <div className="children">
-                    <ul className="px-0">
-                      <li>
-                        <Link href={''}>Manage Users</Link>
-                      </li>
-                      <li>
-                        <Link href={''}>Users</Link>
-                      </li>
-                    </ul>
+                  <div>
+                    <Link href={''}>Users</Link>
+
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Manage Users</Link>
+                        </li>
+                        <li>
+                          <Link href={''}>Logged-In Users</Link>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
               </li>
               <li className={tab == 'reports' ? 'nav-item active' : 'nav-item'}>
                 <div className="parent">
-                  <Link href={''}>Reports</Link>
+                  <div>
+                    <Link href={''}>Reports</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
               <li
@@ -47,16 +73,39 @@ export default function BreadCrumb({ tab }) {
                   tab == 'pageManagement' ? 'nav-item active' : 'nav-item'
                 }
               >
-                <div className="parent"></div>
-                <Link href={''}>Page Management</Link>
+                <div className="parent">
+                  <div>
+                    <Link href={''}>Page Management</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </li>
               <li
                 className={
                   tab == 'adminMembers' ? 'nav-item active' : 'nav-item'
                 }
+                onMouseOver={() => MouseOver}
+                onMouseOut={MouseOut}
               >
                 <div className="parent">
-                  <Link href={''}>Admin Members</Link>
+                  <div>
+                    <Link href={''}>Admin Members</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
               <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
@@ -70,7 +119,17 @@ export default function BreadCrumb({ tab }) {
                 }
               >
                 <div className="parent">
-                  <Link href={''}>Communications</Link>
+                  <div>
+                    <Link href={''}>Communications</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
               <li
@@ -79,7 +138,17 @@ export default function BreadCrumb({ tab }) {
                 }
               >
                 <div className="parent">
-                  <Link href={''}>Notifications</Link>
+                  <div>
+                    <Link href={''}>Notifications</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
               <li
@@ -88,7 +157,17 @@ export default function BreadCrumb({ tab }) {
                 }
               >
                 <div className="parent">
-                  <Link href={''}>Configurations</Link>
+                  <div>
+                    <Link href={''}>Configurations</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/manage-users'}>Reports</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
             </ul>
@@ -99,9 +178,17 @@ export default function BreadCrumb({ tab }) {
         <div className="container">
           <Breadcrumb>
             <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>
-              <a href="">Dashboard</a>
-            </Breadcrumb.Item>
+            {location ? (
+              location.map((el, index) => (
+                <Breadcrumb.Item key={index}>
+                  <a href={el.link}>{el.location}</a>
+                </Breadcrumb.Item>
+              ))
+            ) : (
+              <Breadcrumb.Item>
+                <a href="">Dashboard</a>
+              </Breadcrumb.Item>
+            )}
           </Breadcrumb>
         </div>
       </section>

@@ -1,14 +1,14 @@
 import React from 'react';
 import BreadCrumb from '../components/BreadCrumb';
-import Users from '../components/Users';
+import ManageUsers from '../components/ManageUsers';
 import Welcome from '../components/Welcome';
 
-export default function users() {
+export default function manageusers() {
   return (
     <>
       <Welcome />
       <BreadCrumb tab={'users'} />
-      <Users />
+      <ManageUsers />
     </>
   );
 }
