@@ -34,7 +34,7 @@ export default function HomeTable() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: text => <span className="status pending">{text}</span>,
+      render: text => <span className={`status ${text}`}>{text}</span>,
     },
   ];
 
@@ -47,8 +47,6 @@ export default function HomeTable() {
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Pending',
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
     },
     {
       key: '2',

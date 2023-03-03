@@ -2,6 +2,9 @@ import Link from 'next/link';
 import React from 'react';
 import { back } from '../utility/svg';
 import { Tabs } from 'antd';
+import Profile from './Profile';
+import UsersReport from './UsersReport';
+import UserDevice from './UserDevice';
 
 export default function UserDetails() {
   return (
@@ -27,14 +30,14 @@ export default function UserDetails() {
         <div className="user-details-content">
           <Tabs defaultActiveKey="1">
             <Tabs.TabPane tab="Profile" key="item-1">
-              <div>tab 1</div>
+              <Profile />
             </Tabs.TabPane>
 
             <Tabs.TabPane tab="Reports" key="item-2">
-              <div>tab 2</div>
+              <UsersReport />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Device" key="item-3">
-              <div>tab 3</div>
+              <UserDevice />
             </Tabs.TabPane>
           </Tabs>
         </div>
