@@ -30,6 +30,7 @@ export default function ManageUsers() {
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
   };
+
   const onFinish = values => {
     console.log('Success:', values);
   };
