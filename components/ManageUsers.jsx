@@ -354,7 +354,7 @@ export default function ManageUsers() {
         open={modalOpen}
         onOk={() => setModalOpen(false)}
         onCancel={() => setModalOpen(false)}
-        className="filter-by"
+        className="our-modal"
         footer={null}
       >
         <Form layout="vertical" onFinish={onFinish}>
@@ -417,15 +417,21 @@ export default function ManageUsers() {
             </Space>
           </Form.Item>
 
-          <Form.Item>
+          <Form.Item className="buttons">
             <Button
               // type="primary"
               onClick={() => setModalOpen(false)}
               htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
             >
               Apply
             </Button>
-            <Button type="primary" onClick={() => setModalOpen(false)}>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
               Clear
             </Button>
           </Form.Item>

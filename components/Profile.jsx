@@ -1,8 +1,173 @@
-import { Button } from 'antd';
+import { Button, Modal } from 'antd';
+import { useRouter } from 'next/router';
 import Image from 'next/image';
-import React from 'react';
+import Link from 'next/link';
+import React, { useState, useContext, useEffect } from 'react';
+import { OverlayContext } from './Layout';
 
 export default function Profile() {
+  const { isActive, setIsActive } = useContext(OverlayContext);
+  // const [isActive, setIsActive] = useState(true);
+  const [confirmDeactivation, setConfirmDeactivation] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const router = useRouter();
+
+  const deactivate = () => {
+    // setIsActive(!isActive);
+    setModalOpen(true);
+  };
+
+  const activate = () => {
+    // setIsActive(!isActive);
+    setConfirmDeactivation(false);
+    setModalOpen(true);
+  };
+
+  const confirmDeactivate = () => {
+    setIsActive(false);
+    setConfirmDeactivation(true);
+  };
+
+  const confirmactivate = () => {
+    setIsActive(true);
+    setConfirmDeactivation(true);
+  };
+
+  useEffect(() => {
+    setConfirmDeactivation(false);
+  }, []);
+
+  const DeactivateModal = () => {
+    return (
+      <div className="deactivate">
+        <div className="img-wrap ">
+          <Image
+            src={'/icons/deactivate-icon.png'}
+            alt="Deactivate account"
+            width={160}
+            height={160}
+            style={{ maxWidth: '100%' }}
+          />
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <div className="buttons">
+          <Button className="cont" onClick={() => confirmDeactivate()}>
+            Deactivate
+          </Button>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+        </div>
+      </div>
+    );
+  };
+
+  const DeactivatedModal = () => {
+    return (
+      <div className="deactivate">
+        <div className="img-wrap ">
+          <Image
+            src={'/icons/deactivated-icon.png'}
+            alt="Account Deactivated"
+            width={160}
+            height={160}
+            style={{ maxWidth: '100%' }}
+          />
+        </div>
+        <p>
+          The user{' '}
+          <span className="our-primary-color text-decoration-underline">
+            Atanda Damilare
+          </span>{' '}
+          has been successfully suspended from the vigilant app and can no
+          longer perform activities on the app
+        </p>
+        <div className="buttons">
+          <Link href="/manage-users">
+            <Button className="cont">Okay, Go to all users</Button>
+          </Link>
+        </div>
+      </div>
+    );
+  };
+
+  const ActivateModal = () => {
+    return (
+      <div className="deactivate activate">
+        <div className="img-wrap mb-3">
+          <Image
+            src={'/icons/activate-icon.png'}
+            alt="Deactivate account"
+            width={160}
+            height={160}
+            style={{ maxWidth: '100%' }}
+          />
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        </p>
+
+        <div className="buttons">
+          <Button
+            className="acti"
+            onClick={() => confirmactivate()}
+            style={{ border: 'none' }}
+          >
+            Activate
+          </Button>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+        </div>
+      </div>
+    );
+  };
+
+  const ActivatedModal = () => {
+    return (
+      <div className="deactivate activate">
+        <div className="img-wrap ">
+          <Image
+            src={'/icons/activated-icon.png'}
+            alt="Deactivate account"
+            width={140}
+            height={140}
+            style={{ maxWidth: '100%' }}
+          />
+        </div>
+        <p>
+          The user{' '}
+          <span className="our-primary-color text-decoration-underline">
+            Atanda Damilare
+          </span>{' '}
+          has been successfully activated and can now perform activities on the
+          app
+        </p>
+
+        <div className="buttons">
+          <Button
+            className="cont"
+            onClick={() => {
+              setConfirmDeactivation(false);
+              router.push('/manage-users');
+            }}
+          >
+            Okay, Go to all users
+          </Button>
+        </div>
+      </div>
+    );
+  };
+
+  const cancelModal = () => {
+    setConfirmDeactivation(false);
+    setModalOpen(false);
+  };
+
+  console.log(confirmDeactivation, isActive);
+
   return (
     <div className="row user-profile">
       <div className="col-sm-auto">
@@ -70,12 +235,39 @@ export default function Profile() {
         </div>
         <div>
           <h5>Status:</h5>
-          <p className="status active">• Active</p>
+          {isActive ? (
+            <p className="status active">• Active</p>
+          ) : (
+            <p className="status inactive">• Inactive</p>
+          )}
         </div>
-        <div className="deactivate">
-          <Button>Deactivate</Button>
+        <div className={isActive ? 'deactivate' : 'deactivate activate'}>
+          {isActive ? (
+            <Button onClick={() => deactivate()}>Deactivate</Button>
+          ) : (
+            <Button onClick={() => activate()}>Activate</Button>
+          )}
         </div>
       </div>
+
+      <Modal
+        title={
+          <div className="text-center">
+            {confirmDeactivation ? 'Account Deactivated' : 'Deactivate account'}
+          </div>
+        }
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        className="our-modal"
+        footer={null}
+        onCancel={() => cancelModal()}
+      >
+        {isActive && !confirmDeactivation && <DeactivateModal />}
+        {!isActive && confirmDeactivation && <DeactivatedModal />}
+        {!isActive && !confirmDeactivation && <ActivateModal />}
+        {isActive && confirmDeactivation && <ActivatedModal />}
+      </Modal>
     </div>
   );
 }

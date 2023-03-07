@@ -22,6 +22,9 @@ export const OverlayContext = React.createContext({
 
   walletBalance: {},
   setwalletBalance: () => {},
+
+  isActive: true,
+  setIsActive: () => {},
 });
 
 const Layout = ({ children }) => {
@@ -30,6 +33,7 @@ const Layout = ({ children }) => {
   const [dashboardInfo, setdashboardInfo] = useState(null);
   const [loading, setloading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
   const router = useRouter();
 
@@ -48,6 +52,9 @@ const Layout = ({ children }) => {
         setLoggedIn,
         info,
         setInfo,
+
+        isActive,
+        setIsActive,
       }}
     >
       {!routesWithoutNavBars.includes(router.pathname) && <NavBar />}

@@ -84,6 +84,10 @@ tr {
   --black2: #1c1c1c;
 }
 
+.our-primary-color {
+  color: var(--primary);
+}
+
 p,
 h1,
 h2,
@@ -131,6 +135,13 @@ a {
   }
 
 } */
+
+:where(.css-dev-only-do-not-override-j0nf2s).ant-btn-default:not(
+    :disabled
+  ):hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
 
 @media (min-width: 1300px) {
   .container {
@@ -759,17 +770,17 @@ button:hover {
 .table-wrapper .our-pagination > div {
   margin: 40px auto 50px;
 }
-.filter-by.ant-modal {
-  width: 720px !important;
+.our-modal.ant-modal {
+  width: 650px !important;
   max-width: 100%;
 }
-.filter-by .ant-modal-content {
+.our-modal .ant-modal-content {
   padding: 0px;
 }
-.filter-by .ant-modal-content > div {
+.our-modal .ant-modal-content > div {
   padding: 0px 1.5rem;
 }
-.filter-by .ant-modal-title {
+.our-modal .ant-modal-title {
   /* font-family: 'avenir-medium'; */
   font-family: 'dm-sans-medium';
   font-weight: 900;
@@ -777,12 +788,12 @@ button:hover {
   line-height: 31px;
   color: var(--primary);
 }
-.filter-by .ant-modal-content .ant-modal-header {
+.our-modal .ant-modal-content .ant-modal-header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #f5f5f5;
 }
 
-.filter-by .ant-modal-body {
+.our-modal .ant-modal-body {
   margin-top: 24px;
   padding-bottom: 24px !important;
 }
@@ -796,12 +807,52 @@ button:hover {
   display: flex;
   align-items: center;
 }
-.filter-by .date-filter .ant-picker {
+.our-modal .date-filter .ant-picker {
   border: none;
   background: #f9f9f9 !important;
   height: 40px;
   border-radius: 0px;
 }
+
+.our-modal .ant-btn {
+  padding: 1rem 2rem;
+  height: auto;
+}
+.our-modal label {
+  font-family: 'dm-sans-medium';
+}
+.our-modal p {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 28px;
+  color: var(--black2);
+  text-align: center;
+  max-width: 100%;
+  width: 530px;
+  margin: auto;
+}
+.our-modal .img-wrap {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.our-modal .deactivate .buttons {
+  width: 100%;
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
+}
+.our-modal .deactivate .buttons .cont {
+  color: var(--white);
+  background-color: var(--primary);
+}
+.our-modal .deactivate .buttons .acti {
+  color: var(--white);
+  background-color: #009600;
+}
+
 @media (min-width: 1000px) {
   .search-filter .select-all {
     margin-top: 3rem;
@@ -809,18 +860,18 @@ button:hover {
   .search-filter .select-all .ant-checkbox-wrapper {
     color: var(--black2);
   }
-  .filter-by .ant-modal-content .ant-modal-header {
+  .our-modal .ant-modal-content .ant-modal-header {
     padding: 1rem 2.5rem;
   }
-  .filter-by .ant-modal-content > div {
+  .our-modal .ant-modal-content > div {
     padding: 0px 2.5rem;
   }
   .range-filter .ant-select-selector {
     padding: 0px 1rem;
   }
-  .filter-by label {
+  .our-modal label {
     font-weight: 500;
-    font-size: 16px !important;
+    font-size: 15px !important;
     line-height: 20px !important;
     color: #1c1c1c !important;
     margin-bottom: 8px !important;
@@ -831,8 +882,8 @@ button:hover {
 }
 
 @media (min-width: 1300px) {
-  .filter-by label {
-    font-size: 18px !important;
+  .our-modal label {
+    font-size: 16px !important;
     line-height: 23px !important;
   }
   :where(.css-dev-only-do-not-override-j0nf2s).ant-form-item {
@@ -948,22 +999,28 @@ button:hover {
 .user-profile .img-wrap img {
   width: 100%;
 }
+
+.user-profile .activate .ant-btn {
+}
 .user-profile .deactivate .ant-btn {
-  width: 155px;
-  height: 57px;
+  margin-top: 24px;
   background: var(--white);
   border-radius: 4px;
+  padding: 1rem 2rem;
+  height: auto;
   border-color: var(--white);
-  margin-top: 24px;
 }
-.user-profile .deactivate .ant-btn span {
+
+.user-profile .ant-btn span {
   font-weight: 900;
   font-size: 18px;
   line-height: 25px;
   color: var(--primary);
 }
-.user-profile .det p {
+.user-profile .deactivate.activate .ant-btn span {
+  color: #009600;
 }
+
 .user-profile .det h5,
 .user-profile .det p {
   font-weight: 400;
