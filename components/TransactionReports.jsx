@@ -1,6 +1,14 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import Exportzone from './Exportzone';
-import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import {
+  SearchIcon,
+  FilterIcon,
+  DirLeft,
+  DirRight,
+  CalenderIcon,
+  BankDebit,
+} from '../utility/svg';
 import Link from 'next/link';
 import {
   Button,
@@ -18,7 +26,15 @@ import {
 export default function TransactionReports() {
   const { Search } = Input;
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalReport, setModalReport] = useState(false);
   const [value, setValue] = useState('all');
+
+  const defaultCheckedList = ['Pending'];
+  const defaultCheckedList2 = ['All'];
+  const [checkedList, setCheckedList] = useState(defaultCheckedList);
+  const [checkedList2, setCheckedList2] = useState(defaultCheckedList2);
+  const [checkAll, setCheckAll] = useState(false);
+  const [checkAll2, setCheckAll2] = useState(false);
 
   const handleChange = value => {
     console.log(`selected ${value}`);
@@ -28,6 +44,72 @@ export default function TransactionReports() {
     console.log('Success:', values);
   };
   const onSearch = value => console.log(value);
+
+  const onChangeCheck = e => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
+  };
+  const onChange = e => {
+    console.log(`checked = ${e.target.checked}`);
+  };
+
+  const onChanges = checkedValues => {
+    console.log('checked = ', checkedValues);
+  };
+
+  const [indeterminate, setIndeterminate] = useState(true);
+  const [indeterminate2, setIndeterminate2] = useState(true);
+
+  const options = [
+    {
+      label: 'All',
+      value: 'All',
+    },
+    {
+      label: 'Pending',
+      value: 'Pending',
+    },
+    {
+      label: 'On Tracking',
+      value: 'On Tracking',
+    },
+    {
+      label: 'Recovery',
+      value: 'Recovery',
+    },
+    {
+      label: 'Completed',
+      value: 'Completed',
+    },
+  ];
+
+  const plainOptions = ['Pending', 'On Tracking', 'Recovery', 'Completed'];
+
+  const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
+
+  const onChanged = list => {
+    setCheckedList(list);
+    setIndeterminate(!!list.length && list.length < plainOptions.length);
+    setCheckAll(list.length === plainOptions.length);
+  };
+
+  const onChanged2 = list => {
+    setCheckedList(list);
+    setIndeterminate2(!!list.length && list.length < transactionOptions.length);
+    setCheckAll2(list.length === transactionOptions.length);
+  };
+
+  const onCheckAllChange = e => {
+    setCheckedList(e.target.checked ? plainOptions : []);
+    setIndeterminate(false);
+    setCheckAll(e.target.checked);
+  };
+
+  const onCheckAllChange2 = e => {
+    setCheckedList(e.target.checked ? transactionOptions : []);
+    setIndeterminate2(false);
+    setCheckAll2(e.target.checked);
+  };
 
   const columns = [
     {
@@ -68,9 +150,9 @@ export default function TransactionReports() {
       key: 'details',
       render: text => (
         <div className="view-btn">
-          <Link href={'/user-details'} passHref>
-            <Button className="view-profle">View profile</Button>
-          </Link>
+          <Button className="view-profle" onClick={() => setModalReport(true)}>
+            View details
+          </Button>
         </div>
       ),
     },
@@ -258,6 +340,188 @@ export default function TransactionReports() {
           </div>
         </div>
       </div>
+
+      <Modal
+        title={<div className="text-center">Report Details</div>}
+        centered
+        open={modalReport}
+        onOk={() => setModalReport(false)}
+        className="our-modal"
+        footer={null}
+        onCancel={() => setModalReport(false)}
+      >
+        <div className="report-details-modal border-bottom ">
+          <h4 className="mb-4">Transaction Details</h4>
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>
+                Transaction date <span>{CalenderIcon}</span>{' '}
+              </h6>
+              <p>Jan 11th, 2022</p>
+            </div>
+            <div className="col-md-4 col-6">
+              <h6>Account number</h6>
+              <p>0123456789</p>
+            </div>
+            <div className="col-md-4 col-6">
+              <h6>Transaction type</h6>
+              <p>{BankDebit} Bank Debit</p>
+            </div>
+          </div>
+          <div className="row ">
+            <div className="col-md-4 col-6">
+              <h6>Transaction reference</h6>
+              <p>0123456789</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>Bank Name</h6>
+              <p>
+                {' '}
+                <span>
+                  <Image
+                    src={'/icons/Bank_logo.png'}
+                    alt="bank logo"
+                    width={22}
+                    height={22}
+                  />
+                </span>{' '}
+                Guarantee Trust Bank
+              </p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>Tracking ID </h6>
+              <p>ABC-12345</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>
+                Report date <span>{CalenderIcon}</span>{' '}
+              </h6>
+              <p>Jan 11th, 2022</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <h6>Reported by</h6>
+              <p className="our-primary-color text-decoration-underline">
+                Atanda Damilare
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="report-details-modal pb-4">
+          <div className="row">
+            <div>
+              <h4 className="bold">Tracking Details</h4>
+            </div>
+          </div>
+          <div className="row">
+            <h6>Report status</h6>
+            <p className="status pending">• Pending</p>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
+        title="Filter by:"
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        className="our-modal"
+        footer={null}
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="status" label="Status:" className="wrap-check-group">
+            {/* <Checkbox.Group
+              options={options}
+              defaultValue={['Pear']}
+              onChange={onChanges}
+            /> */}
+            <>
+              <Checkbox
+                indeterminate={indeterminate}
+                onChange={onCheckAllChange}
+                checked={checkAll}
+                className="me-3"
+              >
+                All
+              </Checkbox>
+
+              <Checkbox.Group
+                options={plainOptions}
+                value={checkedList}
+                onChange={onChanged}
+              />
+            </>
+          </Form.Item>
+
+          <Form.Item
+            name="transactionType:"
+            label="Transaction type:"
+            className="wrap-check-group"
+          >
+            <>
+              <Checkbox
+                indeterminate={indeterminate2}
+                onChange={onCheckAllChange2}
+                checked={checkAll2}
+                className="me-3"
+              >
+                All
+              </Checkbox>
+
+              <Checkbox.Group
+                options={transactionOptions}
+                value={checkedList}
+                onChange={onChanged2}
+              />
+            </>
+          </Form.Item>
+          <Form.Item
+            name="rangeFilter"
+            label="Report date:"
+            className="date-filter"
+          >
+            <Space direction="" className="flex-wrap">
+              <DatePicker
+                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+              <DatePicker
+                onChange={onChange}
+                placeholder="To"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Space>
+          </Form.Item>
+
+          <Form.Item className="buttons">
+            <Button
+              // type="primary"
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Apply
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Clear
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </section>
   );
 }

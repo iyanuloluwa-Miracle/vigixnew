@@ -85,7 +85,7 @@ tr {
 }
 
 .our-primary-color {
-  color: var(--primary);
+  color: var(--primary) !important;
 }
 
 p,
@@ -851,6 +851,41 @@ button:hover {
 .our-modal .deactivate .buttons .acti {
   color: var(--white);
   background-color: #009600;
+}
+.our-modal .report-details-modal {
+  margin-bottom: 1.5rem;
+}
+.our-modal .report-details-modal h4 {
+  font-size: 1.2rem;
+  line-height: 24px;
+  color: var(--black2);
+  font-family: 'dm-sans-medium';
+}
+.our-modal .report-details-modal h6 {
+  font-weight: 400;
+  font-size: 0.9rem;
+  line-height: 23px;
+  color: #757575;
+}
+.our-modal .report-details-modal p {
+  text-align: left;
+  width: 100%;
+  color: var(--black2);
+}
+.our-modal .report-details-modal .row > div {
+  margin-bottom: 1.5rem;
+}
+.our-modal .report-details-modal .status.pending {
+  color: #ff7700;
+}
+
+.our-modal .wrap-check-group .ant-checkbox-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.our-modal .wrap-check-group .ant-form-item-control-input-content {
+  display: flex;
 }
 
 @media (min-width: 1000px) {
