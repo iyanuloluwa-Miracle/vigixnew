@@ -82,7 +82,7 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="px-0">
                         <li>
-                          <Link href={'/manage-users'}>Reports</Link>
+                          <Link href={'/page-management'}>Pages</Link>
                         </li>
                       </ul>
                     </div>

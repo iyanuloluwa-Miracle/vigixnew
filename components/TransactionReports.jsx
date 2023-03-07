@@ -150,7 +150,7 @@ export default function TransactionReports() {
       key: 'details',
       render: text => (
         <div className="view-btn">
-          <Button className="view-profle" onClick={() => setModalReport(true)}>
+          <Button className="view-profile" onClick={() => setModalReport(true)}>
             View details
           </Button>
         </div>
@@ -253,7 +253,7 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <Exportzone h4="All Users" />
+      <Exportzone h4="All Transaction Reports" />
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
           <div className="col-md-auto d-flex flex-wrap gap-3 me-lg-5">

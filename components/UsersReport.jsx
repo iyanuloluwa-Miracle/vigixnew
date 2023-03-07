@@ -39,7 +39,7 @@ export default function UsersReport() {
       render: text => (
         <div className="view-btn">
           <Link href={'/user-details'} passHref>
-            <Button className="view-profle">View profile</Button>
+            <Button className="view-profile">View profile</Button>
           </Link>
         </div>
       ),

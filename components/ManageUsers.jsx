@@ -109,7 +109,7 @@ export default function ManageUsers() {
       views: (
         <div className="view-btn">
           <Link href={'/user-details'} passHref>
-            <Button className="view-profle">View profile</Button>
+            <Button className="view-profile">View profile</Button>
           </Link>
           <Button className="view-report">View reports</Button>
         </div>
@@ -126,7 +126,7 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -142,7 +142,7 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -158,7 +158,7 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -174,7 +174,7 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -190,7 +190,7 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -206,7 +206,7 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -222,7 +222,7 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -238,7 +238,7 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -254,7 +254,7 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profle">View profile</Button>
+          <Button className="view-profile">View profile</Button>
           <Button className="view-report">View reports</Button>
         </div>
       ),
@@ -327,6 +327,7 @@ export default function ManageUsers() {
           </div>
         </div>
       </div>
+
       <div className="container">
         <div className="table-wrapper ">
           <Table columns={columns} dataSource={data} />
