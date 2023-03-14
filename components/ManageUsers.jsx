@@ -42,9 +42,9 @@ export default function ManageUsers() {
 
   const columns = [
     {
-      title: 'First Name',
-      dataIndex: 'firstName',
-      key: 'firstName',
+      title: 'Full Name',
+      dataIndex: 'fullName',
+      key: 'fullName',
       render: text => (
         <div>
           <Checkbox onChange={onChange}>{text}</Checkbox>
@@ -52,9 +52,9 @@ export default function ManageUsers() {
       ),
     },
     {
-      title: 'Last Name',
-      dataIndex: 'lastName',
-      key: 'lastName',
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
       render: text => <span className="last-name">{text}</span>,
     },
     {
@@ -99,8 +99,8 @@ export default function ManageUsers() {
   const data = [
     {
       key: '1',
-      firstName: 'Specter',
-      lastName: 'omojo',
+      fullName: 'Atanda Damilare',
+      username: 'dammy',
       email: 'atandadray@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'Sept 17, 2022',
@@ -117,9 +117,9 @@ export default function ManageUsers() {
     },
     {
       key: '2',
-      firstName: 'Atanda',
-      lastName: 'Damilare',
-      email: 'atandadray@gmail.com',
+      fullName: 'Jide Ola',
+      username: 'Ola',
+      email: 'jideola@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'Jun 12, 2020',
       report: 2,
@@ -133,9 +133,9 @@ export default function ManageUsers() {
     },
     {
       key: '3',
-      firstName: 'Jide',
-      lastName: 'Specter Damilare',
-      email: 'jideola@gmail.com',
+      fullName: 'Specter Omo',
+      username: 'Specter Damilare',
+      email: 'Specter@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'May 8, 2021',
       report: 10,
@@ -149,9 +149,9 @@ export default function ManageUsers() {
     },
     {
       key: '4',
-      firstName: 'Henry',
-      lastName: 'Etta',
-      email: 'henryetta@gmail.com',
+      fullName: 'Jesse Finn',
+      username: 'Finn',
+      email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'Aug 16, 2020',
       report: 22,
@@ -165,8 +165,8 @@ export default function ManageUsers() {
     },
     {
       key: '5',
-      firstName: 'Jesse',
-      lastName: 'Ola',
+      fullName: 'Atanda Damilare',
+      username: 'Ola',
       email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'Sept 17, 2022',
@@ -181,8 +181,8 @@ export default function ManageUsers() {
     },
     {
       key: '6',
-      firstName: 'Atanda',
-      lastName: 'Damilare',
+      fullName: 'Jide Ola',
+      username: 'Damilare',
       email: 'atandadray@gmail.com',
       phone: '+2348123456790',
       dateRegistered: 'Jun 12, 2020',
@@ -197,8 +197,8 @@ export default function ManageUsers() {
     },
     {
       key: '7',
-      firstName: 'Specter',
-      lastName: 'Omo',
+      fullName: 'Henry Etta',
+      username: 'Omo',
       email: 'atandadray@gmail.com',
       phone: '+2348123456790',
       dateRegistered: '12345678901234567890',
@@ -213,8 +213,8 @@ export default function ManageUsers() {
     },
     {
       key: '8',
-      firstName: 'Jide',
-      lastName: 'Ola',
+      fullName: 'Jesse Finn',
+      username: 'Ola',
       email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
       dateRegistered: '12345678901234567890',
@@ -229,8 +229,8 @@ export default function ManageUsers() {
     },
     {
       key: '9',
-      firstName: 'Jesse',
-      lastName: 'Finn',
+      fullName: 'Specter Omo',
+      username: 'Finn',
       email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
       dateRegistered: '12345678901234567890',
@@ -245,8 +245,8 @@ export default function ManageUsers() {
     },
     {
       key: '10',
-      firstName: 'Henry',
-      lastName: 'Etta',
+      fullName: 'Atanda Damilare',
+      username: 'Etta',
       email: 'henryetta@gmail.com',
       phone: '+2348123456790',
       dateRegistered: '12345678901234567890',

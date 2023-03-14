@@ -1,3 +1,34 @@
+export const NavDropdown = (
+  <svg
+    width="10"
+    height="7"
+    viewBox="0 0 10 7"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      fill-rule="evenodd"
+      clip-rule="evenodd"
+      d="M9.843 1.211C9.951 1.07 10 0.911 10 0.755C10 0.366 9.694 0 9.251 0H0.75C0.305 0 0 0.367 0 0.755C0 0.912 0.0499999 1.071 0.159 1.212C1.362 2.766 3.411 5.411 4.417 6.71C4.559 6.894 4.777 7 5.009 7C5.239 7 5.458 6.893 5.6 6.709C6.602 5.41 8.644 2.764 9.843 1.211Z"
+      fill="white"
+    />
+  </svg>
+);
+
+export const LogoutIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M10.6667 6.66666V3.33333L16 7.99999L10.6667 12.6667V9.33333H5.33333V6.66666H10.6667ZM0 1.33333V14.6667H9.33333V13.3333H1.33333V2.66666H9.33333V1.33333H0Z"
+      fill="#7D0003"
+    />
+  </svg>
+);
 export const CardIcon1 = (
   <svg
     width="40"
@@ -351,20 +382,20 @@ export const BankDebit = (
   </svg>
 );
 
-export const AddIcon = (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <path
-      d="M12 6V18M18 12H6"
-      stroke="white"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
-);
+// export const AddIcon = (
+//   <svg
+//     width="24"
+//     height="24"
+//     viewBox="0 0 24 24"
+//     fill="none"
+//     xmlns="http://www.w3.org/2000/svg"
+//   >
+//     <path
+//       d="M12 6V18M18 12H6"
+//       stroke="white"
+//       stroke-width="1.5"
+//       stroke-linecap="round"
+//       stroke-linejoin="round"
+//     />
+//   </svg>
+// );

@@ -40,7 +40,17 @@ export default function BreadCrumb({ tab, location }) {
                     <Link href={''}>Users</Link>
 
                     <div className="children">
-                      <div className="backdrop" />
+                      <div
+                        className="backdrop"
+                        // style={{
+                        //   position: 'fixed',
+                        //   top: '0px',
+                        //   bottom: 'top',
+                        //   right: '0px',
+                        //   left: '0px',
+                        //   opacity: 1,
+                        // }}
+                      />
                       <ul className="px-0">
                         <li>
                           <Link href={'/manage-users'}>Manage Users</Link>
@@ -103,7 +113,7 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="px-0">
                         <li>
-                          <Link href={'/manage-users'}>Reports</Link>
+                          <Link href={'/admin-members'}>Members</Link>
                         </li>
                       </ul>
                     </div>

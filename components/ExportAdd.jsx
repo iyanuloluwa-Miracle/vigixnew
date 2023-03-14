@@ -1,7 +1,7 @@
 import { Button } from 'antd';
-import { AddIcon } from '../utility/svg';
+import AddIcon from './Vectors/AddIcon';
 
-export default function ExportAdd({ h4, add }) {
+export default function ExportAdd({ h4, add, openModal }) {
   return (
     <div className="container">
       <div className="row _tabs-wrapper">
@@ -10,8 +10,9 @@ export default function ExportAdd({ h4, add }) {
         </div>
         <div className="col-auto">
           <Button
-            icon={AddIcon}
+            icon={<AddIcon />}
             style={{ background: '#7D0003', color: '#fff' }}
+            onClick={() => openModal()}
           >
             Add new page
           </Button>

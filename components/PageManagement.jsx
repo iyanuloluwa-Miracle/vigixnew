@@ -12,6 +12,7 @@ import {
   Form,
   Radio,
   DatePicker,
+  Switch,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 
@@ -19,11 +20,30 @@ export default function PageManagement() {
   const { Search } = Input;
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [modalAddPage, setModalAddPage] = useState(false);
+  const [value, setValue] = useState('all');
 
   const onSearch = value => console.log(value);
 
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
+  };
+
+  const checkChange = checked => {
+    console.log(`switch to ${checked}`);
+  };
+
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+  };
+
+  const onFinish = values => {
+    console.log('Success:', values);
+  };
+
+  const onChangeCheck = e => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
   };
 
   const columns = [
@@ -94,6 +114,7 @@ export default function PageManagement() {
       Segment: 'Users',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -110,7 +131,7 @@ export default function PageManagement() {
       Segment: 'Users',
       Status: (
         <div className="view-btn">
-          <Button className="view-profile">Edit</Button>
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -127,6 +148,7 @@ export default function PageManagement() {
       Segment: 'Reports',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -143,6 +165,7 @@ export default function PageManagement() {
       Segment: 'Pages',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -159,6 +182,7 @@ export default function PageManagement() {
       Segment: 'Members',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -175,6 +199,7 @@ export default function PageManagement() {
       Segment: 'Roles',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -191,6 +216,7 @@ export default function PageManagement() {
       Segment: 'Communications',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -207,6 +233,7 @@ export default function PageManagement() {
       Segment: 'Communications',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -223,6 +250,7 @@ export default function PageManagement() {
       Segment: 'Notifications',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -239,6 +267,7 @@ export default function PageManagement() {
       Segment: 'Notifications',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -255,6 +284,7 @@ export default function PageManagement() {
       Segment: 'Configuration',
       Status: (
         <div className="view-btn">
+          <Switch defaultChecked onChange={checkChange} />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -271,6 +301,11 @@ export default function PageManagement() {
       Segment: 'Configuration',
       Status: (
         <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
           <Button className="view-profile">Edit</Button>
         </div>
       ),
@@ -278,7 +313,12 @@ export default function PageManagement() {
   ];
   return (
     <section className="page-management">
-      <ExportAdd h4="Page Management" add="page-management" />
+      <ExportAdd
+        h4="Page Management"
+        add="page-management"
+        openModal={() => setModalAddPage(true)}
+      />
+
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
           <div className="col-md-auto d-flex flex-wrap gap-3 me-lg-5">
@@ -324,6 +364,264 @@ export default function PageManagement() {
           </div>
         </div>
       </div>
+
+      <Modal
+        title="Filter by:"
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        className="our-modal"
+        footer={null}
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="status" label="Status:">
+            <Radio.Group onChange={onChangeCheck} value={value}>
+              <Radio value={'all'}>All</Radio>
+              <Radio value={'active'}>Active</Radio>
+              <Radio value={'inactive'}>Inactive</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Space direction="" className="flex-wrap">
+            <Form.Item name="Segment" label="Segment:" className="range-filter">
+              <Select
+                defaultValue="All"
+                style={{
+                  width: 270,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: 'All',
+                    label: 'All',
+                  },
+                  {
+                    value: 'User',
+                    label: 'User',
+                  },
+                  {
+                    value: 'Reports',
+                    label: 'Reports',
+                  },
+                  {
+                    value: 'Pages',
+                    label: 'Pages',
+                  },
+                  {
+                    value: 'Members',
+                    label: 'Members',
+                  },
+                  {
+                    value: 'Roles',
+                    label: 'Roles',
+                  },
+                  {
+                    value: 'Communications',
+                    label: 'Communications',
+                  },
+                  {
+                    value: 'Notifications',
+                    label: 'Notifications',
+                  },
+                ]}
+              />
+            </Form.Item>
+
+            <Form.Item
+              name="Position"
+              label="Position:"
+              className="range-filter"
+            >
+              <Select
+                defaultValue="All"
+                style={{
+                  width: 270,
+                }}
+                onChange={handleChange}
+                options={[
+                  {
+                    value: 'All',
+                    label: 'All',
+                  },
+                  {
+                    value: '1',
+                    label: '1',
+                  },
+                  {
+                    value: '2',
+                    label: '2',
+                  },
+                  {
+                    value: '3',
+                    label: '3',
+                  },
+                  {
+                    value: '4',
+                    label: '4',
+                  },
+                  {
+                    value: '5',
+                    label: '5',
+                  },
+                ]}
+              />
+            </Form.Item>
+          </Space>
+
+          <Form.Item
+            name="dateCreated"
+            label="Date created:"
+            className="date-filter"
+          >
+            <Space direction="" className="flex-wrap">
+              <DatePicker
+                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+              <DatePicker
+                onChange={onChange}
+                placeholder="To"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Space>
+          </Form.Item>
+
+          <Form.Item className="buttons">
+            <Button
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Apply
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Clear
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        centered
+        open={modalAddPage}
+        onOk={() => setModalAddPage(false)}
+        onCancel={() => setModalAddPage(false)}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Add New Page</h4>
+          <p>Fill the fields below to add a new page.</p>
+        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="pageTitle" label="Page Title" className="heights">
+            <Input placeholder="Enter page title" />
+          </Form.Item>
+          <Form.Item name="URL" label="URL" className="heights">
+            <Input placeholder="Enter page URL" />
+          </Form.Item>
+
+          <Form.Item name="segment" label="Segment">
+            <Select
+              defaultValue="All"
+              style={{
+                width: '100%',
+              }}
+              onChange={handleChange}
+              options={[
+                {
+                  value: 'All',
+                  label: 'All',
+                },
+                {
+                  value: 'User',
+                  label: 'User',
+                },
+                {
+                  value: 'Reports',
+                  label: 'Reports',
+                },
+                {
+                  value: 'Pages',
+                  label: 'Pages',
+                },
+                {
+                  value: 'Members',
+                  label: 'Members',
+                },
+                {
+                  value: 'Roles',
+                  label: 'Roles',
+                },
+                {
+                  value: 'Communications',
+                  label: 'Communications',
+                },
+                {
+                  value: 'Notifications',
+                  label: 'Notifications',
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item name="Position" label="Position">
+            <Select
+              defaultValue="All"
+              onChange={handleChange}
+              options={[
+                {
+                  value: 'All',
+                  label: 'All',
+                },
+                {
+                  value: '1',
+                  label: '1',
+                },
+                {
+                  value: '2',
+                  label: '2',
+                },
+                {
+                  value: '3',
+                  label: '3',
+                },
+                {
+                  value: '4',
+                  label: '4',
+                },
+                {
+                  value: '5',
+                  label: '5',
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item name="Description" label="Description">
+            <Input.TextArea placeholder="Enter page description" rows={3} />
+          </Form.Item>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#460102', color: '#FFF' }}
+            className="w-100 mt-4"
+          >
+            Add Page
+          </Button>
+        </Form>
+      </Modal>
     </section>
   );
 }

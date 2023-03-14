@@ -142,7 +142,19 @@ a {
   border-color: var(--primary);
   color: var(--primary);
 }
-
+:where(.css-dev-only-do-not-override-j0nf2s).ant-input:hover,
+:where(.css-dev-only-do-not-override-j0nf2s).ant-select:not(
+    .ant-select-disabled
+  ):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
+  .ant-select-selector {
+  border-color: var(--primary);
+}
+.ant-switch.ant-switch-checked {
+  background-color: var(--primary);
+}
+.ant-switch.ant-switch-checked:hover {
+  background-color: var(--primary) !important;
+}
 @media (min-width: 1300px) {
   .container {
     max-width: 1400px;
@@ -218,7 +230,18 @@ header .navbar-brand {
   color: white;
   transform: scale(1.05);
 }
-
+.logout-icon .ant-dropdown-menu {
+  border-radius: 0px;
+  height: 48px;
+  display: flex;
+  width: 100%;
+}
+.logout-icon .ant-dropdown-menu li {
+  width: 100%;
+}
+.ant-dropdown-trigger {
+  cursor: pointer;
+}
 button {
   transition: transform 0.8s;
 }
@@ -432,6 +455,9 @@ button:hover {
   font-weight: 500;
   font-size: 11.52px;
   line-height: 16px;
+}
+.table-wrapper .ant-table-tbody tr td .max-content {
+  min-width: max-content;
 }
 
 .ant-form-item-required::before {
@@ -852,7 +878,8 @@ button:hover {
 .our-modal .report-details-modal {
   margin-bottom: 1.5rem;
 }
-.our-modal .report-details-modal h4 {
+.our-modal .report-details-modal h4,
+.our-modal.add-page-modal .headings h4 {
   font-size: 1.2rem;
   line-height: 24px;
   color: var(--black2);
@@ -884,6 +911,40 @@ button:hover {
 .our-modal .wrap-check-group .ant-form-item-control-input-content {
   display: flex;
 }
+.our-modal.add-page-modal {
+  max-width: 450px;
+  margin-bottom: 3rem;
+}
+.our-modal.add-page-modal .headings {
+  /* padding-top: 24px; */
+  margin-bottom: 2.5rem;
+}
+.our-modal.add-page-modal .ant-modal-body {
+  padding: 1.5rem 2.5rem;
+}
+.our-modal.add-page-modal .headings h4 {
+  margin-bottom: 0.8rem;
+}
+.our-modal.add-page-modal .headings p {
+  line-height: 19px;
+}
+.our-modal.add-page-modal .ant-select-selector,
+.our-modal.add-page-modal .heights .ant-input {
+  height: 48px;
+  display: flex;
+  align-items: center;
+}
+.our-modal.add-page-modal label {
+  margin-bottom: 0px !important;
+  font-weight: 500;
+  font-size: 14px !important;
+  line-height: 19px;
+  font-family: 'dm-sans-regular';
+}
+.our-modal.add-page-modal .ant-form-item {
+  /* margin-bottom: 1.5rem; */
+}
+
 .page-management .page-url {
   color: #7d0003;
   font-weight: 400;
@@ -906,6 +967,9 @@ button:hover {
 }
 .page-management .table-date {
   max-width: 88px;
+}
+.page-management .ant-table-cell {
+  padding: 16px 8px !important;
 }
 @media (min-width: 1000px) {
   .search-filter .select-all {
@@ -954,6 +1018,7 @@ button:hover {
   position: absolute;
   background-color: white;
   z-index: 4;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 .page-navigation .nav-item .parent .children ul {
   list-style: none;
@@ -975,13 +1040,21 @@ button:hover {
   background: #bfbfbf;
   top: 0px;
   left: 0px;
+  bottom: 0px;
+  right: 0px;
   z-index: -1;
   visibility: hidden;
   opacity: 0.2;
+  background: #150404;
 }
+
 .page-navigation .nav-item .parent:hover .backdrop {
   /* display: block; */
   /* visibility: visible; */
+}
+
+.page-navigation .nav-item .parent .backdrop:hover {
+  visibility: hidden;
 }
 .page-navigation .nav-item .parent .backdrop:hover {
   /* display: none; */
@@ -1067,7 +1140,7 @@ button:hover {
 
 .user-profile .ant-btn span {
   font-weight: 900;
-  font-size: 18px;
+  font-size: 1rem;
   line-height: 25px;
   color: var(--primary);
 }
@@ -1161,4 +1234,31 @@ button:hover {
   .user-device .device {
     padding-left: 6rem;
   }
+}
+.user-profile.admin-profile .buttons {
+  display: flex;
+  gap: 24px;
+}
+.user-profile.admin-profile .buttons .ant-btn {
+  margin-top: 24px;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  height: auto;
+  border: none;
+}
+.user-profile.admin-profile .buttons .edit-members {
+  background: var(--primary);
+}
+.user-profile.admin-profile .buttons .edit-members span {
+  color: #fff;
+}
+.user-profile.admin-profile .buttons .deactivate .ant-btn {
+  background: #faeff0;
+}
+.user-profile.admin-profile .buttons .deactivate span {
+  color: var(--primary);
+}
+.user-profile.admin-profile .buttons .change-pass {
+  background: #ffffff;
+  border: 1px solid #7d0003;
 }
