@@ -162,6 +162,13 @@ a {
   }
 }
 
+@media (min-width: 1500px) {
+  .container {
+    max-width: 1500px;
+    width: 94%;
+  }
+}
+
 :where(.css-dev-only-do-not-override-j0nf2s).ant-breadcrumb a {
   color: var(--primary) !important;
 }
