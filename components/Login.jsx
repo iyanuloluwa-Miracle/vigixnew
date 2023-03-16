@@ -2,10 +2,14 @@ import Image from 'next/image';
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import { ArrowRight } from '../utility/svg';
+import { useRouter } from 'next/router';
 
 export default function Login() {
+  const router = useRouter();
+
   const onFinish = values => {
     console.log('Success:', values);
+    router.push('/');
   };
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);

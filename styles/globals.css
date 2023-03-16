@@ -158,7 +158,7 @@ a {
 @media (min-width: 1300px) {
   .container {
     max-width: 1400px;
-    width: 95%;
+    width: 96%;
   }
 }
 
@@ -929,10 +929,57 @@ button:hover {
   line-height: 19px;
 }
 .our-modal.add-page-modal .ant-select-selector,
-.our-modal.add-page-modal .heights .ant-input {
+.our-modal.add-page-modal .heights .ant-input,
+.configuration .heights .ant-input,
+.configuration .heights .ant-select-selector {
   height: 48px;
   display: flex;
   align-items: center;
+}
+.configuration .inner {
+  max-width: 850px;
+  width: 100%;
+}
+.configuration .ant-collapse {
+  border: none;
+}
+.configuration .ant-collapse .ant-collapse-content > .ant-collapse-content-box {
+  padding: 32px 2.5rem 2.5rem;
+}
+.configuration .ant-collapse .ant-collapse-header {
+  padding: 1rem 2.5rem;
+  border: none;
+  border-bottom: 1px solid #f5f5f5;
+  background: var(--white);
+  border-radius: 0px !important;
+}
+.configuration .ant-collapse .ant-collapse-content {
+  border: none;
+}
+.configuration .ant-collapse > .ant-collapse-item {
+  border: none;
+  margin-bottom: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
+  border-radius: 0px;
+}
+.configuration .legals label {
+  margin-bottom: 8px;
+}
+.configuration .legals {
+  max-width: 650px;
+  width: 100%;
+  margin: auto;
+}
+.configuration .legals .ck.ck-editor {
+  border: 1px solid #e6e6e6;
+}
+.configuration .legals .ck-sticky-panel .ck-toolbar {
+  border: none;
+  border-bottom: 1px solid #e6e6e6 !important;
+}
+.configuration .legals .ck-editor__editable {
+  min-height: 200px;
+  border: none;
 }
 .our-modal.add-page-modal label {
   margin-bottom: 0px !important;
@@ -944,7 +991,25 @@ button:hover {
 .our-modal.add-page-modal .ant-form-item {
   /* margin-bottom: 1.5rem; */
 }
+.our-modal.add-page-modal .copy .ant-btn {
+  padding: 0.5rem 1rem;
+  font-size: 11.52px;
+  border-color: #7d0003;
+}
+.our-modal.add-page-modal .auto-generate {
+  font-size: '11.52px';
+  line-height: 15px;
+  color: #7d0003;
+  display: flex;
+  gap: 6px;
+  cursor: pointer;
+}
 
+.our-modal.add-page-modal .copy .ant-btn span {
+  color: #7d0003;
+  font-weight: 500;
+  font-family: 'dm-sans-medium';
+}
 .page-management .page-url {
   color: #7d0003;
   font-weight: 400;
@@ -1065,7 +1130,7 @@ button:hover {
   margin-top: 40px;
   margin-bottom: 32px;
 }
-.go-back a {
+.go-back .ant-btn {
   padding: 0.5rem 1rem;
   color: var(--primary) !important;
   font-weight: 900;
@@ -1076,6 +1141,8 @@ button:hover {
   gap: 10px;
   background: #faeff0;
   border-radius: 4px;
+  border-color: #faeff0;
+  height: 36px;
 }
 .go-back svg {
   width: 20px;

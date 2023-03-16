@@ -8,7 +8,7 @@ export default function pagemanagement() {
     <>
       <Welcome />
       <BreadCrumb
-        tab={'reports'}
+        tab={'pageManagement'}
         location={[{ link: '#', location: 'Page Management' }]}
       />
       <PageManagement />

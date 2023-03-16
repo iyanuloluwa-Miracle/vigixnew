@@ -122,7 +122,17 @@ export default function BreadCrumb({ tab, location }) {
               </li>
               <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
                 <div className="parent">
-                  <Link href={''}>Roles</Link>
+                  <div>
+                    <Link href={''}>Roles</Link>
+                    <div className="children">
+                      <div className="backdrop" />
+                      <ul className="px-0">
+                        <li>
+                          <Link href={'/roles'}>Roles</Link>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
                 </div>
               </li>
               <li
@@ -175,7 +185,14 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="px-0" style={{ maxWidth: '100%' }}>
                         <li style={{ maxWidth: '100%' }}>
-                          <Link href={'/manage-users'}>Reports</Link>
+                          <Link href={'/app-configuration'}>
+                            App Configuration{' '}
+                          </Link>
+                        </li>
+                        <li style={{ maxWidth: '100%' }}>
+                          <Link href={'/admin-configuration'}>
+                            Web Configuration{' '}
+                          </Link>
                         </li>
                       </ul>
                     </div>

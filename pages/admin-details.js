@@ -9,7 +9,7 @@ export default function adminDetails() {
     <>
       <Welcome />
       <BreadCrumb
-        tab={'reports'}
+        tab={'adminMembers'}
         location={[{ link: '', location: 'Admin Members' }]}
       />
       <AdminDetails />

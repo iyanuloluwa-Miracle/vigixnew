@@ -1,17 +1,33 @@
-import { Button, Modal } from 'antd';
+import { Button, Modal, Form, Input, Select } from 'antd';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useContext, useEffect } from 'react';
 import { OverlayContext } from './Layout';
+import { CopyIcon, LockIcon } from '../utility/svg';
 
 export default function AdminProfile() {
   const { isActive, setIsActive } = useContext(OverlayContext);
+  const [modalAddPage, setModalAddPage] = useState(false);
+
   // const [isActive, setIsActive] = useState(true);
   const [confirmDeactivation, setConfirmDeactivation] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
 
   const router = useRouter();
+
+  const onFinish = values => {
+    console.log('Success:', values);
+    setTimeout(() => {
+      setConfirmed(false);
+    }, 1000);
+    setModalOpen(false);
+  };
+
+  const handleChange = value => {
+    console.log(`selected ${value}`);
+  };
 
   const deactivate = () => {
     // setIsActive(!isActive);
@@ -19,18 +35,11 @@ export default function AdminProfile() {
   };
 
   const activate = () => {
-    // setIsActive(!isActive);
-    setConfirmDeactivation(false);
     setModalOpen(true);
   };
 
   const confirmDeactivate = () => {
     setIsActive(false);
-    setConfirmDeactivation(true);
-  };
-
-  const confirmactivate = () => {
-    setIsActive(true);
     setConfirmDeactivation(true);
   };
 
@@ -43,7 +52,7 @@ export default function AdminProfile() {
       <div className="deactivate">
         <div className="img-wrap ">
           <Image
-            src={'/icons/deactivate-icon.png'}
+            src={'/icons/secure.svg'}
             alt="Deactivate account"
             width={160}
             height={160}
@@ -56,108 +65,57 @@ export default function AdminProfile() {
         </p>
 
         <div className="buttons">
-          <Button className="cont" onClick={() => confirmDeactivate()}>
-            Deactivate
+          <Button className="cont" onClick={() => setConfirmed(true)}>
+            Change password
           </Button>
-          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
-        </div>
-      </div>
-    );
-  };
-
-  const DeactivatedModal = () => {
-    return (
-      <div className="deactivate">
-        <div className="img-wrap ">
-          <Image
-            src={'/icons/deactivated-icon.png'}
-            alt="Account Deactivated"
-            width={160}
-            height={160}
-            style={{ maxWidth: '100%' }}
-          />
-        </div>
-        <p>
-          The user{' '}
-          <span className="our-primary-color text-decoration-underline">
-            Atanda Damilare
-          </span>{' '}
-          has been successfully suspended from the vigilant app and can no
-          longer perform activities on the app
-        </p>
-        <div className="buttons">
-          <Link href="/manage-users">
-            <Button className="cont">Okay, Go to all users</Button>
-          </Link>
-        </div>
-      </div>
-    );
-  };
-
-  const ActivateModal = () => {
-    return (
-      <div className="deactivate activate">
-        <div className="img-wrap mb-3">
-          <Image
-            src={'/icons/activate-icon.png'}
-            alt="Deactivate account"
-            width={160}
-            height={160}
-            style={{ maxWidth: '100%' }}
-          />
-        </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
-
-        <div className="buttons">
           <Button
-            className="acti"
-            onClick={() => confirmactivate()}
-            style={{ border: 'none' }}
+            onClick={() => setModalOpen(false)}
+            // style={{ borderColor: 'white' }}
           >
-            Activate
+            Cancel
           </Button>
-          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
         </div>
       </div>
     );
   };
 
-  const ActivatedModal = () => {
+  const PasswordChanged = () => {
     return (
-      <div className="deactivate activate">
-        <div className="img-wrap ">
-          <Image
-            src={'/icons/activated-icon.png'}
-            alt="Deactivate account"
-            width={140}
-            height={140}
-            style={{ maxWidth: '100%' }}
-          />
+      <>
+        <div className="headings text-center">
+          <h4>Password Change</h4>
+          <p>The new password is displayed below</p>
         </div>
-        <p>
-          The user{' '}
-          <span className="our-primary-color text-decoration-underline">
-            Atanda Damilare
-          </span>{' '}
-          has been successfully activated and can now perform activities on the
-          app
-        </p>
-
-        <div className="buttons">
-          <Button
-            className="cont"
-            onClick={() => {
-              setConfirmDeactivation(false);
-              router.push('/manage-users');
-            }}
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item
+            name="password"
+            label="New password"
+            className="heights mb-3"
           >
-            Okay, Go to all users
+            <Input placeholder="a138der4d-3544SD" />
+          </Form.Item>
+          <div className="d-flex justify-content-between mb-4 ">
+            <div>
+              <span className="auto-generate">
+                {LockIcon}
+                Autogenerate password
+              </span>
+            </div>
+            <div className="copy">
+              <Button icon={CopyIcon}>Copy</Button>
+            </div>
+          </div>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 mt-4 mb-lg-5 mb-4"
+            // onClick={}
+          >
+            Done, Thank you!
           </Button>
-        </div>
-      </div>
+        </Form>
+      </>
     );
   };
 
@@ -248,27 +206,24 @@ export default function AdminProfile() {
               <Button onClick={() => activate()}>Activate</Button>
             </div>
           )}
-          <Button className="change-pass">Change Password</Button>
+          <Button className="change-pass" onClick={() => setModalOpen(true)}>
+            Change Password
+          </Button>
         </div>
       </div>
 
       <Modal
         title={
-          <div className="text-center">
-            {confirmDeactivation ? 'Account Deactivated' : 'Deactivate account'}
-          </div>
+          !confirmed ? <div className="text-center">Change Password</div> : ''
         }
         centered
         open={modalOpen}
         onOk={() => setModalOpen(false)}
-        className="our-modal"
+        className={!confirmed ? 'our-modal' : 'our-modal add-page-modal'}
         footer={null}
         onCancel={() => cancelModal()}
       >
-        {isActive && !confirmDeactivation && <DeactivateModal />}
-        {!isActive && confirmDeactivation && <DeactivatedModal />}
-        {!isActive && !confirmDeactivation && <ActivateModal />}
-        {isActive && confirmDeactivation && <ActivatedModal />}
+        {!confirmed ? <DeactivateModal /> : <PasswordChanged />}
       </Modal>
     </div>
   );

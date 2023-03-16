@@ -1,25 +1,28 @@
 import Link from 'next/link';
 import React from 'react';
 import { back } from '../utility/svg';
-import { Tabs } from 'antd';
+import { Tabs, Button } from 'antd';
+import { useRouter } from 'next/router';
 
 import UserDevice from './UserDevice';
 import AdminProfile from './AdminProfile';
 import AdminMemberReport from './AdminMemberReport';
 
 export default function AdminDetails() {
+  const router = useRouter();
+
   return (
     <section>
       <div className="container">
         <div className="row justify-content-between details-header">
           <div className="col-auto go-back">
-            <Link href={''}>
+            <Button onClick={() => router.back()}>
               {back}
               <span>Go back</span>
-            </Link>
+            </Button>
           </div>
           <div className="col-auto">
-            <h4 className="_tabs">User Details</h4>
+            <h4 className="_tabs">Member Details</h4>
           </div>
           <div className="col-auto go-back d-none d-lg-block">
             <Link href={''} style={{ visibility: 'hidden' }}>

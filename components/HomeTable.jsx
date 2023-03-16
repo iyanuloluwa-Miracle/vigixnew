@@ -136,7 +136,7 @@ export default function HomeTable() {
   ];
   return (
     <>
-      <div className="container tabling">
+      <div className="container tabling pb-5 ">
         <div className="row justify-content-between mb-4">
           <div className="col-auto">
             <h4 className="our-h4">Recent Reports</h4>
@@ -147,7 +147,7 @@ export default function HomeTable() {
             </p>
           </div>
         </div>
-        <div className="table-wrapper ">
+        <div className="table-wrapper pb-5">
           <Table columns={columns} dataSource={data} />
         </div>
       </div>
