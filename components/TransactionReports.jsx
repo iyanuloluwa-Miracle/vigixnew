@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import Exportzone from './Exportzone';
+import ExportZone from './ExportZone';
 import {
   SearchIcon,
   FilterIcon,
@@ -253,7 +253,7 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <Exportzone h4="All Transaction Reports" />
+      <ExportZone h4="All Transaction Reports" />
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
           <div className="col-md-auto d-flex flex-wrap gap-3 me-lg-5">

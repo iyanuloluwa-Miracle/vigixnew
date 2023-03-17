@@ -11,7 +11,7 @@ import {
   DatePicker,
 } from 'antd';
 import React, { useState } from 'react';
-import Exportzone from './Exportzone';
+import ExportZone from './ExportZone';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 import Link from 'next/link';
 
@@ -268,7 +268,7 @@ export default function ManageUsers() {
 
   return (
     <section>
-      <Exportzone h4="All Users" />
+      <ExportZone h4="All Users" />
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
           <div className="col-md-auto d-flex flex-wrap gap-3 me-lg-5">
