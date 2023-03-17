@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import React from 'react';
 import { ExportCsv } from '../utility/svg';
 
-export default function Exportzone({ h4, add }) {
+function ExportZone({ h4 }) {
   return (
     <div className="container">
       <div className="row _tabs-wrapper">
@@ -10,14 +10,14 @@ export default function Exportzone({ h4, add }) {
           <h4 className="_tabs">{h4}</h4>
         </div>
         {/* {add == 'page-management' ? (
-          <div className="col-auto">
-            <Button icon={ExportCsv}>Add new page</Button>
-          </div>
-        ) : (
-          <div className="col-auto">
-            <Button icon={ExportCsv}>Export CSV</Button>
-          </div>
-        )} */}
+        <div className="col-auto">
+          <Button icon={ExportCsv}>Add new page</Button>
+        </div>
+      ) : (
+        <div className="col-auto">
+          <Button icon={ExportCsv}>Export CSV</Button>
+        </div>
+      )} */}
         <div className="col-auto">
           <Button icon={ExportCsv}>Export CSV</Button>
         </div>
@@ -25,3 +25,5 @@ export default function Exportzone({ h4, add }) {
     </div>
   );
 }
+
+export default ExportZone;

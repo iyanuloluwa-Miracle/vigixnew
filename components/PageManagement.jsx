@@ -21,6 +21,7 @@ export default function PageManagement() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAddPage, setModalAddPage] = useState(false);
+  const [editAction, setEditAction] = useState(true);
   const [value, setValue] = useState('all');
 
   const onSearch = value => console.log(value);
@@ -99,6 +100,11 @@ export default function PageManagement() {
       dataIndex: 'Status',
       key: 'Status',
     },
+    {
+      title: ' ',
+      dataIndex: 'edit',
+      key: 'edit',
+    },
   ];
 
   const data = [
@@ -115,7 +121,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -132,7 +147,18 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => {
+              setModalAddPage(true);
+            }}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -149,7 +175,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -166,7 +201,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -183,7 +227,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -200,7 +253,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -217,7 +279,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -234,7 +305,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -251,7 +331,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -268,7 +357,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -285,7 +383,16 @@ export default function PageManagement() {
       Status: (
         <div className="view-btn">
           <Switch defaultChecked onChange={checkChange} />
-          <Button className="view-profile">Edit</Button>
+        </div>
+      ),
+      edit: (
+        <div className="view-btn">
+          <Button
+            className="view-profile"
+            onClick={() => setModalAddPage(true)}
+          >
+            Edit
+          </Button>
         </div>
       ),
     },
@@ -316,7 +423,10 @@ export default function PageManagement() {
       <ExportAdd
         h4="Page Management"
         add="page-management"
-        openModal={() => setModalAddPage(true)}
+        openModal={() => {
+          setEditAction(false);
+          setModalAddPage(true);
+        }}
       />
 
       <div className="container search-filter">
@@ -516,12 +626,15 @@ export default function PageManagement() {
         centered
         open={modalAddPage}
         onOk={() => setModalAddPage(false)}
-        onCancel={() => setModalAddPage(false)}
+        onCancel={() => {
+          setModalAddPage(false);
+          setEditAction(true);
+        }}
         className="our-modal add-page-modal"
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Add New Page</h4>
+          <h4> {editAction ? 'Edit Page' : 'Add New Page'}</h4>
           <p>Fill the fields below to add a new page.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>

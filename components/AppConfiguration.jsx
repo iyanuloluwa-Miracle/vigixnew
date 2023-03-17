@@ -282,7 +282,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="sessionLogout"
                         className="heights"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter session logout time here" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -291,7 +291,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="loginFailed"
                         className="heights"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter session logout time here" />
                       </Form.Item>
                     </div>
                   </div>
@@ -303,7 +303,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="maxLogin"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter session logout time here" />
                       </Form.Item>
                     </div>
                     <div className="col" style={{ visibility: 'hidden' }}>
@@ -321,7 +321,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="emailID"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter ID here" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -330,7 +330,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="smsID"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter ID here" />
                       </Form.Item>
                     </div>
                   </div>

@@ -596,14 +596,14 @@ export default function AdminMembers() {
             />
           </Form.Item>
 
-          <Form.Item name="password" label="Password">
+          <Form.Item name="password" label="Password" className="heights">
             <Input placeholder="Enter password here" />
           </Form.Item>
 
           <Button
             htmlType="submit"
-            style={{ background: '#460102', color: '#FFF' }}
-            className="w-100 mt-4"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 mt-4 mb-4"
           >
             Add Page
           </Button>

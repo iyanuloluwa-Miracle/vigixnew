@@ -18,7 +18,7 @@ export default function NavBar() {
       <nav className="container">
         <div className="row justify-content-between gap-3 gap-lg-4">
           <div className="col-auto nav-logo">
-            <Link href="#" passHref>
+            <Link href="/" passHref>
               <Image
                 src={'/icons/VigilantAppLogo.svg'}
                 alt="logo"

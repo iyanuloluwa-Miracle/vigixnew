@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { back } from '../utility/svg';
-import { Tabs } from 'antd';
+import { Tabs, Button } from 'antd';
 import Profile from './Profile';
 import UsersReport from './UsersReport';
 import UserDevice from './UserDevice';
@@ -12,10 +12,10 @@ export default function UserDetails() {
       <div className="container">
         <div className="row justify-content-between details-header">
           <div className="col-auto go-back">
-            <Link href={''}>
+            <Button href={''}>
               {back}
               <span>Go back</span>
-            </Link>
+            </Button>
           </div>
           <div className="col-auto">
             <h4 className="_tabs">User Details</h4>

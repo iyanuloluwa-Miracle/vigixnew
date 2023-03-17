@@ -42,14 +42,19 @@ export default function ManageUsers() {
 
   const columns = [
     {
+      title: ' ',
+      dataIndex: 'checkbox',
+      key: 'checkbox',
+      render: text => (
+        <div>
+          <Checkbox onChange={onChange} />
+        </div>
+      ),
+    },
+    {
       title: 'Full Name',
       dataIndex: 'fullName',
       key: 'fullName',
-      render: text => (
-        <div>
-          <Checkbox onChange={onChange}>{text}</Checkbox>
-        </div>
-      ),
     },
     {
       title: 'Username',
@@ -58,13 +63,13 @@ export default function ManageUsers() {
       render: text => <span className="last-name">{text}</span>,
     },
     {
-      title: 'Email Adress',
+      title: 'Email Address',
       dataIndex: 'email',
       key: 'email',
     },
 
     {
-      title: 'Phone Number',
+      title: 'Mobile',
       dataIndex: 'phone',
       key: 'phone',
     },
@@ -389,7 +394,7 @@ export default function ManageUsers() {
               />
             </Space>
           </Form.Item>
-          <Form.Item
+          {/* <Form.Item
             name="rangeFilter"
             label="No of reports:"
             className="range-filter"
@@ -417,7 +422,7 @@ export default function ManageUsers() {
                 ]}
               />
             </Space>
-          </Form.Item>
+          </Form.Item> */}
 
           <Form.Item className="buttons">
             <Button

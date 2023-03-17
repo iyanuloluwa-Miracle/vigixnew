@@ -191,7 +191,7 @@ export default function BreadCrumb({ tab, location }) {
                         </li>
                         <li style={{ maxWidth: '100%' }}>
                           <Link href={'/admin-configuration'}>
-                            Web Configuration{' '}
+                            Admin Configuration{' '}
                           </Link>
                         </li>
                       </ul>

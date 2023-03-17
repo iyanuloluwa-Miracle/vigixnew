@@ -12,7 +12,7 @@ export default function configuration() {
         location={[{ link: '', location: 'App Configuration' }]}
       />
 
-      <AppConfiguration admin={false} heading={'Admin Configuration'} />
+      <AppConfiguration admin={false} heading={'App Configuration'} />
     </>
   );
 }
