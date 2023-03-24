@@ -17,8 +17,8 @@ export default function Welcome() {
           <span> Damilare</span>
         </h2>
         <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
+          Keeping careful watch for possible dangers or difficulties. Also
+          represent protection, safety, security and strength.{' '}
         </p>
       </div>
     </section>

@@ -49,10 +49,10 @@ export default function Login() {
                 priority={true}
               />
             </div>
-            <p>Fill the fields below to login to your admin dashboard.</p>
+            <p>Fill the fields to login.</p>
 
             <Form.Item
-              label="Usename / Email address"
+              label="Username / Email address"
               className={'username-input'}
               name="username"
               rules={[

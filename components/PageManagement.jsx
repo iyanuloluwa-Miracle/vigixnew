@@ -49,14 +49,19 @@ export default function PageManagement() {
 
   const columns = [
     {
+      title: ' ',
+      dataIndex: 'checkbox',
+      key: 'checkbox',
+      render: text => (
+        <div>
+          <Checkbox onChange={onChange} />
+        </div>
+      ),
+    },
+    {
       title: 'Title',
       dataIndex: 'Title',
       key: 'Title',
-      render: text => (
-        <div style={{ fontSize: '13px' }}>
-          <Checkbox onChange={onChange}>{text}</Checkbox>
-        </div>
-      ),
     },
     {
       title: 'Page URL',

@@ -43,14 +43,19 @@ export default function AdminMembers() {
 
   const columns = [
     {
-      title: <span className="ps-3 ms-lg-1">Username</span>,
-      dataIndex: 'username',
-      key: 'username',
+      title: ' ',
+      dataIndex: 'checkbox',
+      key: 'checkbox',
       render: text => (
         <div>
-          <Checkbox onChange={onChange}>{text}</Checkbox>
+          <Checkbox onChange={onChange} />
         </div>
       ),
+    },
+    {
+      title: 'Username',
+      dataIndex: 'username',
+      key: 'username',
     },
     {
       title: 'Company',

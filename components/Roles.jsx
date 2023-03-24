@@ -50,15 +50,16 @@ export default function Roles() {
 
   const columns = [
     {
-      title: <span className="ps-3 ms-lg-1">Role name</span>,
+      title: ' ',
+      dataIndex: 'checkbox',
+      key: 'checkbox',
+      render: text => <Checkbox onChange={onChange} />,
+    },
+    {
+      title: 'Role name',
       dataIndex: 'role',
       key: 'role',
       render: text => <div className="max-content">{text}</div>,
-      render: text => (
-        <div>
-          <Checkbox onChange={onChange}>{text}</Checkbox>
-        </div>
-      ),
     },
     {
       title: 'Company',

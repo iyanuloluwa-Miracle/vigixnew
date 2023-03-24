@@ -46,6 +46,8 @@ export default function UsersReport() {
     },
   ];
 
+  //change to view details and the button is suppose to open a modal
+
   const data = [
     {
       key: '1',

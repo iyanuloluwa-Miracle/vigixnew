@@ -10,10 +10,21 @@ import {
   Radio,
   DatePicker,
 } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ExportZone from './ExportZone';
-import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import {
+  SearchIcon,
+  FilterIcon,
+  DirLeft,
+  DirRight,
+  listIcon,
+} from '../utility/svg';
 import Link from 'next/link';
+import axios from 'axios';
+import NodeRSA from 'node-rsa';
+import CryptoJS from 'crypto-js';
+
+const key = new NodeRSA({ b: 256 });
 
 export default function ManageUsers() {
   const { Search } = Input;
@@ -21,6 +32,54 @@ export default function ManageUsers() {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [value, setValue] = useState('all');
+
+  // rsa start
+
+  const [plaintext, setPlaintext] = useState('');
+  const [encrypted, setEncrypted] = useState('');
+  const [decrypted, setDecrypted] = useState('');
+
+  const [key, setKey] = useState('');
+  const [iv, setIv] = useState('');
+
+  // const generateRandomNumber = () => {
+  //   const randomBytes = CryptoJS.lib.WordArray.random(16);
+  //   console.log(randomBytes);
+  //   const randomHex = randomBytes.toString(CryptoJS.enc.Hex);
+  //   console.log(randomHex);
+  //   const random16Digits = randomHex.substr(0, 16);
+  //   console.log(random16Digits);
+  //   setKey(random16Digits);
+  // };
+
+  const handleEncrypt = () => {
+    // const encryptedData = key.encrypt(plaintext, 'base64');
+    // setEncrypted(encryptedData);
+
+    console.log({ key: key, iv: iv });
+
+    const encrypted = CryptoJS.AES.encrypt(inputText, key, {
+      iv: iv,
+    }).toString();
+    setOutputText(encrypted);
+    console.log(encrypted);
+  };
+
+  const handleDecrypt = () => {
+    // const decryptedData = key.decrypt(encrypted, 'utf8');
+    // setDecrypted(decryptedData);
+
+    console.log({ key: key, iv: iv });
+    console.log(outputText);
+
+    const decrypted = CryptoJS.AES.decrypt(outputText, key, {
+      iv: iv,
+    }).toString(CryptoJS.enc.Utf8);
+    setOutputText(decrypted);
+    console.log(decrypted);
+  };
+
+  // rsa end
 
   const onSearch = value => console.log(value);
   const handleChange = value => {
@@ -206,7 +265,7 @@ export default function ManageUsers() {
       username: 'Omo',
       email: 'atandadray@gmail.com',
       phone: '+2348123456790',
-      dateRegistered: '12345678901234567890',
+      dateRegistered: 'May 8, 2021',
       report: 10,
       status: 'Active',
       views: (
@@ -222,7 +281,7 @@ export default function ManageUsers() {
       username: 'Ola',
       email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
-      dateRegistered: '12345678901234567890',
+      dateRegistered: 'May 8, 2021',
       report: 22,
       status: 'Inactive',
       views: (
@@ -238,7 +297,7 @@ export default function ManageUsers() {
       username: 'Finn',
       email: 'jessefinn@gmail.com',
       phone: '+2348123456790',
-      dateRegistered: '12345678901234567890',
+      dateRegistered: 'May 8, 2021',
       report: 42,
       status: 'Active',
       views: (
@@ -254,7 +313,7 @@ export default function ManageUsers() {
       username: 'Etta',
       email: 'henryetta@gmail.com',
       phone: '+2348123456790',
-      dateRegistered: '12345678901234567890',
+      dateRegistered: 'May 8, 2021',
       report: 2,
       status: 'Inactive',
       views: (
@@ -266,9 +325,72 @@ export default function ManageUsers() {
     },
   ];
 
+  const FetchJoke = async () => {
+    const url = 'https://icanhazdadjoke.com';
+
+    try {
+      const { data } = await axios(url, {
+        headers: { Accept: 'application/json' },
+      });
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
+  useEffect(() => {
+    FetchJoke();
+    // generateRandomNumber();
+    setKey(CryptoJS.lib.WordArray.random(16));
+    setIv(CryptoJS.lib.WordArray.random(16));
+  }, []);
+
+  const [inputText, setInputText] = useState('');
+  const [passphrase, setPassphrase] = useState('');
+  const [outputText, setOutputText] = useState('');
+
   return (
     <section>
       <ExportZone h4="All Users" />
+
+      {/* <div>
+        <input
+          type="text"
+          value={plaintext}
+          onChange={e => setPlaintext(e.target.value)}
+        />
+        <button onClick={handleEncrypt}>Encrypt</button>
+        <button onClick={handleDecrypt}>Decrypt</button>
+        <br />
+        <br />
+        <div>Encrypted: {encrypted}</div>
+        <div>Decrypted: {decrypted}</div>
+      </div> */}
+
+      <div>
+        <h1>AES Encryption/Decryption</h1>
+        <label htmlFor="input-text">Input Text:</label>
+        <input
+          id="input-text"
+          value={inputText}
+          onChange={e => setInputText(e.target.value)}
+        />
+        <label htmlFor="passphrase">Passphrase:</label>
+        <input
+          id="passphrase"
+          value={passphrase}
+          onChange={e => setPassphrase(e.target.value)}
+        />
+        <button onClick={handleEncrypt}>Encrypt</button>
+        <button onClick={handleDecrypt}>Decrypt</button>
+        <label htmlFor="output-text">Output Text:</label>
+        <input
+          id="output-text"
+          value={outputText}
+          onChange={e => setOutputText(e.target.value)}
+        />
+      </div>
+
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
           <div className="col-md-auto d-flex flex-wrap gap-3 me-lg-5">
@@ -311,16 +433,20 @@ export default function ManageUsers() {
                   onChange={handleChange}
                   options={[
                     {
-                      value: '10',
-                      label: '10 per page',
+                      value: '25',
+                      label: '25 per page',
+                    },
+                    {
+                      value: '50',
+                      label: '50 per page',
                     },
                     {
                       value: '100',
                       label: '100 per page',
                     },
                     {
-                      value: '1000',
-                      label: '1000 per page',
+                      value: '250',
+                      label: '250 per page',
                     },
                   ]}
                 />

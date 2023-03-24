@@ -424,3 +424,25 @@ export const CopyIcon = (
     />
   </svg>
 );
+
+export const listIcon = (
+  <svg
+    width="16"
+    height="16"
+    viewBox="0 0 16 16"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g clip-path="url(#clip0_1670_10274)">
+      <path
+        d="M12.7245 8.39799L4.19222 11.5363L6.26756 7.94173L12.7245 8.39799ZM15.8564 8.66663L2.00004 0.666625L4.88986 7.66131L1.19619 14.0589L15.8564 8.66663Z"
+        fill="black"
+      />
+    </g>
+    <defs>
+      <clipPath id="clip0_1670_10274">
+        <rect width="16" height="16" fill="white" />
+      </clipPath>
+    </defs>
+  </svg>
+);

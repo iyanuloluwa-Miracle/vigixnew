@@ -102,17 +102,17 @@ export const options2 = {
 };
 
 const labels = [
-  'Jan 2022',
-  'Feb 2022',
-  'Mar 2022',
-  'Apr  2022',
-  'May  2022',
-  'Jun 2022',
-  'Jul 2022',
-  'Aug 2022',
-  'Sep 2022',
-  'Nov 2022',
-  'Dec 2022',
+  'Jan',
+  'Feb',
+  'Mar',
+  'Apr',
+  'May',
+  'Jun',
+  'Jul',
+  'Aug',
+  'Sep',
+  'Nov',
+  'Dec',
 ];
 
 const labels2 = ['Awaiting confirmation', 'Approved', 'Declined', 'Failed'];
@@ -156,9 +156,8 @@ export default function HomeGraph() {
           <div className="col-lg line-wrapper line-chart">
             <h4 className="our-h4">Reports</h4>
             <p>
-              This is a graphical representation of reports that changes over a
-              period of time. It is a chart made by joining point using line
-              segments.{' '}
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.{' '}
             </p>
             {!isLoading ? (
               <Line data={data} options={options} />
@@ -177,21 +176,21 @@ export default function HomeGraph() {
             </div>
 
             <div className="legends">
-              <div className="d-flex" style={{ width: '60%' }}>
+              <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#F6C789' }} />
-                <p>Awaiting confirmation</p>
+                <p>view-profile</p>
               </div>
-              <div className="d-flex" style={{ width: '40%' }}>
+              <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#FFA500' }} />
-                <p>Approved</p>
+                <p>Total Blocked Users</p>
               </div>
-              <div className="d-flex" style={{ width: '60%' }}>
+              <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#FFC0CB' }} />
-                <p>Declined</p>
+                <p>Total Reports</p>
               </div>
-              <div className="d-flex" style={{ width: '40%' }}>
+              <div className="d-flex">
                 <div className="box" style={{ backgroundColor: '#F36D56' }} />
-                <p>Failed</p>
+                <p>Total recoveries</p>
               </div>
             </div>
           </div>
