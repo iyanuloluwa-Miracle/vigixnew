@@ -21,7 +21,7 @@ export default function UserDetails() {
             <h4 className="_tabs">User Details</h4>
           </div>
           <div className="col-auto go-back d-none d-lg-block">
-            <Link href={''} style={{ visibility: 'hidden' }}>
+            <Link href={'/'} style={{ visibility: 'hidden' }}>
               {back}
               <span>Go back</span>
             </Link>
