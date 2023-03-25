@@ -503,7 +503,7 @@ export default function PageManagement() {
               <Select
                 defaultValue="All"
                 style={{
-                  width: 270,
+                  width: 250,
                 }}
                 onChange={handleChange}
                 options={[
@@ -551,7 +551,7 @@ export default function PageManagement() {
               <Select
                 defaultValue="All"
                 style={{
-                  width: 270,
+                  width: 250,
                 }}
                 onChange={handleChange}
                 options={[
@@ -594,14 +594,14 @@ export default function PageManagement() {
                 onChange={onChange}
                 placeholder="From"
                 style={{
-                  width: 270,
+                  width: 250,
                 }}
               />
               <DatePicker
                 onChange={onChange}
                 placeholder="To"
                 style={{
-                  width: 270,
+                  width: 250,
                 }}
               />
             </Space>
@@ -733,8 +733,8 @@ export default function PageManagement() {
 
           <Button
             htmlType="submit"
-            style={{ background: '#460102', color: '#FFF' }}
-            className="w-100 mt-4"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 my-4"
           >
             Add Page
           </Button>
