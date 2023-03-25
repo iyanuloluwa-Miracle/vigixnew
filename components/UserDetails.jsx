@@ -1,12 +1,16 @@
 import Link from 'next/link';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { back } from '../utility/svg';
 import { Tabs, Button } from 'antd';
 import Profile from './Profile';
 import UsersReport from './UsersReport';
 import UserDevice from './UserDevice';
+import { useRouter } from 'next/router';
+import { OverlayContext } from './Layout';
 
 export default function UserDetails() {
+  const { defaultUserTab } = useContext(OverlayContext);
+
   return (
     <section>
       <div className="container">
@@ -28,15 +32,15 @@ export default function UserDetails() {
           </div>
         </div>
         <div className="user-details-content">
-          <Tabs defaultActiveKey="1">
-            <Tabs.TabPane tab="Profile" key="item-1">
+          <Tabs defaultActiveKey={defaultUserTab}>
+            <Tabs.TabPane tab="Profile" key="1">
               <Profile />
             </Tabs.TabPane>
 
-            <Tabs.TabPane tab="Reports" key="item-2">
+            <Tabs.TabPane tab="Reports" key="2">
               <UsersReport />
             </Tabs.TabPane>
-            <Tabs.TabPane tab="Device" key="item-3">
+            <Tabs.TabPane tab="Device" key="3">
               <UserDevice />
             </Tabs.TabPane>
           </Tabs>

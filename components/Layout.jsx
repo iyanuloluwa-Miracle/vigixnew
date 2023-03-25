@@ -25,6 +25,9 @@ export const OverlayContext = React.createContext({
 
   isActive: true,
   setIsActive: () => {},
+
+  defaultUserTab: '1',
+  setDefaultUSerTab: () => {},
 });
 
 const Layout = ({ children }) => {
@@ -35,6 +38,7 @@ const Layout = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
+  const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
 
   return (
@@ -52,7 +56,8 @@ const Layout = ({ children }) => {
         setLoggedIn,
         info,
         setInfo,
-
+        defaultUserTab,
+        setDefaultUSerTab,
         isActive,
         setIsActive,
       }}

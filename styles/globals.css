@@ -243,9 +243,20 @@ header .navbar-brand {
   height: 48px;
   display: flex;
   width: 100%;
+  padding: 0px;
 }
 .logout-icon .ant-dropdown-menu li {
   width: 100%;
+  padding: 0px !important;
+}
+.logout-icon .ant-dropdown-menu li div {
+  padding: 6px 12px;
+  height: 48px;
+  background: red;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #ffffff;
 }
 .ant-dropdown-trigger {
   cursor: pointer;
@@ -394,6 +405,7 @@ button:hover {
   padding: 20px 20px;
   display: inline-block;
   z-index: 5;
+  cursor: pointer;
 }
 
 .page-navigation .nav-item a:hover,
@@ -802,7 +814,7 @@ button:hover {
   margin: 40px auto 50px;
 }
 .our-modal.ant-modal {
-  width: 650px !important;
+  width: 600px !important;
   max-width: 100%;
 }
 .our-modal .ant-modal-content {
@@ -850,7 +862,7 @@ button:hover {
   height: auto;
 }
 .our-modal label {
-  font-family: 'dm-sans-medium';
+  /* font-family: 'dm-sans-medium'; */
 }
 .our-modal p {
   font-weight: 400;
@@ -867,6 +879,10 @@ button:hover {
   display: flex;
   justify-content: center;
 }
+.our-modal .ant-form-item.buttons {
+  margin-top: 2.5rem;
+}
+
 .our-modal .deactivate .buttons {
   width: 100%;
   display: flex;
@@ -1068,7 +1084,7 @@ button:hover {
     margin-bottom: 8px !important;
   }
   :where(.css-dev-only-do-not-override-j0nf2s).ant-form-item {
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -1361,4 +1377,25 @@ button:hover {
 .user-profile.admin-profile .buttons .change-pass {
   background: #ffffff;
   border: 1px solid #7d0003;
+}
+.logout-modal {
+  text-align: center;
+  padding-top: 1rem;
+}
+.logout-modal p {
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 24px;
+  font-family: 'aeonik-regular';
+  margin-top: 32px;
+  margin-bottom: 3rem;
+}
+.buttons.logout-buttons {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+}
+.buttons.logout-buttons .ant-btn {
+  padding: 0.9rem 2rem;
 }

@@ -1,18 +1,34 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavDropdown, LogoutIcon } from '../utility/svg';
 import SettingsVector from './Vectors/Settings';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
-import { Dropdown, Space } from 'antd';
+import { Dropdown, Space, Modal, Form, Button } from 'antd';
 
 export default function NavBar() {
+  const [logoutModal, setLogoutModal] = useState(false);
+
+  const onFinish = value => {
+    console.log(value);
+    setLogoutModal(false);
+  };
+
   const items = [
     {
       key: '1',
-      label: <Link href="/login">{LogoutIcon} Logout</Link>,
+      label: (
+        <div
+          onClick={() => {
+            setLogoutModal(true);
+          }}
+        >
+          {LogoutIcon} Logout
+        </div>
+      ),
     },
   ];
+
   return (
     <header>
       <nav className="container">
@@ -25,7 +41,6 @@ export default function NavBar() {
                 height={38}
                 width={220}
               />
-              {/* <button className="navbar-brand aeonik-bold"> {NavLogo}</button> */}
             </Link>
           </div>
 
@@ -40,7 +55,7 @@ export default function NavBar() {
               }}
               overlayClassName="logout-icon"
             >
-              <a onClick={e => e.preventDefault()}>
+              <a>
                 <Space>
                   <div className="dp">
                     <Image
@@ -55,7 +70,6 @@ export default function NavBar() {
                   </div>
                   <div>
                     <h5>Atanda Damilare</h5>
-                    {/* <h6>Product Designer</h6> */}
                   </div>
                   {NavDropdown}
                 </Space>
@@ -66,6 +80,45 @@ export default function NavBar() {
           </div>
         </div>
       </nav>
+
+      <Modal
+        title={<div className="text-center">Logout</div>}
+        centered
+        open={logoutModal}
+        onOk={() => setLogoutModal(false)}
+        onCancel={() => setLogoutModal(false)}
+        className="our-modal logout"
+        footer={null}
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <div className="logout-modal">
+            <Image
+              src={'/images/logout.png'}
+              alt="logout image"
+              width={140}
+              height={140}
+            />
+            <p>Are you sure you want to logout?</p>
+          </div>
+
+          <Form.Item className="buttons logout-buttons ">
+            <Button
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Logout
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setLogoutModal(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Cancel
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
     </header>
   );
 }

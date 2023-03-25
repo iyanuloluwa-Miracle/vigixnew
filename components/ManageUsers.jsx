@@ -10,7 +10,7 @@ import {
   Radio,
   DatePicker,
 } from 'antd';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import ExportZone from './ExportZone';
 import {
   SearchIcon,
@@ -23,10 +23,12 @@ import Link from 'next/link';
 import axios from 'axios';
 import NodeRSA from 'node-rsa';
 import CryptoJS from 'crypto-js';
+import { OverlayContext } from './Layout';
 
 const key = new NodeRSA({ b: 256 });
 
 export default function ManageUsers() {
+  const { setDefaultUSerTab } = useContext(OverlayContext);
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -172,10 +174,21 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/user-details'} passHref>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
             <Button className="view-profile">View profile</Button>
           </Link>
-          <Button className="view-report">View reports</Button>
+
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -190,8 +203,20 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link
+            href={'/user-details'}
+            onClick={() => setDefaultUSerTab('1')}
+            passHref
+          >
+            <Button className="view-profile">View profile</Button>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -206,8 +231,22 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -222,8 +261,23 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -238,8 +292,22 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -254,8 +322,22 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -270,8 +352,22 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -286,8 +382,22 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -302,8 +412,22 @@ export default function ManageUsers() {
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -318,8 +442,22 @@ export default function ManageUsers() {
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Button className="view-profile">View profile</Button>
-          <Button className="view-report">View reports</Button>
+          <Link href={'/user-details'} passHref>
+            <Link
+              href={'/user-details'}
+              onClick={() => setDefaultUSerTab('1')}
+              passHref
+            >
+              <Button className="view-profile">View profile</Button>
+            </Link>
+          </Link>
+          <Link
+            href={'/user-details?defaultpage=2'}
+            onClick={() => setDefaultUSerTab('2')}
+            passHref
+          >
+            <Button className="view-report">View reports</Button>
+          </Link>
         </div>
       ),
     },
@@ -367,7 +505,7 @@ export default function ManageUsers() {
         <div>Decrypted: {decrypted}</div>
       </div> */}
 
-      <div>
+      {/* <div>
         <h1>AES Encryption/Decryption</h1>
         <label htmlFor="input-text">Input Text:</label>
         <input
@@ -389,7 +527,7 @@ export default function ManageUsers() {
           value={outputText}
           onChange={e => setOutputText(e.target.value)}
         />
-      </div>
+      </div> */}
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
@@ -503,52 +641,23 @@ export default function ManageUsers() {
             label="Date joined:"
             className="date-filter"
           >
-            <Space direction="" className="flex-wrap">
+            <Space direction="" className="flex-wrap" style={{ width: '100%' }}>
               <DatePicker
                 onChange={onChange}
                 placeholder="From"
                 style={{
-                  width: 270,
+                  width: '250px',
                 }}
               />
               <DatePicker
                 onChange={onChange}
                 placeholder="To"
                 style={{
-                  width: 270,
+                  width: '250px',
                 }}
               />
             </Space>
           </Form.Item>
-          {/* <Form.Item
-            name="rangeFilter"
-            label="No of reports:"
-            className="range-filter"
-          >
-            <Space wrap>
-              <Select
-                defaultValue="10 per page'"
-                style={{
-                  width: 270,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: '10',
-                    label: '10 per page',
-                  },
-                  {
-                    value: '100',
-                    label: '100 per page',
-                  },
-                  {
-                    value: '1000',
-                    label: '1000 per page',
-                  },
-                ]}
-              />
-            </Space>
-          </Form.Item> */}
 
           <Form.Item className="buttons">
             <Button

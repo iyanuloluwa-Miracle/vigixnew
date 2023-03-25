@@ -166,8 +166,6 @@ export default function Profile() {
     setModalOpen(false);
   };
 
-  console.log(confirmDeactivation, isActive);
-
   return (
     <div className="row user-profile">
       <div className="col-sm-auto">
