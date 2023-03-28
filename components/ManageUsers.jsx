@@ -643,14 +643,14 @@ export default function ManageUsers() {
           >
             <Space direction="" className="flex-wrap" style={{ width: '100%' }}>
               <DatePicker
-                onChange={onChange}
+                onChange={() => onChange(e)}
                 placeholder="From"
                 style={{
                   width: '250px',
                 }}
               />
               <DatePicker
-                onChange={onChange}
+                onChange={() => onChange(e)}
                 placeholder="To"
                 style={{
                   width: '250px',

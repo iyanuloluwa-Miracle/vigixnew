@@ -23,6 +23,7 @@ export default function Roles() {
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAddPage, setModalAddPage] = useState(false);
+  const [modalEditPage, setModalEditPage] = useState(false);
   const [value, setValue] = useState('all');
 
   const onSearch = value => console.log(value);
@@ -127,7 +128,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -152,7 +158,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -178,7 +189,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -203,7 +219,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -229,7 +250,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -255,7 +281,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -331,7 +362,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -356,7 +392,12 @@ export default function Roles() {
           <Link href={'/role-access'} passHref>
             <Button className="view-profile">Fetch access </Button>
           </Link>
-          <Button className="view-report">Edit </Button>
+          <Button
+            className="view-report"
+            onClick={() => setModalEditPage(true)}
+          >
+            Edit{' '}
+          </Button>
         </div>
       ),
     },
@@ -590,6 +631,36 @@ export default function Roles() {
             className="w-100 mt-4"
           >
             Add Page
+          </Button>
+        </Form>
+      </Modal>
+
+      <Modal
+        centered
+        open={modalEditPage}
+        onOk={() => setModalEditPage(false)}
+        onCancel={() => setModalEditPage(false)}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Edit Role</h4>
+          <p>Fill the fields below to edit the role.</p>
+        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="roleName" label="Role Name" className="heights">
+            <Input placeholder="Enter role name here" />
+          </Form.Item>
+          <Form.Item name="Company" label="Company" className="heights">
+            <Input placeholder="Company" />
+          </Form.Item>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 mt-4"
+          >
+            Edit Page
           </Button>
         </Form>
       </Modal>

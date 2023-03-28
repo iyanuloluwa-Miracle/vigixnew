@@ -423,6 +423,7 @@ export default function PageManagement() {
       ),
     },
   ];
+
   return (
     <section className="page-management">
       <ExportAdd

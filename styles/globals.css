@@ -142,12 +142,17 @@ a {
   border-color: var(--primary);
   color: var(--primary);
 }
-:where(.css-dev-only-do-not-override-j0nf2s).ant-input:hover,
+
+.ant-input:hover,
 :where(.css-dev-only-do-not-override-j0nf2s).ant-select:not(
     .ant-select-disabled
   ):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover
   .ant-select-selector {
   border-color: var(--primary);
+}
+.ant-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(125, 0, 2, 0.1);
 }
 
 .ant-switch.ant-switch-checked {
@@ -268,6 +273,18 @@ button:hover {
   -ms-transform: scale(1.05); /* IE 9 */
   -webkit-transform: scale(1.05); /* Safari 3-8 */
   transform: scale(1.05);
+}
+.our-btn {
+  background: #7d0003;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  height: auto;
+}
+.our-btn span {
+  font-weight: 900;
+  font-size: 1rem;
+  line-height: 20px;
+  color: #ffffff;
 }
 
 .welcom__block {
@@ -955,11 +972,13 @@ button:hover {
 .our-modal.add-page-modal .ant-select-selector,
 .our-modal.add-page-modal .heights .ant-input,
 .configuration .heights .ant-input,
-.configuration .heights .ant-select-selector {
+.configuration .heights .ant-select-selector,
+.our-modal.add-page-modal .heights .ant-picker {
   height: 48px;
   display: flex;
   align-items: center;
 }
+
 .configuration .inner {
   max-width: 850px;
   width: 100%;
@@ -1125,11 +1144,12 @@ button:hover {
 .page-navigation .nav-item .parent .children ul li:before {
   content: '';
   position: absolute;
-  top: 4px;
+  top: 7px;
   left: 12px;
-  width: 16px;
-  height: 16px;
+  width: 13px;
+  height: 13px;
   background-image: url('/icons/listIcon.svg');
+  background-size: 13px 13px;
 }
 
 .page-navigation .nav-item .parent:hover .children {
@@ -1398,4 +1418,52 @@ button:hover {
 }
 .buttons.logout-buttons .ant-btn {
   padding: 0.9rem 2rem;
+}
+
+.active-status {
+  display: flex;
+  justify-content: center;
+}
+.active-status p {
+  font-weight: 500;
+  font-size: 1rem;
+  line-height: 20px;
+  margin-top: 1.5rem;
+}
+.online {
+  color: #009600;
+}
+.offline {
+  color: var(--primary);
+}
+.user-profile :where(.deactivate, .activate) .edit-user.ant-btn {
+  background: var(--primary);
+}
+.user-profile :where(.deactivate, .activate) .edit-user.ant-btn span {
+  color: var(--white);
+}
+.user-profile :where(.deactivate, .activate) {
+  gap: 1.5rem !important;
+}
+.role-access-page .role-access-heading {
+  margin-bottom: 1.25rem;
+}
+.role-access-page
+  .configuration
+  .ant-collapse
+  .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding: 1.75rem 2.5rem 2rem;
+}
+.role-access-page
+  .configuration
+  .ant-collapse
+  .multiple
+  .ant-collapse-content
+  > .ant-collapse-content-box {
+  padding: 0px;
+}
+.role-access-page .multiple .singleton {
+  padding: 1.75rem 2.5rem 2rem;
+  border-bottom: 1px solid #f5f5f5;
 }

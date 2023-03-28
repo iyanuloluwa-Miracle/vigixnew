@@ -34,7 +34,7 @@ export default function UserDetails() {
         <div className="user-details-content">
           <Tabs defaultActiveKey={defaultUserTab}>
             <Tabs.TabPane tab="Profile" key="1">
-              <Profile />
+              <Profile activeStatus={'online'} />
             </Tabs.TabPane>
 
             <Tabs.TabPane tab="Reports" key="2">
