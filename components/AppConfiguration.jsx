@@ -371,6 +371,11 @@ export default function AppConfiguration({ admin, heading }) {
                 </Panel>
               )}
             </Collapse>
+            <Form.Item className="mt-5 pt-lg-4 d-flex justify-content-center">
+              <Button htmlType="submit" className="our-btn">
+                Save Changes
+              </Button>
+            </Form.Item>
           </Form>
         </div>
       </div>
