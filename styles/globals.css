@@ -280,6 +280,14 @@ button:hover {
   padding: 1rem 2rem;
   height: auto;
 }
+.small-btn {
+  padding: 6px 0.8rem;
+}
+.small-btn span {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 20px;
+}
 .our-btn span {
   font-weight: 900;
   font-size: 1rem;
@@ -470,7 +478,7 @@ button:hover {
 .table-wrapper .ant-table-thead tr th::before {
   display: none;
 }
-.table-wrapper .ant-table-tbody tr td .Pending {
+.table-wrapper .ant-table-tbody tr td .pending {
   color: #ff7700;
   background: #fff6ee;
 }
@@ -756,6 +764,18 @@ button:hover {
 .filter-btn-wrapper .ant-btn svg {
   margin-right: 10px;
 }
+.filter-btn-wrapper .small-btn svg {
+  width: 12px;
+  height: 15px;
+}
+.filter-btn-wrapper .small-btn {
+  height: auto;
+  padding: 8px 1rem 8px 1.2rem;
+  width: auto;
+}
+.filter-btn-wrapper .small-btn span {
+  font-size: 0.9rem;
+}
 
 .dir {
   display: flex;
@@ -830,9 +850,17 @@ button:hover {
 .table-wrapper .our-pagination > div {
   margin: 40px auto 50px;
 }
+
+.our-modal {
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+}
 .our-modal.ant-modal {
   width: 600px !important;
   max-width: 100%;
+}
+.our-modal.filter-transaction {
+  width: 650px !important;
 }
 .our-modal .ant-modal-content {
   padding: 0px;
@@ -931,6 +959,8 @@ button:hover {
   font-size: 0.9rem;
   line-height: 23px;
   color: #757575;
+  font-family: 'avenir-light';
+  /* font-family: 'aeonik-light'; */
 }
 .our-modal .report-details-modal p {
   text-align: left;
@@ -942,6 +972,14 @@ button:hover {
 }
 .our-modal .report-details-modal .status.pending {
   color: #ff7700;
+}
+.our-modal .report-details-modal .notes {
+  margin-top: 2rem;
+}
+.our-modal .report-details-modal .notes p {
+  font-weight: 500;
+  font-size: 0.875rem;
+  line-height: 27px;
 }
 
 .our-modal .wrap-check-group .ant-checkbox-group {
@@ -1031,9 +1069,7 @@ button:hover {
   line-height: 19px;
   font-family: 'dm-sans-regular';
 }
-.our-modal.add-page-modal .ant-form-item {
-  /* margin-bottom: 1.5rem; */
-}
+
 .our-modal.add-page-modal .copy .ant-btn {
   padding: 0.5rem 1rem;
   font-size: 11.52px;
@@ -1263,8 +1299,6 @@ button:hover {
   width: 100%;
 }
 
-.user-profile .activate .ant-btn {
-}
 .user-profile .deactivate .ant-btn {
   margin-top: 24px;
   background: var(--white);
@@ -1295,7 +1329,8 @@ button:hover {
 }
 .user-profile .det h5 {
   color: #757575;
-  width: 170px;
+  width: 195px;
+  max-width: 100%;
   font-weight: 500;
 }
 .user-profile .det div {
@@ -1323,14 +1358,21 @@ button:hover {
   margin-bottom: 160px;
   padding-left: 3rem;
 }
-.user-device .device .ant-btn {
+.user-device .device-wrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+.user-device .device-wrap > div {
+  margin-bottom: 4rem;
+}
+.user-device .ant-btn {
   margin-top: 1.5rem;
   background: #7d0003;
   border-radius: 4px;
   padding: 1rem 2rem;
   height: 57px;
 }
-.user-device .device .ant-btn span {
+.user-device .ant-btn span {
   color: var(--white);
   font-weight: 900;
   font-size: 16px;
@@ -1341,6 +1383,8 @@ button:hover {
   font-size: 14px;
   line-height: 19px;
   color: #757575;
+  margin-bottom: 8px;
+  font-family: 'aeonik-light';
 }
 .user-device p {
   font-weight: 500;
@@ -1357,7 +1401,7 @@ button:hover {
     padding-left: 40px;
   }
   .user-profile .det div {
-    gap: 5rem;
+    gap: 4rem;
   }
   .user-device .our-h4 {
     margin-bottom: 3rem;
@@ -1371,6 +1415,7 @@ button:hover {
     padding-left: 6rem;
   }
 }
+
 .user-profile.admin-profile .buttons {
   display: flex;
   gap: 24px;
@@ -1466,4 +1511,10 @@ button:hover {
 .role-access-page .multiple .singleton {
   padding: 1.75rem 2.5rem 2rem;
   border-bottom: 1px solid #f5f5f5;
+}
+
+@media screen and (max-width: 768px) {
+  .user-device .device-wrap > div {
+    margin-bottom: 2.5rem;
+  }
 }

@@ -115,7 +115,14 @@ const labels = [
   'Dec 2022',
 ];
 
-const labels2 = ['Awaiting confirmation', 'Approved', 'Declined', 'Failed'];
+const labels2 = [
+  'Awaiting confirmation',
+  'Approved',
+  'Declined',
+  'Failed',
+  'Initiated',
+  'Processed',
+];
 
 export const data = {
   labels,
@@ -134,9 +141,23 @@ export const data2 = {
   datasets: [
     {
       label: 'Dataset 1',
-      data: ['55', '25', '10', '10'],
-      borderColor: ['#F6C789', '#FFA500', '#FFC0CB', '#F36D56'],
-      backgroundColor: ['#F6C789', '#FFA500', '#FFC0CB', '#F36D56'],
+      data: ['35', '15', '10', '20', '10', '15'],
+      borderColor: [
+        '#F6C789',
+        '#009600',
+        '#FF2000',
+        '#7D0003',
+        '#967500',
+        '#9747FF',
+      ],
+      backgroundColor: [
+        '#F6C789',
+        '#009600',
+        '#FF2000',
+        '#7D0003',
+        '#967500',
+        '#9747FF',
+      ],
       // backgroundColor: ['#F6C789', '#A8C61B', '#6412CE', '#006CB6'],
     },
   ],
@@ -178,20 +199,28 @@ export default function HomeGraph() {
 
             <div className="legends">
               <div className="d-flex" style={{ width: '60%' }}>
-                <div className="box" style={{ backgroundColor: '#F6C789' }} />
+                <div className="box" style={{ backgroundColor: '#FF7700' }} />
                 <p>Awaiting confirmation</p>
               </div>
               <div className="d-flex" style={{ width: '40%' }}>
-                <div className="box" style={{ backgroundColor: '#FFA500' }} />
+                <div className="box" style={{ backgroundColor: '#009600' }} />
                 <p>Approved</p>
               </div>
               <div className="d-flex" style={{ width: '60%' }}>
-                <div className="box" style={{ backgroundColor: '#FFC0CB' }} />
+                <div className="box" style={{ backgroundColor: '#FF2000' }} />
                 <p>Declined</p>
               </div>
               <div className="d-flex" style={{ width: '40%' }}>
-                <div className="box" style={{ backgroundColor: '#F36D56' }} />
+                <div className="box" style={{ backgroundColor: '#7D0003' }} />
                 <p>Failed</p>
+              </div>
+              <div className="d-flex" style={{ width: '60%' }}>
+                <div className="box" style={{ backgroundColor: '#967500' }} />
+                <p>Initiated</p>
+              </div>
+              <div className="d-flex" style={{ width: '40%' }}>
+                <div className="box" style={{ backgroundColor: '#9747FF' }} />
+                <p>Processed</p>
               </div>
             </div>
           </div>

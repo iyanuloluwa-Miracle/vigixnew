@@ -7,6 +7,7 @@ import UsersReport from './UsersReport';
 import UserDevice from './UserDevice';
 import { useRouter } from 'next/router';
 import { OverlayContext } from './Layout';
+import UserBVN from './UserBVN';
 
 export default function UserDetails() {
   const { defaultUserTab } = useContext(OverlayContext);
@@ -36,12 +37,14 @@ export default function UserDetails() {
             <Tabs.TabPane tab="Profile" key="1">
               <Profile activeStatus={'online'} />
             </Tabs.TabPane>
-
             <Tabs.TabPane tab="Reports" key="2">
               <UsersReport />
             </Tabs.TabPane>
             <Tabs.TabPane tab="Device" key="3">
               <UserDevice />
+            </Tabs.TabPane>
+            <Tabs.TabPane tab="BVN Details" key="4">
+              <UserBVN />
             </Tabs.TabPane>
           </Tabs>
         </div>

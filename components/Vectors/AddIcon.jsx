@@ -13,9 +13,9 @@ export default function AddIcon(props) {
       <path
         d="M12 6V18M18 12H6"
         stroke={props.color || 'white'}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

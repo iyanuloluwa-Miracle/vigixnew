@@ -34,7 +34,13 @@ export default function HomeTable() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      render: text => <span className={`status ${text}`}>{text}</span>,
+      render: text => (
+        <span
+          className={text == 'Awaiting Confirmation' ? 'pending status' : ''}
+        >
+          {text}
+        </span>
+      ),
     },
   ];
 
@@ -46,7 +52,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '2',
@@ -55,7 +61,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '3',
@@ -64,7 +70,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '4',
@@ -73,7 +79,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
       address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
     },
@@ -84,7 +90,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '6',
@@ -93,7 +99,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '7',
@@ -102,7 +108,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
       address: 'New York No. 1 Lake Park',
       tags: ['nice', 'developer'],
     },
@@ -113,7 +119,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '9',
@@ -122,7 +128,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '10',
@@ -131,7 +137,7 @@ export default function HomeTable() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
   ];
   return (

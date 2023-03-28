@@ -346,7 +346,7 @@ export default function TransactionReports() {
         centered
         open={modalReport}
         onOk={() => setModalReport(false)}
-        className="our-modal"
+        className="our-modal report-modal"
         footer={null}
         onCancel={() => setModalReport(false)}
       >
@@ -429,16 +429,11 @@ export default function TransactionReports() {
         open={modalOpen}
         onOk={() => setModalOpen(false)}
         onCancel={() => setModalOpen(false)}
-        className="our-modal"
+        className="our-modal filter-transaction"
         footer={null}
       >
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
-            {/* <Checkbox.Group
-              options={options}
-              defaultValue={['Pear']}
-              onChange={onChanges}
-            /> */}
             <>
               <Checkbox
                 indeterminate={indeterminate}
