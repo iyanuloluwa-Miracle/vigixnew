@@ -136,6 +136,60 @@ a {
 
 } */
 
+/* animation  */
+
+@keyframes righttoleft {
+  0% {
+    transform: translateX(-10px); /* Start from left */
+  }
+  50% {
+    transform: translateX(0px); /* Move to right */
+  }
+  100% {
+    transform: translateX(-10px); /* Move back to left */
+  }
+}
+
+/* Apply the animation to the element */
+.left-to-right {
+  animation-name: righttoleft;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; /* Move back and forth */
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Apply the animation to an element */
+.slide-in {
+  animation: slide-in 1s ease-out;
+}
+
+@keyframes dropdown-animation {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dropdown-anima {
+  display: block;
+  animation: dropdown-animation 0.3s ease forwards;
+}
+
+/* animations end  */
+
 :where(.css-dev-only-do-not-override-j0nf2s).ant-btn-default:not(
     :disabled
   ):hover {
@@ -1220,6 +1274,7 @@ button:hover {
 
 .page-navigation .nav-item .parent:hover .children {
   visibility: visible;
+  animation: dropdown-animation 0.3s ease forwards;
 }
 
 .page-navigation .nav-item .parent .children a {
@@ -1571,6 +1626,7 @@ button:hover {
 .hide-button {
   display: none;
 }
+
 /* animation  */
 
 @keyframes righttoleft {
@@ -1591,6 +1647,20 @@ button:hover {
   animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-direction: alternate; /* Move back and forth */
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+/* Apply the animation to an element */
+.slide-in {
+  animation: slide-in 1s ease-out;
 }
 
 /* animations end  */
