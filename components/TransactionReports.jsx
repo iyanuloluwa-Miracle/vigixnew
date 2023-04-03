@@ -27,6 +27,7 @@ export default function TransactionReports() {
   const { Search } = Input;
   const [modalOpen, setModalOpen] = useState(false);
   const [modalReport, setModalReport] = useState(false);
+  const [modalsignature, setModalSignature] = useState(false);
   const [value, setValue] = useState('all');
 
   const defaultCheckedList = ['Pending'];
@@ -83,7 +84,14 @@ export default function TransactionReports() {
     },
   ];
 
-  const plainOptions = ['Pending', 'On Tracking', 'Recovery', 'Completed'];
+  const plainOptions = [
+    'Approved',
+    'Awaiting Confirmation',
+    'Declined',
+    'Failed',
+    'Processed',
+    'Initiated',
+  ];
 
   const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
 
@@ -118,16 +126,10 @@ export default function TransactionReports() {
       key: 'TrackingID',
     },
     {
-      title: 'Reported by',
-      dataIndex: 'reportedby',
-      key: 'reportedby',
+      title: 'Username',
+      dataIndex: 'Username',
+      key: 'Username',
     },
-    {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
-
     {
       title: 'Transaction type',
       dataIndex: 'transactionType',
@@ -137,6 +139,11 @@ export default function TransactionReports() {
       title: 'Transaction reference',
       dataIndex: 'transactionReference',
       key: 'transactionReference',
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: 'Status',
@@ -153,6 +160,13 @@ export default function TransactionReports() {
           <Button className="view-profile" onClick={() => setModalReport(true)}>
             View details
           </Button>
+
+          <Button
+            className="view-report"
+            onClick={() => setModalSignature(true)}
+          >
+            Signatures
+          </Button>
         </div>
       ),
     },
@@ -162,92 +176,92 @@ export default function TransactionReports() {
     {
       key: '1',
       TrackingID: 'ABC-1234',
-      reportedby: 'Specter Omo',
+      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '2',
       TrackingID: 'ABC-1234',
-      reportedby: 'Atanda Damilare',
+      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
-      status: 'On Tracking',
+      status: 'Failed',
     },
     {
       key: '3',
       TrackingID: 'ABC-1234',
-      reportedby: 'Jide Ola',
+      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
-      status: 'Recovery',
+      status: 'Processed',
     },
     {
       key: '4',
       TrackingID: 'ABC-1234',
-      reportedby: 'Henry Etta',
+      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Completed',
+      status: 'Approved',
     },
     {
       key: '5',
       TrackingID: 'ABC-1234',
-      reportedby: 'Jesse Finn',
+      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Completed',
+      status: 'Declined',
     },
     {
       key: '6',
       TrackingID: 'ABC-1234',
-      reportedby: 'Specter Omo',
+      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Initiated',
     },
     {
       key: '7',
       TrackingID: 'ABC-1234',
-      reportedby: 'Atanda Damilare',
+      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
-      status: 'On Tracking',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '8',
       TrackingID: 'ABC-1234',
-      reportedby: 'Jide Ola',
+      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
-      status: 'Recovery',
+      status: 'Failed',
     },
     {
       key: '9',
       TrackingID: 'ABC-1234',
-      reportedby: 'Henry Etta',
+      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Completed',
+      status: 'Processed',
     },
     {
       key: '10',
       TrackingID: 'ABC-1234',
-      reportedby: 'Jesse Finn',
+      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Completed',
+      status: 'Approved',
     },
   ];
 
@@ -424,6 +438,98 @@ export default function TransactionReports() {
       </Modal>
 
       <Modal
+        title={<div className="text-center">Signatures</div>}
+        centered
+        open={modalsignature}
+        onOk={() => setModalSignature(false)}
+        className="our-modal report-modal"
+        footer={null}
+        onCancel={() => setModalSignature(false)}
+      >
+        <div className="report-details-modal border-bottom ">
+          <h4 className="mb-4">Processing Details</h4>
+          <div className="row">
+            <div className="col-sm-6 col-6">
+              <h6>Processing Details</h6>
+              <p>Atanda Specter</p>
+            </div>
+            <div className="col-sm-6 col-6">
+              <h6>
+                Process date <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>Jan 11th, 2022 15:20</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <h6>
+                Report date to Process Interval{' '}
+                <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+            </div>
+          </div>
+
+          <h4 className="mb-4">Initiation Details</h4>
+
+          <div className="row">
+            <div className="col-sm-6 col-6">
+              <h6>Initiated by</h6>
+              <p>Atanda Specter</p>
+            </div>
+            <div className="col-sm-6 col-6">
+              <h6>
+                Initiate date <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>Jan 11th, 2022 15:20</p>
+            </div>
+          </div>
+
+          <div className="row ">
+            <div className="col-12">
+              <h6>
+                Process date to Initaite Interval{' '}
+                <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>Tracking ID </h6>
+              <p>ABC-12345</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>
+                Report date <span>{CalenderIcon}</span>{' '}
+              </h6>
+              <p>Jan 11th, 2022</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <h6>Reported by</h6>
+              <p className="our-primary-color text-decoration-underline">
+                Atanda Damilare
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="report-details-modal pb-4">
+          <div className="row">
+            <div>
+              <h4 className="bold">Tracking Details</h4>
+            </div>
+          </div>
+          <div className="row">
+            <h6>Report status</h6>
+            <p className="status pending">• Pending</p>
+          </div>
+        </div>
+      </Modal>
+
+      <Modal
         title="Filter by:"
         centered
         open={modalOpen}
@@ -435,14 +541,16 @@ export default function TransactionReports() {
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
             <>
-              <Checkbox
-                indeterminate={indeterminate}
-                onChange={onCheckAllChange}
-                checked={checkAll}
-                className="me-3"
-              >
-                All
-              </Checkbox>
+              <div>
+                <Checkbox
+                  indeterminate={indeterminate}
+                  onChange={onCheckAllChange}
+                  checked={checkAll}
+                  className="me-3"
+                >
+                  All
+                </Checkbox>
+              </div>
 
               <Checkbox.Group
                 options={plainOptions}
