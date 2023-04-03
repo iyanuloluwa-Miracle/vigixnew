@@ -535,7 +535,7 @@ export default function ManageUsers() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by name..."
+                placeholder="Search by username, email address, phone number"
                 onSearch={onSearch}
                 className="searching"
               />
@@ -571,20 +571,24 @@ export default function ManageUsers() {
                   onChange={handleChange}
                   options={[
                     {
+                      value: '10 per page',
+                      label: '10 ',
+                    },
+                    {
                       value: '25',
-                      label: '25 per page',
+                      label: '25 ',
                     },
                     {
                       value: '50',
-                      label: '50 per page',
+                      label: '50 ',
                     },
                     {
                       value: '100',
-                      label: '100 per page',
+                      label: '100 ',
                     },
                     {
                       value: '250',
-                      label: '250 per page',
+                      label: '250 ',
                     },
                   ]}
                 />
@@ -638,7 +642,7 @@ export default function ManageUsers() {
           </Form.Item>
           <Form.Item
             name="rangeFilter"
-            label="Date joined:"
+            label="Date range:"
             className="date-filter"
           >
             <Space direction="" className="flex-wrap" style={{ width: '100%' }}>

@@ -1,8 +1,30 @@
-import React from 'react';
-import { shevronRight } from '../utility/svg';
+import React, { useState, useEffect } from 'react';
+import { shevronRight, ArrowUp } from '../utility/svg';
 import { Space, Table, Tag } from 'antd';
+import ScrollToTop from './Vectors/ScrollToTop';
 
 export default function HomeTable() {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset;
+
+      if (scrollPosition > 500) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const columns = [
     {
       title: 'Tracking ID',
@@ -156,6 +178,17 @@ export default function HomeTable() {
         <div className="table-wrapper pb-5">
           <Table columns={columns} dataSource={data} />
         </div>
+        <button
+          onClick={handleClick}
+          className={
+            showButton
+              ? 'show-button scroll-to-top'
+              : 'hide-button scroll-to-top'
+          }
+        >
+          <div>{ArrowUp}</div>
+          {/* <ScrollToTop /> */}
+        </button>
       </div>
     </>
   );

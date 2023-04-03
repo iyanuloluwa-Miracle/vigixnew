@@ -129,7 +129,7 @@ export const data = {
   datasets: [
     {
       label: 'users',
-      data: labels.map(() => faker.datatype.number({ min: 1, max: 100 })),
+      data: labels.map(() => faker.datatype.number({ min: 1, max: 1000000 })),
       borderColor: '#ED9013',
       backgroundColor: '#ED9013',
     },

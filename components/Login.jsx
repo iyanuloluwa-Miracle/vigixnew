@@ -1,19 +1,26 @@
 import Image from 'next/image';
-import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { ArrowRight } from '../utility/svg';
 import { useRouter } from 'next/router';
 
 export default function Login() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   const onFinish = values => {
+    setLoading(true);
     console.log('Success:', values);
-    router.push('/');
+    setTimeout(() => {
+      setLoading(false);
+      router.push('/');
+    }, 1500);
   };
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
+
+  const styling = {};
 
   return (
     <div className="Login-page container-fluid">
@@ -80,7 +87,11 @@ export default function Login() {
 
             <Form.Item className="button-wrapper">
               <Button type="primary" htmlType="submit">
-                Login {ArrowRight}
+                {loading ? (
+                  <Spin className="white-spinner" style={{ color: 'white' }} />
+                ) : (
+                  <>Login {ArrowRight}</>
+                )}
               </Button>
             </Form.Item>
           </Form>

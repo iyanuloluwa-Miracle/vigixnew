@@ -8,7 +8,7 @@ export default function Welcome() {
           <div className="col-auto">
             <span>VIGILANT / PRODUCT DESIGNER</span>
           </div>
-          <div className="col-auto">
+          <div className="col-auto left-to-right">
             <span>Thursday, February 2 2023</span>
           </div>
         </div>

@@ -102,13 +102,16 @@ export default function NavBar() {
           </div>
 
           <Form.Item className="buttons logout-buttons ">
-            <Button
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Logout
-            </Button>
+            <Link href="/login">
+              <Button
+                htmlType="submit"
+                className="me-3"
+                style={{ background: '#7D0003', color: '#fff' }}
+              >
+                Logout
+              </Button>
+            </Link>
+
             <Button
               type="primary"
               onClick={() => setLogoutModal(false)}

@@ -51,10 +51,7 @@ export default function Profile({ activeStatus }) {
             style={{ maxWidth: '100%' }}
           />
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p>Are you sure you want to deactivate this user?</p>
 
         <div className="buttons">
           <Button className="cont" onClick={() => confirmDeactivate()}>
@@ -111,10 +108,7 @@ export default function Profile({ activeStatus }) {
             style={{ maxWidth: '100%' }}
           />
         </div>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua.
-        </p>
+        <p>Are you sure you want to activate this user?</p>
 
         <div className="buttons">
           <Button
@@ -224,10 +218,6 @@ export default function Profile({ activeStatus }) {
           <p>13</p>
         </div>
         <div>
-          <h5>Last seen:</h5>
-          <p>June 17, 2022 21:43:28</p>
-        </div>
-        <div>
           <h5>Login Count:</h5>
           <p>3</p>
         </div>
@@ -298,11 +288,11 @@ export default function Profile({ activeStatus }) {
         </div>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="fullName" label="Full name" className="heights">
-            <Input placeholder="full name" />
+            <Input placeholder="Full name" />
           </Form.Item>
 
           <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email here" type="email" />
+            <Input placeholder="Enter email" type="email" />
           </Form.Item>
 
           <Form.Item
@@ -327,13 +317,6 @@ export default function Profile({ activeStatus }) {
             className="heights"
           >
             <Input placeholder="4" type="number" />
-          </Form.Item>
-
-          <Form.Item name="pageTitle" label="Page Title" className="heights">
-            <Input placeholder="Enter page title" />
-          </Form.Item>
-          <Form.Item name="URL" label="URL" className="heights">
-            <Input placeholder="Enter page URL" />
           </Form.Item>
 
           <Form.Item

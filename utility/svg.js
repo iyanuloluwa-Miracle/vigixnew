@@ -211,6 +211,23 @@ export const ArrowRight = (
     />
   </svg>
 );
+export const ArrowUp = (
+  <svg
+    width="18"
+    height="20"
+    viewBox="0 0 18 20"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M9 18.75V1.25M9 1.25L1.125 9.125M9 1.25L16.875 9.125"
+      stroke="white"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+);
 
 export const ExportCsv = (
   <svg

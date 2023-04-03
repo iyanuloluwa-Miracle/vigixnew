@@ -490,6 +490,30 @@ button:hover {
   color: #9747ff;
   background: rgba(151, 71, 255, 0.05);
 }
+.status.Awaiting.Confirmation {
+  color: #ff7700;
+  background: #fff6ee;
+}
+.status.Failed {
+  color: #7d0003;
+  background: rgba(125, 0, 3, 0.05);
+}
+.status.Processed {
+  color: #9747ff;
+  background: rgba(151, 71, 255, 0.05);
+}
+.status.Approved {
+  color: #009600;
+  background: rgba(0, 150, 0, 0.05);
+}
+.status.Declined {
+  color: #ff2000;
+  background: rgba(255, 32, 0, 0.05);
+}
+.status.Initiated {
+  color: #967500;
+  background: rgba(150, 117, 0, 0.05);
+}
 .table-wrapper .ant-table-tbody tr td .Completed {
   color: #009600;
   background: rgba(0, 150, 0, 0.05);
@@ -876,6 +900,11 @@ button:hover {
   line-height: 31px;
   color: var(--primary);
 }
+@media screen and (max-width: 1300px) {
+  .our-modal .ant-modal-title {
+    font-size: 20px;
+  }
+}
 .our-modal .ant-modal-content .ant-modal-header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid #f5f5f5;
@@ -942,7 +971,7 @@ button:hover {
 }
 .our-modal .deactivate .buttons .acti {
   color: var(--white);
-  background-color: #009600;
+  background-color: var(--primary);
 }
 .our-modal .report-details-modal {
   margin-bottom: 1.5rem;
@@ -973,6 +1002,7 @@ button:hover {
 .our-modal .report-details-modal .status.pending {
   color: #ff7700;
 }
+
 .our-modal .report-details-modal .notes {
   margin-top: 2rem;
 }
@@ -1518,3 +1548,49 @@ button:hover {
     margin-bottom: 2.5rem;
   }
 }
+
+.white-spinner.ant-spin .ant-spin-dot-item {
+  background-color: #fff;
+}
+.scroll-to-top {
+  position: fixed;
+  bottom: 15%;
+  right: 5%;
+  border: none;
+}
+.scroll-to-top > div {
+  width: 56px;
+  height: 56px;
+  background: var(--primary);
+  filter: drop-shadow(0px 4px 16px #b7b7b7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hide-button {
+  display: none;
+}
+/* animation  */
+
+@keyframes righttoleft {
+  0% {
+    transform: translateX(-10px); /* Start from left */
+  }
+  50% {
+    transform: translateX(0px); /* Move to right */
+  }
+  100% {
+    transform: translateX(-10px); /* Move back to left */
+  }
+}
+
+/* Apply the animation to the element */
+.left-to-right {
+  animation-name: righttoleft;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate; /* Move back and forth */
+}
+
+/* animations end  */
