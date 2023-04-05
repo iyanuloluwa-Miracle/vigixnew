@@ -1,5 +1,5 @@
 import React from 'react';
-import { Line } from 'react-chartjs-2';
+import { Line, Pie } from 'react-chartjs-2';
 import { Skeleton } from 'antd';
 import { useState } from 'react';
 import {
@@ -16,6 +16,7 @@ import {
 } from 'chart.js';
 import { faker } from '@faker-js/faker';
 import PieChart from './PieChart';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 ChartJS.register(
   CategoryScale,
@@ -98,7 +99,15 @@ export const options2 = {
       text: 'Report',
       position: 'bottom',
     },
+    datalabels: {
+      anchor: 'end',
+      align: 'top',
+      formatter: value => {
+        return '$' + value;
+      },
+    },
   },
+  // plugins: [ChartDataLabels]
 };
 
 const labels = [
@@ -123,6 +132,42 @@ const labels2 = [
   'Initiated',
   'Processed',
 ];
+
+const pieData = {
+  labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+  datasets: [
+    {
+      label: 'My First Dataset',
+      data: [12, 19, 3, 5, 2, 3],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(54, 162, 235, 0.2)',
+        'rgba(255, 206, 86, 0.2)',
+        'rgba(75, 192, 192, 0.2)',
+        'rgba(153, 102, 255, 0.2)',
+        'rgba(255, 159, 64, 0.2)',
+      ],
+      borderColor: [
+        'rgba(255, 99, 132, 1)',
+        'rgba(54, 162, 235, 1)',
+        'rgba(255, 206, 86, 1)',
+        'rgba(75, 192, 192, 1)',
+        'rgba(153, 102, 255, 1)',
+        'rgba(255, 159, 64, 1)',
+      ],
+      borderWidth: 1,
+    },
+  ],
+};
+
+const pieOptions = {
+  plugins: {
+    datalabels: {
+      formatter: '10%',
+      color: '#fff',
+    },
+  },
+};
 
 export const data = {
   labels,
@@ -224,6 +269,9 @@ export default function HomeGraph() {
               </div>
             </div>
           </div>
+        </div>
+        <div>
+          {/* <Pie data={pieData} options={{ plugins: pieOptions.plugins }} /> */}
         </div>
       </div>
     </div>
