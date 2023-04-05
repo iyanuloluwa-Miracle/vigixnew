@@ -52,11 +52,9 @@ export default function CustomerSupport() {
               onChange={onChange}
               expandIconPosition={'end'}
             >
-              <Panel header={usersPanel('Users', onChangeCheck)} key="1">
+              <Panel header={'Users'} key="1">
                 <div className="flex-wrap inner gap-lg-5 gap-4">
-                  <div className="role-access-heading">
-                    {usersPanel('Manage Users', onChangeCheck)}
-                  </div>
+                  <div className="role-access-heading">Manage Users</div>
                   <div className="d-flex justify-content-between">
                     <div>{usersPanel('View', onChangeCheck)}</div>
                     <div>{usersPanel('Edit', onChangeCheck)}</div>
@@ -66,15 +64,11 @@ export default function CustomerSupport() {
                   </div>
                 </div>
               </Panel>
-              <Panel
-                header={usersPanel('Reports', onChangeCheck)}
-                key="2"
-                className="multiple"
-              >
+              <Panel header={'Reports'} key="2" className="multiple">
                 <div className="singleton">
                   <div className="flex-wrap inner gap-lg-5 gap-4">
                     <div className="role-access-heading">
-                      {usersPanel('Transaction report', onChangeCheck)}
+                      Transaction report
                     </div>
                     <div className="d-flex justify-content-between">
                       <div>{usersPanel('View', onChangeCheck)}</div>
@@ -89,10 +83,7 @@ export default function CustomerSupport() {
                 <div className="singleton">
                   <div className="flex-wrap inner gap-lg-5 gap-4">
                     <div className="role-access-heading">
-                      {usersPanel(
-                        'Authorized transaction report',
-                        onChangeCheck
-                      )}
+                      Manual transaction report
                     </div>
                     <div className="d-flex justify-content-between">
                       <div>{usersPanel('View', onChangeCheck)}</div>
@@ -107,10 +98,7 @@ export default function CustomerSupport() {
                 <div className="singleton">
                   <div className="flex-wrap inner gap-lg-5 gap-4">
                     <div className="role-access-heading">
-                      {usersPanel(
-                        'Authorized transaction report',
-                        onChangeCheck
-                      )}
+                      Authorized MAnual transaction report
                     </div>
                     <div className="d-flex justify-content-between">
                       <div>{usersPanel('View', onChangeCheck)}</div>
@@ -125,10 +113,7 @@ export default function CustomerSupport() {
                 <div className="singleton">
                   <div className="flex-wrap inner gap-lg-5 gap-4">
                     <div className="role-access-heading">
-                      {usersPanel(
-                        'Authorized transaction report',
-                        onChangeCheck
-                      )}
+                      Authorized transaction report
                     </div>
                     <div className="d-flex justify-content-between">
                       <div>{usersPanel('View', onChangeCheck)}</div>
@@ -140,14 +125,9 @@ export default function CustomerSupport() {
                   </div>
                 </div>
               </Panel>
-              <Panel
-                header={usersPanel('Page Management', onChangeCheck)}
-                key="3"
-              >
+              <Panel header={'Page Management'} key="3">
                 <div className="flex-wrap inner gap-lg-5 gap-4">
-                  <div className="role-access-heading">
-                    {usersPanel('Pages', onChangeCheck)}
-                  </div>
+                  <div className="role-access-heading">Pages</div>
                   <div className="d-flex justify-content-between">
                     <div>{usersPanel('View', onChangeCheck)}</div>
                     <div>{usersPanel('Edit', onChangeCheck)}</div>
@@ -158,10 +138,7 @@ export default function CustomerSupport() {
                 </div>
               </Panel>
 
-              <Panel
-                header={usersPanel('Admin Members', onChangeCheck)}
-                key="4"
-              >
+              <Panel header={'Admin Members'} key="4">
                 <div className="flex-wrap inner gap-lg-5 gap-4">
                   <div className="role-access-heading">
                     {usersPanel('Members', onChangeCheck)}
@@ -176,7 +153,7 @@ export default function CustomerSupport() {
                 </div>
               </Panel>
 
-              <Panel header={usersPanel('Roles', onChangeCheck)} key="5">
+              <Panel header={'Roles'} key="5">
                 <div className="flex-wrap inner gap-lg-5 gap-4">
                   <div className="role-access-heading">
                     {usersPanel('Roles', onChangeCheck)}
@@ -190,6 +167,7 @@ export default function CustomerSupport() {
                   </div>
                 </div>
               </Panel>
+
               {/* <Panel
                 header={usersPanel('Communications', onChangeCheck)}
                 key="6"
@@ -213,16 +191,10 @@ export default function CustomerSupport() {
               >
                 <div></div>
               </Panel> */}
-              <Panel
-                header={usersPanel('Configurations', onChangeCheck)}
-                key="8"
-                className="multiple"
-              >
+              <Panel header={'Configurations'} key="8" className="multiple">
                 <div className="singleton">
                   <div className="flex-wrap inner gap-lg-5 gap-4">
-                    <div className="role-access-heading">
-                      {usersPanel('App Configuration', onChangeCheck)}
-                    </div>
+                    <div className="role-access-heading">App Configuration</div>
                     <div className="d-flex justify-content-between">
                       <div>{usersPanel('View', onChangeCheck)}</div>
                       <div>{usersPanel('Edit', onChangeCheck)}</div>

@@ -737,7 +737,7 @@ export default function PageManagement() {
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 my-4"
           >
-            Add Page
+            {editAction ? 'Edit Page' : 'Add New Page'}
           </Button>
         </Form>
       </Modal>

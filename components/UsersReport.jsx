@@ -129,7 +129,7 @@ export default function UsersReport() {
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
-      status: 'Pending',
+      status: 'Awaiting Confirmation',
     },
     {
       key: '2',
@@ -378,7 +378,7 @@ export default function UsersReport() {
           </Form.Item>
           <Form.Item
             name="rangeFilter"
-            label="Report date:"
+            label="Date range:"
             className="date-filter"
           >
             <Space direction="" className="flex-wrap">

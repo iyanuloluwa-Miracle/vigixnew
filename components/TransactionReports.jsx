@@ -584,7 +584,7 @@ export default function TransactionReports() {
           </Form.Item>
           <Form.Item
             name="rangeFilter"
-            label="Report date:"
+            label="Date range:"
             className="date-filter"
           >
             <Space direction="" className="flex-wrap">

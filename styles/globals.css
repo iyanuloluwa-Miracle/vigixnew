@@ -1353,8 +1353,7 @@ button:hover {
   :where(.css-dev-only-do-not-override-j0nf2s).ant-tabs
   .ant-tabs-tab.ant-tabs-tab-active
   .ant-tabs-tab-btn {
-  color: var(--primary);
-  /* font-weight: 900; */
+  color: var(--primary) !important;
   font-size: 1rem;
   line-height: 25px;
   font-family: 'dm-sans-medium';
@@ -1401,6 +1400,11 @@ button:hover {
 }
 .user-profile .deactivate.activate .ant-btn span {
   color: #009600;
+}
+
+.user-profile .deactivate .ant-btn.edit-user span,
+.user-profile .activate .ant-btn.edit-user span {
+  color: var(--white);
 }
 
 .user-profile .det h5,
@@ -1612,6 +1616,7 @@ button:hover {
   bottom: 15%;
   right: 5%;
   border: none;
+  background: transparent;
 }
 .scroll-to-top > div {
   width: 56px;
@@ -1659,8 +1664,3 @@ button:hover {
 }
 
 /* Apply the animation to an element */
-.slide-in {
-  animation: slide-in 1s ease-out;
-}
-
-/* animations end  */

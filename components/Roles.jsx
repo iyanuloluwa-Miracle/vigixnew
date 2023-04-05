@@ -418,7 +418,7 @@ export default function Roles() {
               style={{ background: '#7D0003', color: '#fff' }}
               onClick={() => setModalAddPage(true)}
             >
-              Add role
+              Add Role
             </Button>
           </div>
         </div>
@@ -660,7 +660,7 @@ export default function Roles() {
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 mt-4"
           >
-            Edit Page
+            Edit Roles
           </Button>
         </Form>
       </Modal>

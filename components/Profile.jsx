@@ -1,9 +1,10 @@
-import { Button, Modal, Form, Input, DatePicker } from 'antd';
+import { Button, Modal, Form, Input, DatePicker, Radio } from 'antd';
 import { useRouter } from 'next/router';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState, useContext, useEffect } from 'react';
 import { OverlayContext } from './Layout';
+import { LockIcon } from '../utility/svg';
 
 export default function Profile({ activeStatus }) {
   const { isActive, setIsActive } = useContext(OverlayContext);
@@ -11,6 +12,7 @@ export default function Profile({ activeStatus }) {
   const [confirmDeactivation, setConfirmDeactivation] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAddPage, setModalAddPage] = useState(false);
+  const [value, setValue] = useState(1);
 
   const router = useRouter();
 
@@ -23,6 +25,11 @@ export default function Profile({ activeStatus }) {
     // setIsActive(!isActive);
     setConfirmDeactivation(false);
     setModalOpen(true);
+  };
+
+  const onRadioChange = e => {
+    console.log('radio checked', e.target.value);
+    setValue(e.target.value);
   };
 
   const confirmDeactivate = () => {
@@ -84,7 +91,7 @@ export default function Profile({ activeStatus }) {
           <span className="our-primary-color text-decoration-underline">
             Atanda Damilare
           </span>{' '}
-          has been successfully suspended from the vigilant app and can no
+          has been successfully deactivated from the vigilant app and can no
           longer perform activities on the app
         </p>
         <div className="buttons">
@@ -233,6 +240,7 @@ export default function Profile({ activeStatus }) {
           <h5>Login block time:</h5>
           <p>12:34</p>
         </div>
+
         <div>
           <h5>Status:</h5>
           {isActive ? (
@@ -297,11 +305,38 @@ export default function Profile({ activeStatus }) {
 
           <Form.Item
             name="phoneNumber"
-            label="Phone Number"
+            label="Phone number"
             className="heights"
           >
-            <Input placeholder="+234 8123456790" />
+            <Input placeholder="234 8123456790" />
           </Form.Item>
+
+          <div className="d-flex flex-wrap justify-content-between">
+            <div className="col-6">
+              <Form.Item
+                name="passwordReset"
+                label="Password reset"
+                className="heights"
+              >
+                <Radio.Group onChange={onRadioChange} value={value}>
+                  <Radio value={1}>Yes</Radio>
+                  <Radio value={2}>No</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+            <div className="col-6">
+              <Form.Item
+                name="emailVerification"
+                label="Email verification"
+                className="heights"
+              >
+                <Radio.Group onChange={onRadioChange} value={value}>
+                  <Radio value={1}>Yes</Radio>
+                  <Radio value={2}>No</Radio>
+                </Radio.Group>
+              </Form.Item>
+            </div>
+          </div>
 
           <Form.Item
             name="blockedTime"
@@ -317,6 +352,24 @@ export default function Profile({ activeStatus }) {
             className="heights"
           >
             <Input placeholder="4" type="number" />
+          </Form.Item>
+
+          <Form.Item
+            name="OTP"
+            label="One time password  (OTP)"
+            className="heights"
+          >
+            <Input
+              placeholder="- - - - - - "
+              type="number"
+              style={{ textAlign: 'center' }}
+            />
+            <div className="mt-2">
+              <span className="auto-generate">
+                {LockIcon}
+                Autogenerate OTP
+              </span>
+            </div>
           </Form.Item>
 
           <Form.Item

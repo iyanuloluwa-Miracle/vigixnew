@@ -4,6 +4,9 @@ import { HomeNav } from '../utility/svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
+const reportStyles = {
+  width: 'max-content',
+};
 export default function BreadCrumb({ tab, location }) {
   const router = useRouter();
   const [backdrop, setBackdrop] = useState(false);
@@ -69,10 +72,25 @@ export default function BreadCrumb({ tab, location }) {
                     <a>Reports</a>
                     <div className="children">
                       <div className="backdrop" />
-                      <ul className="">
+                      <ul className="transaction-list">
                         <li>
                           <Link href={'/transaction-reports'}>
                             Transaction reports
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href={'/transaction-reports'}>
+                            Authorized Transaction reports
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href={'/transaction-reports'}>
+                            Manual Transaction reports
+                          </Link>
+                        </li>
+                        <li>
+                          <Link href={'/transaction-reports'}>
+                            Authorized Manual Transaction reports
                           </Link>
                         </li>
                       </ul>
@@ -80,7 +98,7 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              <li
+              {/* <li
                 className={
                   tab == 'pageManagement' ? 'nav-item active' : 'nav-item'
                 }
@@ -98,7 +116,7 @@ export default function BreadCrumb({ tab, location }) {
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> */}
               <li
                 className={
                   tab == 'adminMembers' ? 'nav-item active' : 'nav-item'
@@ -120,7 +138,7 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
+              {/* <li className={tab == 'roles' ? 'nav-item active' : 'nav-item '}>
                 <div className="parent">
                   <div>
                     <a>Roles</a>
@@ -134,7 +152,7 @@ export default function BreadCrumb({ tab, location }) {
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> */}
               <li
                 className={
                   tab == 'communications' ? 'nav-item active' : 'nav-item '
