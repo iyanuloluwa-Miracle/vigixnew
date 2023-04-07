@@ -439,7 +439,7 @@ export default function TransactionReportManualAuthorized() {
           </div>
         </div>
 
-        <div className="border-bottom">
+        <div className="report-details-modal border-bottom">
           <h4 className="mb-4">User Details</h4>
 
           <div className="row">
@@ -454,18 +454,9 @@ export default function TransactionReportManualAuthorized() {
           </div>
 
           <div className="row">
-            <div className="col-md col-12">
-              <h6>Email address</h6>
-              <p>specterdamilare@gmail.com</p>
-            </div>
-          </div>
-
-          <div className="row border-bottom">
             <div className="col-md-6">
               <h6>Phone Number</h6>
-              <p className="our-primary-color text-decoration-underline">
-                08012345678
-              </p>
+              <p className="">08012345678</p>
             </div>
           </div>
         </div>
@@ -478,7 +469,7 @@ export default function TransactionReportManualAuthorized() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className="status pending">• Processed</p>
+            <p className="statuses Awaiting Confirmation">• Processed</p>
           </div>
           <div className="row notes">
             <h6>Notes</h6>

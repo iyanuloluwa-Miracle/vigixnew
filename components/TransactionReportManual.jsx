@@ -437,6 +437,7 @@ export default function TransactionReportManual() {
               <p>Jan 11th, 2022</p>
             </div>
           </div>
+
           <div className="row">
             <div className="col-md-6">
               <h6>Reported by</h6>
@@ -446,6 +447,38 @@ export default function TransactionReportManual() {
             </div>
           </div>
         </div>
+
+        <div className="report-details-modal border-bottom">
+          <h4 className="mb-4">User Details</h4>
+
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>Name</h6>
+              <p>Omojolowo Specter</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>Email address</h6>
+              <p>specterdamilare@gmail.com</p>
+            </div>
+          </div>
+
+          <div className="row">
+            <div className="col-md col-12">
+              <h6>Email address</h6>
+              <p>specterdamilare@gmail.com</p>
+            </div>
+          </div>
+
+          <div className="row border-bottom">
+            <div className="col-md-6">
+              <h6>Phone Number</h6>
+              <p className="our-primary-color text-decoration-underline">
+                08012345678
+              </p>
+            </div>
+          </div>
+        </div>
+
         <div className="report-details-modal pb-4">
           <div className="row">
             <div>
@@ -454,8 +487,29 @@ export default function TransactionReportManual() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className="status pending">• Pending</p>
+            <p className="status pending">• Processed</p>
           </div>
+          <div className="row notes">
+            <h6>Notes</h6>
+            <p>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat.
+            </p>
+          </div>
+
+          <Form.Item className="buttons">
+            <Button
+              // type="primary"
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Initiate Report
+            </Button>
+          </Form.Item>
         </div>
       </Modal>
 
