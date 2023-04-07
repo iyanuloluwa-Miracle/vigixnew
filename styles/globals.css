@@ -487,6 +487,12 @@ button:hover {
   cursor: pointer;
 }
 
+@media (max-width: 1300px) {
+  .page-navigation .nav-item a {
+    font-size: 14.4px;
+  }
+}
+
 .page-navigation .nav-item a:hover,
 .page-navigation .active a {
   color: #ffffff !important;
@@ -1053,7 +1059,19 @@ button:hover {
 .our-modal .report-details-modal .row > div {
   margin-bottom: 1.5rem;
 }
-.our-modal .report-details-modal .status.pending {
+.our-modal .report-details-modal .statuses.Awaiting.Confirmation {
+  color: #ff7700;
+}
+
+.our-modal .report-details-modal .statuses.Processed {
+  color: #9747ff;
+}
+
+.our-modal .report-details-modal .statuses.Awaiting.Confirmation {
+  color: #ff7700;
+}
+
+.our-modal .report-details-modal .statuses.Awaiting.Confirmation {
   color: #ff7700;
 }
 
@@ -1064,6 +1082,15 @@ button:hover {
   font-weight: 500;
   font-size: 0.875rem;
   line-height: 27px;
+}
+
+.report-details-modal.signature-modal .separation {
+  border-bottom: 1px solid #f5f5f5 !important;
+  margin-bottom: 1.5rem;
+}
+
+.report-details-modal.signature-modal h4 {
+  margin-bottom: 1.25rem;
 }
 
 .our-modal .wrap-check-group .ant-checkbox-group {
@@ -1248,6 +1275,9 @@ button:hover {
   z-index: 4;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
+.page-navigation .nav-item .parent .children.last {
+  right: 0px;
+}
 .page-navigation .nav-item .parent .children ul {
   list-style: none;
   /* padding: 4px 0px; */
@@ -1281,10 +1311,8 @@ button:hover {
   color: #1c1c1c !important;
   color: #1c1c1c;
   width: 100%;
-  /* padding: 10px 20px; */
   padding-top: 0px;
   padding-bottom: 1rem;
-  padding-left: 0px;
   padding-left: 36px;
 }
 
@@ -1483,8 +1511,9 @@ button:hover {
 }
 @media (min-width: 1000px) {
   .page-navigation .nav-item .parent .children {
-    width: 220px;
     max-width: 100vw;
+    width: max-content;
+    min-width: 220px;
   }
   .user-details-content .ant-tabs-nav {
     padding-left: 40px;

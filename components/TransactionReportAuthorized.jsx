@@ -23,14 +23,12 @@ import {
   DatePicker,
 } from 'antd';
 
-export default function TransactionReports() {
+export default function TransactionReportAuthorized() {
   const { Search } = Input;
   const [modalOpen, setModalOpen] = useState(false);
   const [modalReport, setModalReport] = useState(false);
   const [modalsignature, setModalSignature] = useState(false);
   const [value, setValue] = useState('all');
-
-  const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
   const defaultCheckedList = ['Pending'];
   const defaultCheckedList2 = ['All'];
@@ -38,6 +36,7 @@ export default function TransactionReports() {
   const [checkedList2, setCheckedList2] = useState(defaultCheckedList2);
   const [checkAll, setCheckAll] = useState(false);
   const [checkAll2, setCheckAll2] = useState(false);
+  const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
   const handleChange = value => {
     console.log(`selected ${value}`);
@@ -269,7 +268,7 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <ExportZone h4="All Transaction Reports" />
+      <ExportZone h4="Authorized Transaction Reports" />
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
@@ -441,16 +440,23 @@ export default function TransactionReports() {
           </div>
 
           <div className="row notes">
-            <h6>Notes</h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <h6
+              className="mb-2"
+              style={{ color: '#000000', fontWeight: 'bold' }}
+            >
+              Notes
+            </h6>
+
+            <div>
+              <Input.TextArea
+                rows={6}
+                placeholder="what did you notice"
+                maxLength={8}
+              />
+            </div>
           </div>
 
-          <Form.Item className="buttons">
+          <Form.Item className="buttons mt-2">
             <Button
               // type="primary"
               onClick={() => setModalOpen(false)}
@@ -458,12 +464,12 @@ export default function TransactionReports() {
               className="me-3"
               style={{ background: '#7D0003', color: '#fff' }}
             >
-              Initiate Report
+              Process
             </Button>
             <Button
               type="primary"
               onClick={() => setModalOpen(false)}
-              style={{ background: '#FAEFF0', color: '#7D0003' }}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
             >
               Decline
             </Button>

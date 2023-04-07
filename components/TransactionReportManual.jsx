@@ -8,6 +8,7 @@ import {
   DirRight,
   CalenderIcon,
   BankDebit,
+  ExportCsv,
 } from '../utility/svg';
 import Link from 'next/link';
 import {
@@ -22,15 +23,14 @@ import {
   Radio,
   DatePicker,
 } from 'antd';
+import AddIcon from './Vectors/AddIcon';
 
-export default function TransactionReports() {
+export default function TransactionReportManual() {
   const { Search } = Input;
   const [modalOpen, setModalOpen] = useState(false);
   const [modalReport, setModalReport] = useState(false);
   const [modalsignature, setModalSignature] = useState(false);
   const [value, setValue] = useState('all');
-
-  const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
   const defaultCheckedList = ['Pending'];
   const defaultCheckedList2 = ['All'];
@@ -38,6 +38,7 @@ export default function TransactionReports() {
   const [checkedList2, setCheckedList2] = useState(defaultCheckedList2);
   const [checkAll, setCheckAll] = useState(false);
   const [checkAll2, setCheckAll2] = useState(false);
+  const [createReport, setCreateReport] = useState(false);
 
   const handleChange = value => {
     console.log(`selected ${value}`);
@@ -269,7 +270,25 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <ExportZone h4="All Transaction Reports" />
+      <div className="container">
+        <div className="row _tabs-wrapper">
+          <div className="col-auto">
+            <h4 className="_tabs">Manual Transaction Reports</h4>
+          </div>
+          <div className="col-auto d-flex gap-3">
+            <Button icon={ExportCsv}>Export CSV</Button>
+            <Button
+              icon={<AddIcon />}
+              style={{ background: '#7D0003', color: '#fff' }}
+              onClick={() => {
+                setCreateReport(true);
+              }}
+            >
+              Create Report
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
@@ -358,8 +377,6 @@ export default function TransactionReports() {
         </div>
       </div>
 
-      {/* view details modals  */}
-
       <Modal
         title={<div className="text-center">Report Details</div>}
         centered
@@ -437,41 +454,10 @@ export default function TransactionReports() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className={`statuses ${currentStatus}`}>• {currentStatus}</p>
+            <p className="status pending">• Pending</p>
           </div>
-
-          <div className="row notes">
-            <h6>Notes</h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
-          </div>
-
-          <Form.Item className="buttons">
-            <Button
-              // type="primary"
-              onClick={() => setModalOpen(false)}
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Initiate Report
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => setModalOpen(false)}
-              style={{ background: '#FAEFF0', color: '#7D0003' }}
-            >
-              Decline
-            </Button>
-          </Form.Item>
         </div>
       </Modal>
-
-      {/* signature modal  */}
 
       <Modal
         title={<div className="text-center">Signatures</div>}
@@ -482,91 +468,90 @@ export default function TransactionReports() {
         footer={null}
         onCancel={() => setModalSignature(false)}
       >
-        <div className="report-details-modal signature-modal">
-          <div className="separation">
-            <h4>Processing Details</h4>
-
-            <div className="row">
-              <div className="col-sm-6 col-6">
-                <h6>Processing Details</h6>
-                <p>Atanda Specter</p>
-              </div>
-              <div className="col-sm-6 col-6">
-                <h6>
-                  Process date <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>Jan 11th, 2022 15:20</p>
-              </div>
+        <div className="report-details-modal border-bottom ">
+          <h4 className="mb-4">Processing Details</h4>
+          <div className="row">
+            <div className="col-sm-6 col-6">
+              <h6>Processing Details</h6>
+              <p>Atanda Specter</p>
             </div>
-
-            <div className="row">
-              <div className="col-12">
-                <h6>
-                  Report date to Process Interval{' '}
-                  <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
-              </div>
+            <div className="col-sm-6 col-6">
+              <h6>
+                Process date <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>Jan 11th, 2022 15:20</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-12">
+              <h6>
+                Report date to Process Interval{' '}
+                <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
             </div>
           </div>
 
-          <div className="separation">
-            <h4>Initiation Details</h4>
+          <h4 className="mb-4">Initiation Details</h4>
 
-            <div className="row">
-              <div className="col-sm-6 col-6">
-                <h6>Initiated by</h6>
-                <p>Atanda Specter</p>
-              </div>
-              <div className="col-sm-6 col-6">
-                <h6>
-                  Initiate date <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>Jan 11th, 2022 15:20</p>
-              </div>
+          <div className="row">
+            <div className="col-sm-6 col-6">
+              <h6>Initiated by</h6>
+              <p>Atanda Specter</p>
             </div>
-
-            <div className="row ">
-              <div className="col-12">
-                <h6>
-                  Process date to Initaite Interval{' '}
-                  <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
-              </div>
+            <div className="col-sm-6 col-6">
+              <h6>
+                Initiate date <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>Jan 11th, 2022 15:20</p>
             </div>
           </div>
 
-          <div>
-            <h4>Recovery Details</h4>
-
-            <div className="row">
-              <div className="col-sm-6 col-6">
-                <h6>Initiated by</h6>
-                <p>Atanda Specter</p>
-              </div>
-              <div className="col-sm-6 col-6">
-                <h6>
-                  Process date <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>Jan 11th, 2022 15:20</p>
-              </div>
+          <div className="row ">
+            <div className="col-12">
+              <h6>
+                Process date to Initaite Interval{' '}
+                <span className="ms-1">{CalenderIcon}</span>
+              </h6>
+              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
             </div>
+          </div>
 
-            <div className="row pb-lg-5 pb-4">
-              <div className="col-12">
-                <h6>
-                  Report date to Process Interval{' '}
-                  <span className="ms-1">{CalenderIcon}</span>
-                </h6>
-                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
-              </div>
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>Tracking ID </h6>
+              <p>ABC-12345</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>
+                Report date <span>{CalenderIcon}</span>{' '}
+              </h6>
+              <p>Jan 11th, 2022</p>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6">
+              <h6>Reported by</h6>
+              <p className="our-primary-color text-decoration-underline">
+                Atanda Damilare
+              </p>
             </div>
           </div>
         </div>
+        <div className="report-details-modal pb-4">
+          <div className="row">
+            <div>
+              <h4 className="bold">Tracking Details</h4>
+            </div>
+          </div>
+          <div className="row">
+            <h6>Report status</h6>
+            <p className="status Awaiting Comfirmation">
+              Awaiting Comfirmation
+            </p>
+          </div>
+        </div>
       </Modal>
-
-      {/* filter modal  */}
 
       <Modal
         title="Filter by:"
@@ -662,6 +647,115 @@ export default function TransactionReports() {
               Clear
             </Button>
           </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        centered
+        open={createReport}
+        onOk={() => setCreateReport(false)}
+        onCancel={() => {
+          setCreateReport(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Add New Report</h4>
+          <p>Fill the fields below to add a new page.</p>
+        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="bankName" label="Bank Name" className="heights">
+            <Select
+              defaultValue="GTB"
+              style={{
+                width: '100%',
+              }}
+              onChange={handleChange}
+              options={[
+                {
+                  value: 'gtb',
+                  label: 'GTB',
+                },
+                {
+                  value: 'first_bank',
+                  label: 'firtt bank',
+                },
+                {
+                  value: 'zenith',
+                  label: 'Zenith Bank',
+                },
+                {
+                  value: 'kuda',
+                  label: 'Kuda Microfinance',
+                },
+                {
+                  value: 'union_bank',
+                  label: 'Union Bank',
+                },
+                {
+                  value: 'Opay',
+                  label: 'Opay',
+                },
+                {
+                  value: 'palm_pay',
+                  label: 'Palm Pay',
+                },
+                {
+                  value: 'uba',
+                  label: 'UBA',
+                },
+              ]}
+            />
+          </Form.Item>
+
+          <Form.Item
+            name="accountNumber"
+            label="Account Number"
+            className="heights"
+          >
+            <Input placeholder="Enter account number" type="number" />
+          </Form.Item>
+
+          <Form.Item
+            name="transactionReference"
+            label="Transaction reference"
+            className="heights"
+          >
+            <Input placeholder="Enter transaction reference" />
+          </Form.Item>
+
+          <Form.Item
+            name="transactionDate"
+            label="Transaction date"
+            className="heights date"
+          >
+            <DatePicker placeholder="2023-03-13" />
+          </Form.Item>
+
+          <Form.Item name="email" label="Email address" className="heights">
+            <Input placeholder="Enter email" type="email" />
+          </Form.Item>
+
+          <Form.Item name="mobile" label="Mobile" className="heights">
+            <Input placeholder="Enter mobile " type="number" />
+          </Form.Item>
+
+          <Form.Item
+            name="companyName"
+            label="Company Name"
+            className="heights"
+          >
+            <Input placeholder="Enter transaction reference" />
+          </Form.Item>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 my-4"
+          >
+            Add Report
+          </Button>
         </Form>
       </Modal>
     </section>

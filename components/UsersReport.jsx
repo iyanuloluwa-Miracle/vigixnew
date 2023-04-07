@@ -49,7 +49,12 @@ export default function UsersReport() {
     console.log('Success:', values);
   };
 
-  const plainOptions = ['Pending', 'On Tracking', 'Recovery', 'Completed'];
+  const plainOptions = [
+    'Awaiting Confirmation',
+    'On Tracking',
+    'Recovery',
+    'Completed',
+  ];
 
   const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
 
