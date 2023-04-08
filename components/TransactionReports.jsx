@@ -143,15 +143,15 @@ export default function TransactionReports() {
       key: 'transactionReference',
     },
     {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: ' ',
@@ -429,6 +429,7 @@ export default function TransactionReports() {
             </div>
           </div>
         </div>
+
         <div className="report-details-modal pb-4">
           <div className="row">
             <div>
@@ -461,7 +462,7 @@ export default function TransactionReports() {
               Initiate Report
             </Button>
             <Button
-              type="primary"
+              // type="primary"
               onClick={() => setModalOpen(false)}
               style={{ background: '#FAEFF0', color: '#7D0003' }}
             >

@@ -141,16 +141,17 @@ export default function TransactionReportAuthorized() {
       dataIndex: 'transactionReference',
       key: 'transactionReference',
     },
-    {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
+
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: ' ',
@@ -419,15 +420,30 @@ export default function TransactionReportAuthorized() {
               <p>Jan 11th, 2022</p>
             </div>
           </div>
+        </div>
+
+        <div className="report-details-modal border-bottom">
+          <h4 className="mb-4">User Details</h4>
+
+          <div className="row">
+            <div className="col-md-4 col-6">
+              <h6>Name</h6>
+              <p>Omojolowo Specter</p>
+            </div>
+            <div className="col-md col-6">
+              <h6>Email address</h6>
+              <p>specterdamilare@gmail.com</p>
+            </div>
+          </div>
+
           <div className="row">
             <div className="col-md-6">
-              <h6>Reported by</h6>
-              <p className="our-primary-color text-decoration-underline">
-                Atanda Damilare
-              </p>
+              <h6>Phone Number</h6>
+              <p>08012345678</p>
             </div>
           </div>
         </div>
+
         <div className="report-details-modal pb-4">
           <div className="row">
             <div>
@@ -456,7 +472,7 @@ export default function TransactionReportAuthorized() {
             </div>
           </div>
 
-          <Form.Item className="buttons mt-2">
+          <Form.Item className="buttons">
             <Button
               // type="primary"
               onClick={() => setModalOpen(false)}
@@ -467,9 +483,12 @@ export default function TransactionReportAuthorized() {
               Process
             </Button>
             <Button
-              type="primary"
+              // type="primary"
               onClick={() => setModalOpen(false)}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
+              style={{
+                background: '#FAEFF0',
+                color: '#7D0003',
+              }}
             >
               Decline
             </Button>

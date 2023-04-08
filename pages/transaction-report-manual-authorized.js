@@ -1,5 +1,5 @@
 import BreadCrumb from '../components/BreadCrumb';
-import TransactionReportAuthorized from '../components/TransactionReportAuthorized';
+import TransactionReportManualAuthorized from '../components/TransactionReportManualAuthorized';
 import Welcome from '../components/Welcome';
 
 export default function transactionreportmanualauthorized() {
@@ -10,7 +10,7 @@ export default function transactionreportmanualauthorized() {
         tab={'reports'}
         location={[{ link: '#', location: 'reports' }]}
       />
-      <TransactionReportAuthorized />
+      <TransactionReportManualAuthorized />
     </>
   );
 }

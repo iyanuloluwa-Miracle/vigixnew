@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import ExportZone from './ExportZone';
 import {
   SearchIcon,
   FilterIcon,
@@ -31,6 +30,7 @@ export default function TransactionReportManualAuthorized() {
   const [modalReport, setModalReport] = useState(false);
   const [modalsignature, setModalSignature] = useState(false);
   const [value, setValue] = useState('all');
+  const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
   const defaultCheckedList = ['Pending'];
   const defaultCheckedList2 = ['All'];
@@ -144,15 +144,15 @@ export default function TransactionReportManualAuthorized() {
       key: 'transactionReference',
     },
     {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
-    {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: ' ',
@@ -469,19 +469,27 @@ export default function TransactionReportManualAuthorized() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className="statuses Awaiting Confirmation">• Processed</p>
-          </div>
-          <div className="row notes">
-            <h6>Notes</h6>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </p>
+            <p className={`statuses ${currentStatus}`}>• {currentStatus}</p>
           </div>
 
-          <Form.Item className="buttons">
+          <div className="row notes">
+            <h6
+              className="mb-2"
+              style={{ color: '#000000', fontWeight: 'bold' }}
+            >
+              Notes
+            </h6>
+
+            <div>
+              <Input.TextArea
+                rows={5}
+                placeholder="what did you notice"
+                maxLength={8}
+              />
+            </div>
+          </div>
+
+          <Form.Item className="buttons mt-2">
             <Button
               // type="primary"
               onClick={() => setModalOpen(false)}
@@ -489,7 +497,14 @@ export default function TransactionReportManualAuthorized() {
               className="me-3"
               style={{ background: '#7D0003', color: '#fff' }}
             >
-              Initiate Report
+              Process
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Decline
             </Button>
           </Form.Item>
         </div>

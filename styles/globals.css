@@ -334,6 +334,12 @@ button:hover {
   padding: 1rem 2rem;
   height: auto;
 }
+.our-btn span {
+  font-weight: 900;
+  font-size: 1rem;
+  line-height: 20px;
+  color: #ffffff;
+}
 .small-btn {
   padding: 6px 0.8rem;
 }
@@ -342,11 +348,17 @@ button:hover {
   font-size: 14px;
   line-height: 20px;
 }
-.our-btn span {
+.our-pink-btn {
+  background: #faeff0;
+  border-radius: 4px;
+  padding: 1rem 2rem;
+  height: auto;
+}
+.our-pink-btn span {
   font-weight: 900;
   font-size: 1rem;
   line-height: 20px;
-  color: #ffffff;
+  color: var(--primary);
 }
 
 .welcom__block {
