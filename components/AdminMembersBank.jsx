@@ -42,6 +42,10 @@ export default function AdminMembersBank() {
     setValue(e.target.value);
   };
 
+  const checkChange = checked => {
+    console.log(`switch to ${checked}`);
+  };
+
   const columns = [
     {
       title: ' ',
@@ -65,9 +69,16 @@ export default function AdminMembersBank() {
       key: 'bankCode',
     },
     {
-      title: 'Role Access',
-      dataIndex: 'role',
-      key: 'role',
+      title: 'Bank logo url',
+      dataIndex: 'logoUrl',
+      key: 'logoUrl',
+      responsive: ['lg'],
+      render: text => <div className="page-url">{text}</div>,
+    },
+    {
+      title: 'Added by',
+      dataIndex: 'addedBy',
+      key: 'addedBy',
       render: text => <div className="max-content">{text}</div>,
     },
     {
@@ -97,9 +108,18 @@ export default function AdminMembersBank() {
       key: '1',
       bankName: 'Guarantee Trust Bank',
       bankCode: '1234',
-      role: 'Customer support',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Finn',
       DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -115,9 +135,18 @@ export default function AdminMembersBank() {
       key: '2',
       bankName: 'First Bank of Nigeria',
       bankCode: '5567',
-      role: 'Consumer protection',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Specter',
       DateTime: 'Jun 12, 2020 22:15',
-      status: 'Inactive',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -133,9 +162,18 @@ export default function AdminMembersBank() {
       key: '3',
       bankName: 'United Bank for Africa',
       bankCode: '3453',
-      role: 'Inspector general',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Dammy',
       DateTime: 'May 8, 2021 18:30',
-      status: 'Active',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -151,9 +189,18 @@ export default function AdminMembersBank() {
       key: '4',
       bankName: 'Zenith Bank',
       bankCode: '6840',
-      role: 'E-tranzact',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Jide Ola',
       DateTime: 'Aug 16, 2020 13:17',
-      status: 'Inactive',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -169,9 +216,17 @@ export default function AdminMembersBank() {
       key: '5',
       bankName: 'Guarantee Trust Bank',
       bankCode: '3453',
-      role: 'Customer support',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Dan Fodio',
       DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
+      status: (
+        <div className="view-btn">
+          <Switch
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -187,9 +242,18 @@ export default function AdminMembersBank() {
       key: '6',
       bankName: 'First Bank of Nigeria',
       bankCode: '4598',
-      role: 'Consumer protection',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Specter',
       DateTime: 'Jun 12, 2020 22:15',
-      status: 'Inactive',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -205,9 +269,17 @@ export default function AdminMembersBank() {
       key: '7',
       bankName: 'United Bank for Africa',
       bankCode: '4622',
-      role: 'Inspector general',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Dammy',
       DateTime: 'May 8, 2021 18:30',
-      status: 'Active',
+      status: (
+        <div className="view-btn">
+          <Switch
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -223,9 +295,18 @@ export default function AdminMembersBank() {
       key: '8',
       bankName: 'Zenith Bank',
       bankCode: '4090',
-      role: 'E-tranzact',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Jide Ola',
       DateTime: 'Aug 16, 2020 13:17',
-      status: 'Inactive',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -241,9 +322,17 @@ export default function AdminMembersBank() {
       key: '9',
       bankName: 'Kuda',
       bankCode: '4564',
-      role: 'Customer support',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Atanda',
       DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
+      status: (
+        <div className="view-btn">
+          <Switch
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
@@ -259,10 +348,19 @@ export default function AdminMembersBank() {
       key: '10',
       bankName: 'Palmpay',
       bankCode: '4535',
-      role: 'Consumer protection',
+      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
+      addedBy: 'Ronaldo',
       DateTime: 'Jun 12, 2020 22:15',
 
-      status: 'Inactive',
+      status: (
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
+        </div>
+      ),
       views: (
         <div className="view-btn">
           <Button
