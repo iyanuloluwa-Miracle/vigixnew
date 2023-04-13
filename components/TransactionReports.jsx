@@ -28,6 +28,8 @@ export default function TransactionReports() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalReport, setModalReport] = useState(false);
   const [modalsignature, setModalSignature] = useState(false);
+  const [approval, setApproval] = useState(false);
+  const [approvalModal, setApprovalModal] = useState(false);
   const [value, setValue] = useState('all');
 
   const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
@@ -358,6 +360,58 @@ export default function TransactionReports() {
         </div>
       </div>
 
+      {/* notification modal  */}
+
+      <Modal
+        title={<div className="text-center">Report Details</div>}
+        centered
+        open={approvalModal}
+        onOk={() => setApprovalModal(false)}
+        className="our-modal report-modal"
+        footer={null}
+        onCancel={() => setApprovalModal(false)}
+      >
+        <div className="mt-5 pt-lg-1 mb-4 pb-1 d-flex justify-content-center">
+          {approval ? (
+            <Image
+              src="/images/success.png"
+              alt="approval"
+              width={160}
+              height={160}
+            />
+          ) : (
+            <Image
+              src="/images/remove.png"
+              alt="approval"
+              width={160}
+              height={160}
+            />
+          )}
+        </div>
+        <p>
+          {approval
+            ? 'Transaction report processed successfully'
+            : 'Transaction report declined successfully'}
+        </p>
+
+        <Form.Item className="buttons d-flex justify-content-center mb-4 pb-2">
+          <Button
+            onClick={() => setApprovalModal(false)}
+            htmlType="submit"
+            className="me-3"
+            style={{ background: '#7D0003', color: '#fff' }}
+          >
+            Go to authorized reports
+          </Button>
+          <Button
+            onClick={() => setApprovalModal(false)}
+            style={{ background: '#FAEFF0', color: '#7D0003' }}
+          >
+            Go back to report details
+          </Button>
+        </Form.Item>
+      </Modal>
+
       {/* view details modals  */}
 
       <Modal
@@ -454,7 +508,11 @@ export default function TransactionReports() {
           <Form.Item className="buttons">
             <Button
               // type="primary"
-              onClick={() => setModalOpen(false)}
+              onClick={() => {
+                setModalReport(false);
+                setApproval(true);
+                setApprovalModal(true);
+              }}
               htmlType="submit"
               className="me-3"
               style={{ background: '#7D0003', color: '#fff' }}
@@ -463,7 +521,11 @@ export default function TransactionReports() {
             </Button>
             <Button
               // type="primary"
-              onClick={() => setModalOpen(false)}
+              onClick={() => {
+                setModalReport(false);
+                setApproval(false);
+                setApprovalModal(true);
+              }}
               style={{ background: '#FAEFF0', color: '#7D0003' }}
             >
               Decline

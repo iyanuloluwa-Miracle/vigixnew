@@ -36,11 +36,6 @@ export default function HomeTable() {
       dataIndex: 'reportedby',
       key: 'reportedby',
     },
-    {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
 
     {
       title: 'Transaction type',
@@ -51,6 +46,11 @@ export default function HomeTable() {
       title: 'Transaction reference',
       dataIndex: 'transactionReference',
       key: 'transactionReference',
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: 'Status',

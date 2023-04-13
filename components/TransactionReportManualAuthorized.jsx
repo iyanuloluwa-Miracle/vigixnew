@@ -510,6 +510,8 @@ export default function TransactionReportManualAuthorized() {
         </div>
       </Modal>
 
+      {/* signature modal  */}
+
       <Modal
         title={<div className="text-center">Signatures</div>}
         centered
@@ -519,87 +521,86 @@ export default function TransactionReportManualAuthorized() {
         footer={null}
         onCancel={() => setModalSignature(false)}
       >
-        <div className="report-details-modal border-bottom ">
-          <h4 className="mb-4">Processing Details</h4>
-          <div className="row">
-            <div className="col-sm-6 col-6">
-              <h6>Processing Details</h6>
-              <p>Atanda Specter</p>
+        <div className="report-details-modal signature-modal">
+          <div className="separation">
+            <h4>Processing Details</h4>
+
+            <div className="row">
+              <div className="col-sm-6 col-6">
+                <h6>Processing Details</h6>
+                <p>Atanda Specter</p>
+              </div>
+              <div className="col-sm-6 col-6">
+                <h6>
+                  Process date <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>Jan 11th, 2022 15:20</p>
+              </div>
             </div>
-            <div className="col-sm-6 col-6">
-              <h6>
-                Process date <span className="ms-1">{CalenderIcon}</span>
-              </h6>
-              <p>Jan 11th, 2022 15:20</p>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              <h6>
-                Report date to Process Interval{' '}
-                <span className="ms-1">{CalenderIcon}</span>
-              </h6>
-              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+
+            <div className="row">
+              <div className="col-12">
+                <h6>
+                  Report date to Process Interval{' '}
+                  <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+              </div>
             </div>
           </div>
 
-          <h4 className="mb-4">Initiation Details</h4>
+          <div className="separation">
+            <h4>Initiation Details</h4>
 
-          <div className="row">
-            <div className="col-sm-6 col-6">
-              <h6>Initiated by</h6>
-              <p>Atanda Specter</p>
+            <div className="row">
+              <div className="col-sm-6 col-6">
+                <h6>Initiated by</h6>
+                <p>Atanda Specter</p>
+              </div>
+              <div className="col-sm-6 col-6">
+                <h6>
+                  Initiate date <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>Jan 11th, 2022 15:20</p>
+              </div>
             </div>
-            <div className="col-sm-6 col-6">
-              <h6>
-                Initiate date <span className="ms-1">{CalenderIcon}</span>
-              </h6>
-              <p>Jan 11th, 2022 15:20</p>
+
+            <div className="row ">
+              <div className="col-12">
+                <h6>
+                  Process date to Initaite Interval{' '}
+                  <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+              </div>
             </div>
           </div>
 
-          <div className="row ">
-            <div className="col-12">
-              <h6>
-                Process date to Initaite Interval{' '}
-                <span className="ms-1">{CalenderIcon}</span>
-              </h6>
-              <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
-            </div>
-          </div>
+          <div>
+            <h4>Recovery Details</h4>
 
-          <div className="row">
-            <div className="col-md-4 col-6">
-              <h6>Tracking ID </h6>
-              <p>ABC-12345</p>
+            <div className="row">
+              <div className="col-sm-6 col-6">
+                <h6>Initiated by</h6>
+                <p>Atanda Specter</p>
+              </div>
+              <div className="col-sm-6 col-6">
+                <h6>
+                  Process date <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>Jan 11th, 2022 15:20</p>
+              </div>
             </div>
-            <div className="col-md col-6">
-              <h6>
-                Report date <span>{CalenderIcon}</span>{' '}
-              </h6>
-              <p>Jan 11th, 2022</p>
+
+            <div className="row pb-lg-5 pb-4">
+              <div className="col-12">
+                <h6>
+                  Report date to Process Interval{' '}
+                  <span className="ms-1">{CalenderIcon}</span>
+                </h6>
+                <p>1 year : 4months : 100 days : 15hrs : 40mins : 23 secs</p>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <h6>Reported by</h6>
-              <p className="our-primary-color text-decoration-underline">
-                Atanda Damilare
-              </p>
-            </div>
-          </div>
-        </div>
-        <div className="report-details-modal pb-4">
-          <div className="row">
-            <div>
-              <h4 className="bold">Tracking Details</h4>
-            </div>
-          </div>
-          <div className="row">
-            <h6>Report status</h6>
-            <p className="status Awaiting Comfirmation">
-              Awaiting Comfirmation
-            </p>
           </div>
         </div>
       </Modal>

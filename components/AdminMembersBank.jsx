@@ -16,7 +16,7 @@ import {
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 
-export default function AdminMembers() {
+export default function AdminMembersBank() {
   const { Search } = Input;
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -54,15 +54,15 @@ export default function AdminMembers() {
       ),
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
+      title: 'Bank name',
+      dataIndex: 'bankName',
+      key: 'bankName',
+      render: text => <div className="max-content">{text}</div>,
     },
     {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
-      render: text => <span className="max-content">{text}</span>,
+      title: 'Bank code',
+      dataIndex: 'bankCode',
+      key: 'bankCode',
     },
     {
       title: 'Role Access',
@@ -81,7 +81,7 @@ export default function AdminMembers() {
       ),
     },
     {
-      title: 'Date Created',
+      title: 'Date Added',
       dataIndex: 'DateTime',
       key: 'DateTime',
     },
@@ -95,221 +95,181 @@ export default function AdminMembers() {
   const data = [
     {
       key: '1',
-      fullName: 'Atanda Damilare',
-      username: 'dammy',
-      company: 'Vigilant',
+      bankName: 'Guarantee Trust Bank',
+      bankCode: '1234',
       role: 'Customer support',
       DateTime: 'Sept 17, 2022 11:20',
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '2',
-      fullName: 'Jide Ola',
-      username: 'Ola',
-      company: 'CBN',
+      bankName: 'First Bank of Nigeria',
+      bankCode: '5567',
       role: 'Consumer protection',
       DateTime: 'Jun 12, 2020 22:15',
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '3',
-      fullName: 'Specter Omo',
-      username: 'Specter',
-      company: 'NPF',
+      bankName: 'United Bank for Africa',
+      bankCode: '3453',
       role: 'Inspector general',
       DateTime: 'May 8, 2021 18:30',
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '4',
-      fullName: 'Jesse Finn',
-      username: 'Finn',
-      company: 'E-tranzact',
+      bankName: 'Zenith Bank',
+      bankCode: '6840',
       role: 'E-tranzact',
       DateTime: 'Aug 16, 2020 13:17',
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '5',
-      fullName: 'Atanda Damilare',
-      username: 'Ola',
-      company: 'Vigilant',
+      bankName: 'Guarantee Trust Bank',
+      bankCode: '3453',
       role: 'Customer support',
       DateTime: 'Sept 17, 2022 11:20',
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '6',
-      fullName: 'Jide Ola',
-      username: 'Damilare',
-      company: 'CBN',
+      bankName: 'First Bank of Nigeria',
+      bankCode: '4598',
       role: 'Consumer protection',
       DateTime: 'Jun 12, 2020 22:15',
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '7',
-      fullName: 'Henry Etta',
-      username: 'Omo',
-      company: 'NPF',
+      bankName: 'United Bank for Africa',
+      bankCode: '4622',
       role: 'Inspector general',
       DateTime: 'May 8, 2021 18:30',
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '8',
-      fullName: 'Jesse Finn',
-      username: 'Ola',
-      company: 'E-tranzact',
+      bankName: 'Zenith Bank',
+      bankCode: '4090',
       role: 'E-tranzact',
       DateTime: 'Aug 16, 2020 13:17',
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '9',
-      fullName: 'Specter Omo',
-      username: 'Finn',
-      company: 'Vigilant',
+      bankName: 'Kuda',
+      bankCode: '4564',
       role: 'Customer support',
       DateTime: 'Sept 17, 2022 11:20',
       status: 'Active',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
     },
     {
       key: '10',
-      fullName: 'Atanda Damilare',
-      username: 'Etta',
-      company: 'CBN',
+      bankName: 'Palmpay',
+      bankCode: '4535',
       role: 'Consumer protection',
       DateTime: 'Jun 12, 2020 22:15',
 
       status: 'Inactive',
       views: (
         <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
           <Button
             className="view-report"
             onClick={() => setModalEditMember(true)}
           >
-            Edit member
+            Edit
           </Button>
         </div>
       ),
@@ -321,7 +281,7 @@ export default function AdminMembers() {
       <div className="container">
         <div className="row _tabs-wrapper">
           <div className="col-auto">
-            <h4 className="_tabs">Admin Members</h4>
+            <h4 className="_tabs">Banks</h4>
           </div>
           <div className="col-auto d-flex gap-4">
             <Button
@@ -329,19 +289,8 @@ export default function AdminMembers() {
               style={{ background: '#7D0003', color: '#fff' }}
               onClick={() => setModalAddMember(true)}
             >
-              Add member
+              Add new bank
             </Button>
-            {/* <Button
-              icon={<AddIcon color="#7D0003" />}
-              style={{
-                color: '#7D0003',
-                background: '#fff',
-                border: '1px solid #7D0003',
-              }}
-              onClick={() => openModal()}
-            >
-              Add multiple
-            </Button> */}
           </div>
         </div>
       </div>
@@ -565,7 +514,7 @@ export default function AdminMembers() {
         </Form>
       </Modal>
 
-      {/* add member modal */}
+      {/* add Bank modal */}
 
       <Modal
         centered
@@ -576,84 +525,23 @@ export default function AdminMembers() {
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Add New Member</h4>
-          <p>Fill the fields below to add a new member.</p>
+          <h4>Add New Bank</h4>
+          <p>Fill the fields below to add a new bank.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="bankName" label="Bank Name" className="heights">
+            <Input placeholder="Enter bank name" />
+          </Form.Item>
+          <Form.Item name="bankCode" label="Bank Code" className="heights">
+            <Input placeholder="Enter bank code" />
+          </Form.Item>
+
           <Form.Item
-            name="fullName"
-            label="Full Name (Optional)"
+            name="bankLogoURL"
+            label="Bank Logo URL"
             className="heights"
           >
-            <Input placeholder="Enter full name" />
-          </Form.Item>
-          <Form.Item name="username" label="Username" className="heights">
-            <Input placeholder="Enter username" />
-          </Form.Item>
-
-          <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email" type="email" />
-          </Form.Item>
-
-          <Form.Item name="company" label="Company">
-            <Select
-              defaultValue="All"
-              style={{
-                width: '100%',
-              }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
-                },
-                {
-                  value: 'CBN',
-                  label: 'CBN',
-                },
-                {
-                  value: 'NPF',
-                  label: 'NPF',
-                },
-                {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item name="Role access" label="Role access">
-            <Select
-              defaultValue="All"
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Customer support',
-                  label: 'Customer support',
-                },
-                {
-                  value: 'Consumer protection',
-                  label: 'Consumer protection',
-                },
-                {
-                  value: 'Inspector general',
-                  label: 'Inspector general',
-                },
-                {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
-                },
-              ]}
-            />
+            <Input placeholder="Enter bank code url" />
           </Form.Item>
 
           <Button
@@ -661,7 +549,7 @@ export default function AdminMembers() {
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 mt-4 mb-4"
           >
-            Add Member
+            Add Bank
           </Button>
         </Form>
       </Modal>
@@ -677,84 +565,23 @@ export default function AdminMembers() {
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Edit Member</h4>
-          <p>Fill the fields below to add a new member.</p>
+          <h4>Edit Bank</h4>
+          <p>Fill the fields below to edit bank.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="bankName" label="Bank Name" className="heights">
+            <Input placeholder="Enter bank name" />
+          </Form.Item>
+          <Form.Item name="bankCode" label="Bank Code" className="heights">
+            <Input placeholder="Enter bank code" />
+          </Form.Item>
+
           <Form.Item
-            name="fullName"
-            label="Full Name (Optional)"
+            name="bankLogoURL"
+            label="Bank Logo URL"
             className="heights"
           >
-            <Input placeholder="Enter full name" />
-          </Form.Item>
-          <Form.Item name="username" label="Username" className="heights">
-            <Input placeholder="Enter username" />
-          </Form.Item>
-
-          <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email" type="email" />
-          </Form.Item>
-
-          <Form.Item name="company" label="Company">
-            <Select
-              defaultValue="All"
-              style={{
-                width: '100%',
-              }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
-                },
-                {
-                  value: 'CBN',
-                  label: 'CBN',
-                },
-                {
-                  value: 'NPF',
-                  label: 'NPF',
-                },
-                {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item name="Role access" label="Role access">
-            <Select
-              defaultValue="All"
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Customer support',
-                  label: 'Customer support',
-                },
-                {
-                  value: 'Consumer protection',
-                  label: 'Consumer protection',
-                },
-                {
-                  value: 'Inspector general',
-                  label: 'Inspector general',
-                },
-                {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
-                },
-              ]}
-            />
+            <Input placeholder="Enter bank code url" />
           </Form.Item>
 
           <Button

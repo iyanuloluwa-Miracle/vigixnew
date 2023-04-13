@@ -63,7 +63,7 @@ export default function NavBar() {
                       alt="dp"
                       height={32}
                       width={32}
-                      objectFit="cover"
+                      style={{ objectFit: 'contain' }}
                       quality={100}
                       priority={true}
                     />
@@ -101,7 +101,7 @@ export default function NavBar() {
             <p>Are you sure you want to logout?</p>
           </div>
 
-          <Form.Item className="buttons logout-buttons ">
+          <Form.Item className="buttons logout-buttons">
             <Link href="/login">
               <Button
                 htmlType="submit"

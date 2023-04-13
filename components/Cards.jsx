@@ -40,7 +40,7 @@ export default function Cards() {
               </div>
             </div>
             <h3>4,567,890</h3>
-            <h6>Total Users</h6>
+            <h6>Total Reports</h6>
           </div>
         </div>
         <div className="col-lg-3 col-sm-6">
@@ -70,7 +70,7 @@ export default function Cards() {
               </div>
             </div>
             <h3>890</h3>
-            <h6>Total Roles</h6>
+            <h6>Total Admin Members</h6>
           </div>
         </div>
       </div>

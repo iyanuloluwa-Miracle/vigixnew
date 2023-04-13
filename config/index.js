@@ -6,4 +6,5 @@ export const routesWithoutNavBars = [
   '/signup',
   '/404',
   '/500',
+  '/verify-token',
 ];
