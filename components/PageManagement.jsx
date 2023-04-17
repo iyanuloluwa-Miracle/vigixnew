@@ -78,7 +78,7 @@ export default function PageManagement() {
     },
 
     {
-      title: 'Added by',
+      title: 'Added By',
       dataIndex: 'AddedBy',
       key: 'AddedBy',
     },
@@ -100,7 +100,7 @@ export default function PageManagement() {
       key: 'Status',
     },
     {
-      title: 'Date created',
+      title: 'Date Created',
       dataIndex: 'DateCreated',
       key: 'DateCreated',
       render: text => <div className="table-date">{text}</div>,

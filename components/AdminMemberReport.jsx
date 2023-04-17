@@ -26,7 +26,7 @@ export default function AdminMemberReport() {
       render: text => <span className="max-content">{text}</span>,
     },
     {
-      title: 'Role access',
+      title: 'Role Access',
       dataIndex: 'role',
       key: 'role',
       render: text => <div className="max-content">{text}</div>,
