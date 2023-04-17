@@ -215,6 +215,32 @@ a {
 .ant-switch.ant-switch-checked:hover {
   background-color: var(--primary) !important;
 }
+
+/* Antd Radio styling  */
+label.ant-radio-wrapper:hover {
+  border-color: var(--primary) !important;
+}
+.ant-radio-wrapper:hover .ant-radio:hover {
+  border-color: var(--primary) !important;
+}
+:where(.css-dev-only-do-not-override-j0nf2s).ant-radio-wrapper
+  .ant-radio-checked
+  .ant-radio-inner {
+  border-color: var(--primary) !important;
+  background-color: var(--white);
+}
+:where(.css-dev-only-do-not-override-j0nf2s).ant-radio-wrapper
+  .ant-radio-inner::after {
+  background: var(--primary) !important;
+  width: 24px;
+  height: 24px;
+  margin-block-start: -12px;
+  margin-inline-start: -12px;
+}
+.ant-radio-wrapper:hover .ant-radio-inner {
+  border-color: var(--primary) !important;
+}
+
 @media (min-width: 1300px) {
   .container {
     max-width: 1400px;
