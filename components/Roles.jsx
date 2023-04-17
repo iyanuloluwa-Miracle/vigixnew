@@ -57,7 +57,7 @@ export default function Roles() {
       render: text => <Checkbox onChange={onChange} />,
     },
     {
-      title: 'Role name',
+      title: 'Role Name',
       dataIndex: 'role',
       key: 'role',
       render: text => <div className="max-content">{text}</div>,
@@ -70,7 +70,7 @@ export default function Roles() {
     },
 
     {
-      title: 'Added by',
+      title: 'Added By',
       dataIndex: 'addedBy',
       key: 'addedBy',
       render: text => <span className="max-content">{text}</span>,
@@ -87,7 +87,7 @@ export default function Roles() {
       key: 'status',
     },
     {
-      title: 'Date created',
+      title: 'Date Created',
       dataIndex: 'lasteUpdate',
       key: 'lasteUpdate',
     },

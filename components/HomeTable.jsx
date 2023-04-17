@@ -32,23 +32,23 @@ export default function HomeTable() {
       key: 'TrackingID',
     },
     {
-      title: 'Reported by',
+      title: 'Reported By',
       dataIndex: 'reportedby',
       key: 'reportedby',
     },
 
     {
-      title: 'Transaction type',
+      title: 'Transaction Type',
       dataIndex: 'transactionType',
       key: 'transactionType',
     },
     {
-      title: 'Transaction reference',
+      title: 'Transaction Reference',
       dataIndex: 'transactionReference',
       key: 'transactionReference',
     },
     {
-      title: 'Date reported',
+      title: 'Date Reported',
       dataIndex: 'datereported',
       key: 'datereported',
     },

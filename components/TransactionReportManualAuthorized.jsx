@@ -134,12 +134,12 @@ export default function TransactionReportManualAuthorized() {
       key: 'Username',
     },
     {
-      title: 'Transaction type',
+      title: 'Transaction Type',
       dataIndex: 'transactionType',
       key: 'transactionType',
     },
     {
-      title: 'Transaction reference',
+      title: 'Transaction Reference',
       dataIndex: 'transactionReference',
       key: 'transactionReference',
     },
@@ -150,7 +150,7 @@ export default function TransactionReportManualAuthorized() {
       render: text => <span className={`status ${text}`}>{text}</span>,
     },
     {
-      title: 'Date reported',
+      title: 'Date Reported',
       dataIndex: 'datereported',
       key: 'datereported',
     },

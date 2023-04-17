@@ -151,7 +151,7 @@ export default function ManageUsers() {
       ),
     },
     {
-      title: 'Date registered',
+      title: 'Date Registered',
       dataIndex: 'dateRegistered',
       key: 'dateRegistered',
     },
