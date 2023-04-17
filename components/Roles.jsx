@@ -75,11 +75,7 @@ export default function Roles() {
       key: 'addedBy',
       render: text => <span className="max-content">{text}</span>,
     },
-    {
-      title: 'Date created',
-      dataIndex: 'lasteUpdate',
-      key: 'lasteUpdate',
-    },
+
     {
       title: 'Last Updated',
       dataIndex: 'lasteUpdate',
@@ -89,6 +85,11 @@ export default function Roles() {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
+    },
+    {
+      title: 'Date created',
+      dataIndex: 'lasteUpdate',
+      key: 'lasteUpdate',
     },
     {
       title: ' ',

@@ -1,18 +1,10 @@
-import BreadCrumb from '../components/BreadCrumb';
-import Cards from '../components/Cards';
-import HomeGraph from '../components/HomeGraph';
-import HomeTable from '../components/HomeTable';
-import Welcome from '../components/Welcome';
-// import styles from '../styles/vigilant.module.css';
+import React from 'react';
+import Login from '../components/Login';
 
-export default function Home() {
+export default function login() {
   return (
     <>
-      <Welcome />
-      <BreadCrumb tab={'home'} />
-      <Cards />
-      <HomeGraph />
-      <HomeTable />
+      <Login />
     </>
   );
 }

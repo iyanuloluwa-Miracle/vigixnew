@@ -3,6 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 import Head from 'next/head';
 import Layout from '../components/Layout';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+const queryClient = new QueryClient();
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -37,10 +41,12 @@ function MyApp({ Component, pageProps }) {
 
       {/* <CookiesProvider> */}
       <Layout>
-        {/* <Toaster /> */}
-        {/* <Component {...pageProps} /> */}
-        <Component {...pageProps} />
+        <QueryClientProvider client={queryClient}>
+          <ReactQueryDevtools initialIsOpen={false} />
+          <Component {...pageProps} />
+        </QueryClientProvider>
       </Layout>
+
       {/* </CookiesProvider> */}
     </>
   );

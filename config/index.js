@@ -1,5 +1,6 @@
 export const routesWithoutNavBars = [
   '/login',
+  '/',
   '/change-password',
   '/verify',
   '/forgot-password',

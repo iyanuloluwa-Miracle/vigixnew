@@ -35,7 +35,7 @@ export default function BreadCrumb({ tab, location }) {
                     : 'nav-item home-nav-icon'
                 }
               >
-                <Link href={'/'}>{HomeNav}</Link>
+                <Link href={'/home'}>{HomeNav}</Link>
               </li>
               <li className={tab == 'users' ? 'nav-item active' : 'nav-item'}>
                 <div className="parent">

@@ -34,7 +34,7 @@ export default function NavBar() {
       <nav className="container">
         <div className="row justify-content-between gap-3 gap-lg-4">
           <div className="col-auto nav-logo">
-            <Link href="/" passHref>
+            <Link href="/home" passHref>
               <Image
                 src={'/icons/VigilantAppLogo.svg'}
                 alt="logo"
@@ -102,7 +102,7 @@ export default function NavBar() {
           </div>
 
           <Form.Item className="buttons logout-buttons">
-            <Link href="/login">
+            <Link href="/">
               <Button
                 htmlType="submit"
                 className="me-3"

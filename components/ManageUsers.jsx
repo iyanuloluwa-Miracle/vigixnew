@@ -128,17 +128,12 @@ export default function ManageUsers() {
       dataIndex: 'email',
       key: 'email',
     },
-
     {
       title: 'Mobile',
       dataIndex: 'phone',
       key: 'phone',
     },
-    {
-      title: 'Date registered',
-      dataIndex: 'dateRegistered',
-      key: 'dateRegistered',
-    },
+
     {
       title: 'Total Reports',
       dataIndex: 'report',
@@ -154,6 +149,11 @@ export default function ManageUsers() {
           <span className={`user-status ${text}`}>{text}</span>
         </div>
       ),
+    },
+    {
+      title: 'Date registered',
+      dataIndex: 'dateRegistered',
+      key: 'dateRegistered',
     },
     {
       title: ' ',

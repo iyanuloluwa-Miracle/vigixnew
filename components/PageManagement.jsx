@@ -83,12 +83,6 @@ export default function PageManagement() {
       key: 'AddedBy',
     },
     {
-      title: 'Date created',
-      dataIndex: 'DateCreated',
-      key: 'DateCreated',
-      render: text => <div className="table-date">{text}</div>,
-    },
-    {
       title: 'Position',
       dataIndex: 'Position',
       key: 'Position',
@@ -104,6 +98,12 @@ export default function PageManagement() {
       title: 'Status',
       dataIndex: 'Status',
       key: 'Status',
+    },
+    {
+      title: 'Date created',
+      dataIndex: 'DateCreated',
+      key: 'DateCreated',
+      render: text => <div className="table-date">{text}</div>,
     },
     {
       title: ' ',

@@ -254,9 +254,25 @@ export default function Profile({ activeStatus }) {
             Edit user
           </Button>
           {isActive ? (
-            <Button onClick={() => deactivate()}>Deactivate</Button>
+            <Button
+              style={{
+                background: '#FAEFF0',
+                border: 'none',
+              }}
+              onClick={() => deactivate()}
+            >
+              Deactivate
+            </Button>
           ) : (
-            <Button onClick={() => activate()}>Activate</Button>
+            <Button
+              style={{
+                background: 'rgba(0, 150, 0, 0.1)',
+                border: 'none',
+              }}
+              onClick={() => activate()}
+            >
+              Activate
+            </Button>
           )}
         </div>
       </div>

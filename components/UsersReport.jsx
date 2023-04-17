@@ -89,12 +89,6 @@ export default function UsersReport() {
       key: 'TrackingID',
     },
     {
-      title: 'Date reported',
-      dataIndex: 'datereported',
-      key: 'datereported',
-    },
-
-    {
       title: 'Transaction type',
       dataIndex: 'transactionType',
       key: 'transactionType',
@@ -109,6 +103,11 @@ export default function UsersReport() {
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Date reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: ' ',
@@ -316,7 +315,7 @@ export default function UsersReport() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className="status pending">• Processed</p>
+            <p className="statuses Processed">• Processed</p>
           </div>
           <div className="notes">
             <h6>Notes</h6>
