@@ -3,6 +3,8 @@ import NavBar from './NavBar';
 import { useRouter } from 'next/router';
 import Footer from './Footer';
 import { routesWithoutNavBars } from '../config';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 export const OverlayContext = React.createContext({
   overlay: false,
