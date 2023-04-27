@@ -19,6 +19,12 @@ export const OverlayContext = React.createContext({
   loading: false,
   setloading: () => {},
 
+  user: null,
+  setUser: () => {},
+
+  progressIndicator: null,
+  setProgressIndicator: () => {},
+
   setdashboardInfo: () => {},
   dashboardInfo: {},
 
@@ -40,6 +46,8 @@ const Layout = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
+  const [user, setUser] = useState({});
+  const [progressIndicator, setProgressIndicator] = useState({});
   const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
 
@@ -58,6 +66,10 @@ const Layout = ({ children }) => {
         setLoggedIn,
         info,
         setInfo,
+        user,
+        setUser,
+        progressIndicator,
+        setProgressIndicator,
         defaultUserTab,
         setDefaultUSerTab,
         isActive,

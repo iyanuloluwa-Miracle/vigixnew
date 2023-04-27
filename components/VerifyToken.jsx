@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Form, Row, Col, message, Statistic } from 'antd';
 import { useRouter } from 'next/router';
 import OtpField from 'react-otp-field';
@@ -10,6 +10,7 @@ import secureLocalStorage from 'react-secure-storage';
 
 //components
 import { OtpContainer, AuthenticationCoontainer } from './styles';
+import { OverlayContext } from './Layout';
 
 export default function VerifyAccountLayout() {
   const { Countdown } = Statistic;
@@ -18,6 +19,8 @@ export default function VerifyAccountLayout() {
   const [loading, setLoading] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
   const [countdown, setCountdown] = useState(false);
+
+  const { setUser, setProgressIndicator } = useContext(OverlayContext);
 
   const verifyAccount = useMutation({
     mutationFn: payload => api.verifyToken(payload, null),
@@ -79,6 +82,10 @@ export default function VerifyAccountLayout() {
         toast.error(`${res?.data?.message[0]}, Please resend token`);
       } else if (res?.data?.code == 'EXP_000') {
         toast.error(res?.data?.message[0]);
+        setUser(res?.data?.response?.data?.profile);
+        console.log(res?.data?.response?.data?.profile);
+        setProgressIndicator(res?.data?.response?.data?.progressIndicator);
+        console.log(res?.data?.response?.data?.progressIndicator);
         router.push('/');
       } else {
         // router.push('/');

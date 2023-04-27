@@ -27,6 +27,7 @@ import api from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import { jsonToHex } from '../apis/util';
 import secureLocalStorage from 'react-secure-storage';
+import { useRouter } from 'next/router';
 
 export default function TransactionReports() {
   const { Search } = Input;
@@ -47,6 +48,8 @@ export default function TransactionReports() {
   const [checkedList2, setCheckedList2] = useState(defaultCheckedList2);
   const [checkAll, setCheckAll] = useState(false);
   const [checkAll2, setCheckAll2] = useState(false);
+
+  const router = useRouter();
 
   const handleChange = value => {
     console.log(`selected ${value}`);
@@ -284,8 +287,6 @@ export default function TransactionReports() {
   //   onSuccess: () => {},
   // });
 
-  console.log(JSON.parse(secureLocalStorage.getItem('Token')));
-
   const getReports = async () => {
     setLoading(true);
     try {
@@ -301,6 +302,19 @@ export default function TransactionReports() {
       );
 
       console.log(res);
+      if (
+        res?.data?.code === 'EXP_000' ||
+        res?.data?.code === 'EXP_001' ||
+        res?.data?.code === 'EXP_002' ||
+        res?.data?.code === 'EXP_003' ||
+        res?.data?.code === 'EXP_004' ||
+        res?.data?.code === 'EXP_005' ||
+        res?.data?.code === 'EXP_006' ||
+        res?.data?.code === 'EXP_007' ||
+        res?.data?.code === 'EXP_008'
+      ) {
+        router.push('/');
+      }
       // let tableData = res?.data?.response?.data?.map((item, index)=>{
       //   return {...}
       // })

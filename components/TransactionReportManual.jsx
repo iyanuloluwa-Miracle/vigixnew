@@ -457,28 +457,6 @@ export default function TransactionReportManual() {
           </div>
         </div>
 
-        <div className="report-details-modal border-bottom">
-          <h4 className="mb-4">User Details</h4>
-
-          <div className="row">
-            <div className="col-md-4 col-6">
-              <h6>Name</h6>
-              <p>Omojolowo Specter</p>
-            </div>
-            <div className="col-md col-6">
-              <h6>Email address</h6>
-              <p>specterdamilare@gmail.com</p>
-            </div>
-          </div>
-
-          <div className="row">
-            <div className="col-md-6">
-              <h6>Phone Number</h6>
-              <p>08012345678</p>
-            </div>
-          </div>
-        </div>
-
         <div className="report-details-modal pb-4">
           <div className="row">
             <div>

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   CardIcon1,
   CardIcon2,
@@ -9,7 +9,16 @@ import {
   lows,
 } from '../utility/svg';
 
+import { OverlayContext } from './Layout';
+
 export default function Cards() {
+  const { progressIndicator, user, setUser } = useContext(OverlayContext);
+
+  // useEffect(() => {
+  // setUser({ name: 'specter', role: 'admin' });
+  // }, []);
+
+  console.log(user);
   return (
     <div className="container">
       <div className="row carding my-4">
