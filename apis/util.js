@@ -7,3 +7,10 @@ export const createHTTPHeader = authToken => {
     'x-api-key': `${token}`,
   };
 };
+
+export const jsonToHex = json => {
+  const jsonString = JSON.stringify(json);
+  const buffer = Buffer.from(jsonString, 'utf8');
+  const hexString = buffer.toString('hex');
+  return hexString;
+};

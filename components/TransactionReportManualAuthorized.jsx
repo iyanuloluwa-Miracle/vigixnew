@@ -129,9 +129,9 @@ export default function TransactionReportManualAuthorized() {
       key: 'TrackingID',
     },
     {
-      title: 'Username',
-      dataIndex: 'Username',
-      key: 'Username',
+      title: 'Company Name',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
       title: 'Transaction Type',
@@ -143,11 +143,17 @@ export default function TransactionReportManualAuthorized() {
       dataIndex: 'transactionReference',
       key: 'transactionReference',
     },
+
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Reported by',
+      dataIndex: 'reportedby',
+      key: 'reportedby',
     },
     {
       title: 'Date Reported',
@@ -179,92 +185,102 @@ export default function TransactionReportManualAuthorized() {
     {
       key: '1',
       TrackingID: 'ABC-1234',
-      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Awaiting Confirmation',
+      companyName: 'Dangote',
+      reportedby: 'Specter',
     },
     {
       key: '2',
       TrackingID: 'ABC-1234',
-      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
       status: 'Failed',
+      companyName: 'Specter and CO.',
+      reportedby: 'Jide Ola',
     },
     {
       key: '3',
       TrackingID: 'ABC-1234',
-      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
       status: 'Processed',
+      companyName: 'Vigilant',
+      reportedby: 'Dammy',
     },
     {
       key: '4',
       TrackingID: 'ABC-1234',
-      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Approved',
+      companyName: 'DFM',
+      reportedby: 'Jesse Finn',
     },
     {
       key: '5',
       TrackingID: 'ABC-1234',
-      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Declined',
+      companyName: 'Exoil Mobile',
+      reportedby: 'Dammy',
     },
     {
       key: '6',
       TrackingID: 'ABC-1234',
-      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Initiated',
+      companyName: 'Office Space',
+      reportedby: 'Specter',
     },
     {
       key: '7',
       TrackingID: 'ABC-1234',
-      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
       status: 'Awaiting Confirmation',
+      companyName: 'Howard and CO.',
+      reportedby: 'Jide Ola',
     },
     {
       key: '8',
       TrackingID: 'ABC-1234',
-      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
       status: 'Failed',
+      companyName: 'Opay',
+      reportedby: 'Dammy',
     },
     {
       key: '9',
       TrackingID: 'ABC-1234',
-      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Processed',
+      companyName: 'Film House',
+      reportedby: 'Henry etta',
     },
     {
       key: '10',
       TrackingID: 'ABC-1234',
-      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Approved',
+      companyName: 'Apple',
+      reportedby: 'Jesse Finn',
     },
   ];
 
@@ -277,15 +293,6 @@ export default function TransactionReportManualAuthorized() {
           </div>
           <div className="col-auto d-flex gap-3">
             <Button icon={ExportCsv}>Export CSV</Button>
-            <Button
-              icon={<AddIcon />}
-              style={{ background: '#7D0003', color: '#fff' }}
-              onClick={() => {
-                setCreateReport(true);
-              }}
-            >
-              Create Report
-            </Button>
           </div>
         </div>
       </div>
@@ -702,114 +709,7 @@ export default function TransactionReportManualAuthorized() {
         </Form>
       </Modal>
 
-      <Modal
-        centered
-        open={createReport}
-        onOk={() => setCreateReport(false)}
-        onCancel={() => {
-          setCreateReport(false);
-        }}
-        className="our-modal add-page-modal"
-        footer={null}
-      >
-        <div className="headings text-center">
-          <h4>Add New Report</h4>
-          <p>Fill the fields below to add a new page.</p>
-        </div>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="bankName" label="Bank Name" className="heights">
-            <Select
-              defaultValue="GTB"
-              style={{
-                width: '100%',
-              }}
-              onChange={handleChange}
-              options={[
-                {
-                  value: 'gtb',
-                  label: 'GTB',
-                },
-                {
-                  value: 'first_bank',
-                  label: 'firtt bank',
-                },
-                {
-                  value: 'zenith',
-                  label: 'Zenith Bank',
-                },
-                {
-                  value: 'kuda',
-                  label: 'Kuda Microfinance',
-                },
-                {
-                  value: 'union_bank',
-                  label: 'Union Bank',
-                },
-                {
-                  value: 'Opay',
-                  label: 'Opay',
-                },
-                {
-                  value: 'palm_pay',
-                  label: 'Palm Pay',
-                },
-                {
-                  value: 'uba',
-                  label: 'UBA',
-                },
-              ]}
-            />
-          </Form.Item>
-
-          <Form.Item
-            name="accountNumber"
-            label="Account Number"
-            className="heights"
-          >
-            <Input placeholder="Enter account number" type="number" />
-          </Form.Item>
-
-          <Form.Item
-            name="transactionReference"
-            label="Transaction reference"
-            className="heights"
-          >
-            <Input placeholder="Enter transaction reference" />
-          </Form.Item>
-
-          <Form.Item
-            name="transactionDate"
-            label="Transaction date"
-            className="heights date"
-          >
-            <DatePicker placeholder="2023-03-13" />
-          </Form.Item>
-
-          <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email" type="email" />
-          </Form.Item>
-
-          <Form.Item name="mobile" label="Mobile" className="heights">
-            <Input placeholder="Enter mobile " type="number" />
-          </Form.Item>
-
-          <Form.Item
-            name="companyName"
-            label="Company Name"
-            className="heights"
-          >
-            <Input placeholder="Enter transaction reference" />
-          </Form.Item>
-
-          <Button
-            htmlType="submit"
-            style={{ background: '#7D0003', color: '#FFF' }}
-            className="w-100 my-4"
-          >
-            Add Report
-          </Button>
-        </Form>
-      </Modal>
+      {/* add report modal */}
     </section>
   );
 }

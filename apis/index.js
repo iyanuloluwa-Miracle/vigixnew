@@ -26,9 +26,22 @@ const api = {
     return api.post(url, payload);
   },
 
-  loginAccount: payload => {
+  loginAccount: (payload, token) => {
+    const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/login`;
-    return api.post(url, payload);
+    return api.post(url, payload, headers);
+  },
+
+  verifyToken: (payload, token) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/token`;
+    return api.post(url, payload, headers);
+  },
+  getReportHistory: token => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/transaction_report_history?action=fetch
+    `;
+    return api.get(url, payload, headers);
   },
 
   addInfo: (payload, token) => {

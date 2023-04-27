@@ -481,6 +481,8 @@ export default function PageManagement() {
         </div>
       </div>
 
+      {/* filter modal  */}
+
       <Modal
         title="Filter by:"
         centered
@@ -497,6 +499,29 @@ export default function PageManagement() {
               <Radio value={'active'}>Active</Radio>
               <Radio value={'inactive'}>Inactive</Radio>
             </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="dateCreated"
+            label="Date created:"
+            className="date-filter"
+          >
+            <Space direction="" className="flex-wrap">
+              <DatePicker
+                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 250,
+                }}
+              />
+              <DatePicker
+                onChange={onChange}
+                placeholder="To"
+                style={{
+                  width: 250,
+                }}
+              />
+            </Space>
           </Form.Item>
 
           <Space direction="" className="flex-wrap">
@@ -544,69 +569,17 @@ export default function PageManagement() {
               />
             </Form.Item>
 
-            <Form.Item
-              name="Position"
-              label="Position:"
-              className="range-filter"
-            >
-              <Select
-                defaultValue="All"
+            {/* <Form.Item name="Position" label="Position:" className="heights">
+              <Input
+                placeholder="position"
                 style={{
                   width: 250,
+                  height: '40px',
                 }}
                 onChange={handleChange}
-                options={[
-                  {
-                    value: 'All',
-                    label: 'All',
-                  },
-                  {
-                    value: '1',
-                    label: '1',
-                  },
-                  {
-                    value: '2',
-                    label: '2',
-                  },
-                  {
-                    value: '3',
-                    label: '3',
-                  },
-                  {
-                    value: '4',
-                    label: '4',
-                  },
-                  {
-                    value: '5',
-                    label: '5',
-                  },
-                ]}
               />
-            </Form.Item>
+            </Form.Item> */}
           </Space>
-
-          <Form.Item
-            name="dateCreated"
-            label="Date created:"
-            className="date-filter"
-          >
-            <Space direction="" className="flex-wrap">
-              <DatePicker
-                onChange={onChange}
-                placeholder="From"
-                style={{
-                  width: 250,
-                }}
-              />
-              <DatePicker
-                onChange={onChange}
-                placeholder="To"
-                style={{
-                  width: 250,
-                }}
-              />
-            </Space>
-          </Form.Item>
 
           <Form.Item className="buttons">
             <Button

@@ -11,6 +11,7 @@ export default function Profile({ activeStatus }) {
   // const [isActive, setIsActive] = useState(true);
   const [confirmDeactivation, setConfirmDeactivation] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
+  const [confirmEditModal, setConfirmEditModal] = useState(false);
   const [modalAddPage, setModalAddPage] = useState(false);
   const [value, setValue] = useState(1);
 
@@ -277,6 +278,8 @@ export default function Profile({ activeStatus }) {
         </div>
       </div>
 
+      {/* deactivation and activation modals  */}
+
       <Modal
         title={
           <div className="text-center">
@@ -296,6 +299,8 @@ export default function Profile({ activeStatus }) {
         {isActive && confirmDeactivation && <ActivatedModal />}
       </Modal>
 
+      {/* edit user modals  */}
+
       <Modal
         centered
         open={modalAddPage}
@@ -304,6 +309,10 @@ export default function Profile({ activeStatus }) {
           setModalAddPage(false);
         }}
         className="our-modal add-page-modal"
+        onFinish={() => {
+          setModalAddPage(false);
+          setConfirmEditModal(true);
+        }}
         footer={null}
       >
         <div className="headings text-center">
@@ -404,6 +413,42 @@ export default function Profile({ activeStatus }) {
             Submit
           </Button>
         </Form>
+      </Modal>
+
+      <Modal
+        title={<div className="text-center">Edit User</div>}
+        centered
+        open={confirmEditModal}
+        onOk={() => setConfirmEditModal(false)}
+        className="our-modal"
+        footer={null}
+        onCancel={() => {
+          setConfirmEditModal(false);
+        }}
+      >
+        <div className="deactivate">
+          <div className="img-wrap ">
+            <Image
+              src={'/icons/deactivate-icon.png'}
+              alt="Deactivate account"
+              width={160}
+              height={160}
+              style={{ maxWidth: '100%' }}
+            />
+          </div>
+          <p style={{ fontSize: '0.85rem' }}>
+            Are you sure you want to edit user? Editing a user will alter the
+            user’s information across the entire application both on user and
+            admin end
+          </p>
+
+          <div className="buttons">
+            <Button className="cont" onClick={() => setConfirmEditModal(false)}>
+              Proceed
+            </Button>
+            <Button onClick={() => setConfirmEditModal(false)}>Cancel</Button>
+          </div>
+        </div>
       </Modal>
     </div>
   );

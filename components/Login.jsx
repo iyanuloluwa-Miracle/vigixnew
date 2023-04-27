@@ -6,13 +6,23 @@ import { useRouter } from 'next/router';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import api from '../apis';
+import { jsonToHex } from '../apis/util';
+import secureLocalStorage from 'react-secure-storage';
 
 export default function Login() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
+  // const jsonToHex = json => {
+  //   const jsonString = JSON.stringify(json);
+  //   const buffer = Buffer.from(jsonString, 'utf8');
+  //   const hexString = buffer.toString('hex');
+  //   return hexString;
+  // };
+
   const loginAccount = useMutation({
     mutationFn: payload => api.loginAccount(payload),
+
     onSuccess: () => {
       router.push('/dashboard');
     },
@@ -20,34 +30,49 @@ export default function Login() {
 
   const onFinish = async values => {
     setLoading(true);
+
     console.log('Success:', values);
+
+    const binaryData = jsonToHex(values);
+
+    console.log(binaryData);
+
     const payload = {
-      remote:
-        '55476877636e463063324658616b647a576c5a32545768344d6b6c324b324e4b646d394a536c6452656c4135625864444d6b6c7357473548626c4e76566e6442554842565532526e5a5856354e48465555324e6e62673d3d:516b43795547735576644146707a31715933467a696775615671557157646a386c79776637756c6354455146456a654336395a705642574a4f2f787951437876437851307744496b64684e7a4a33686d47345262544f624a5254636d4c4470676e53723538427455647679534f325879544541433955534f6956375a736164767532584a676e44482b726c5767537454584f336b524b70397a59505777514d5769564e6b65303176786c476a68472b762b484d49774463717330676d3461737a447133332b4e43444f504f585449496755627741763052752f4433597739616569674c386b46424b526161764e386f3743527235526642685672554a4e58586e7a4c4b6661716c563545446c4f315a553152704c6b4c74466c5274414c714e4b65614d334a6b6c374d51354e4c59416574492b2f6f5559654c726762366a78364748703968526a416b357265733571716634394257673d3d:504c646c54477a38425a502f51774c5345453671474d464c375357383666327456356151474c6742504c4c746a39686d6f77794448445671553770384b354b674b62726e5178767973385273395762466e334633592b2b385262637269556c61796f7a3447456676394b387862376d7372595134375a546672656748334b6b547a7641314a3867754d387a6449794e774e733352377376713279776a783332637766672f674475523042414532516f6c42556b487570682b77724a594273376536544a756d37727073757739304734784b754f34536644374f746570345341386b437a48506943344363564a4353554a485932764656565871756a764a4a5a39676a546c694e324247576f3672324e6f69456d6130397032686b68786f6f395931305730324769487a31476e305a6f6269754956533579373036656371454163712b6538644a7464427a6c434f3579674961447931513d3d',
+      remote: binaryData,
     };
 
     try {
       // const res = await loginAccount.mutateAsync(payload);
+
       const res = await api.post(
         'https://safe.staging.vigilant.ng/manage/api/v1.0/login',
-        payload
-        // {x-api-key: '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d'}
+        payload,
+        {
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
       );
       console.log(res);
       if (res) {
-        toast.success('Login successful');
+        secureLocalStorage.setItem(
+          'Token',
+          JSON.stringify(res?.data?.response?.token)
+        );
         setLoading(false);
       }
-      setTimeout(() => {
-        setLoading(false);
-        router.push('/home');
-      }, 1500);
+      if (res?.data?.code === 'LOGIN_OK') {
+        toast.success(`${res?.data?.message}, ${res?.data?.response?.message}`);
+        router.push('/verify-token');
+      } else {
+        toast.error(res?.data?.message);
+      }
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
     }
   };
+
   const onFinishFailed = errorInfo => {
     console.log('Failed:', errorInfo);
   };
@@ -58,12 +83,6 @@ export default function Login() {
         <div className="col-auto">
           <Form
             name="basic"
-            // labelCol={{
-            //   span: 8,
-            // }}
-            // wrapperCol={{
-            //   span: 16,
-            // }}
             style={{
               maxWidth: '100%',
             }}
@@ -99,7 +118,7 @@ export default function Login() {
                 },
               ]}
             >
-              <Input placeholder="Input email or username here" />
+              <Input placeholder="Input email or username" />
             </Form.Item>
 
             <Form.Item
@@ -112,11 +131,11 @@ export default function Login() {
                 },
               ]}
             >
-              <Input.Password placeholder="Input password here" />
+              <Input.Password placeholder="Input password" />
             </Form.Item>
 
             <Form.Item className="button-wrapper">
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" disabled={loading}>
                 {loading ? (
                   <Spin className="white-spinner" style={{ color: 'white' }} />
                 ) : (

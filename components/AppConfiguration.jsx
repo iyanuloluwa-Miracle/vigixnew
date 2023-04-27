@@ -141,7 +141,7 @@ export default function AppConfiguration({ admin, heading }) {
                       name="siteURL"
                       className="heights mb-0"
                     >
-                      <Input placeholder="Enter site url here" />
+                      <Input placeholder="Enter site url" />
                     </Form.Item>
                   </div>
                   <div className="col">
@@ -151,7 +151,7 @@ export default function AppConfiguration({ admin, heading }) {
                       className="mb-0"
                     >
                       <Input.TextArea
-                        placeholder="Enter site description here"
+                        placeholder="Enter site description"
                         row={5}
                       />
                     </Form.Item>
@@ -167,7 +167,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="mobile1"
                         className="heights"
                       >
-                        <Input placeholder="Enter mobile number 1 here" />
+                        <Input placeholder="Enter mobile number 1" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -176,7 +176,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="mobile2"
                         className="heights"
                       >
-                        <Input placeholder="Enter mobile number 2 here" />
+                        <Input placeholder="Enter mobile number 2" />
                       </Form.Item>
                     </div>
                   </div>
@@ -258,7 +258,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="emailOTP"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter OTP time" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -267,7 +267,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="passwordOTP"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter OTP time here" />
+                        <Input placeholder="Enter OTP time" />
                       </Form.Item>
                     </div>
                   </div>
@@ -282,7 +282,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="sessionLogout"
                         className="heights"
                       >
-                        <Input placeholder="Enter session logout time here" />
+                        <Input placeholder="Enter session logout time" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -291,7 +291,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="loginFailed"
                         className="heights"
                       >
-                        <Input placeholder="Enter session logout time here" />
+                        <Input placeholder="Enter session logout time" />
                       </Form.Item>
                     </div>
                   </div>
@@ -303,11 +303,11 @@ export default function AppConfiguration({ admin, heading }) {
                         name="maxLogin"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter session logout time here" />
+                        <Input placeholder="Enter session logout time" />
                       </Form.Item>
                     </div>
                     <div className="col" style={{ visibility: 'hidden' }}>
-                      <Input placeholder="Enter OTP time here" />
+                      <Input placeholder="Enter OTP time" />
                     </div>
                   </div>
                 </div>
@@ -321,7 +321,7 @@ export default function AppConfiguration({ admin, heading }) {
                         name="emailID"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter ID here" />
+                        <Input placeholder="Enter ID" />
                       </Form.Item>
                     </div>
                     <div className="col">
@@ -330,8 +330,25 @@ export default function AppConfiguration({ admin, heading }) {
                         name="smsID"
                         className="heights mb-0"
                       >
-                        <Input placeholder="Enter ID here" />
+                        <Input placeholder="Enter ID" />
                       </Form.Item>
+                    </div>
+                  </div>
+                  <div className="d-flex flex-wrap inner gap-lg-5 gap-4">
+                    <div className="col">
+                      <Form.Item
+                        label="Notification Signature Name"
+                        name="NotificationName"
+                        className="heights mb-0"
+                      >
+                        <Input placeholder="Notification Signature Name" />
+                      </Form.Item>
+                    </div>
+                    <div className="col">
+                      <Input
+                        placeholder="Notification Signature Name"
+                        style={{ visibility: 'hidden' }}
+                      />
                     </div>
                   </div>
                 </div>

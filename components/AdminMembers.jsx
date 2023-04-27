@@ -457,7 +457,8 @@ export default function AdminMembers() {
               <Select
                 defaultValue="All"
                 style={{
-                  width: 270,
+                  width: 250,
+                  maxWidth: '100%',
                 }}
                 onChange={handleChange}
                 options={[
@@ -493,7 +494,8 @@ export default function AdminMembers() {
               <Select
                 defaultValue="All"
                 style={{
-                  width: 270,
+                  width: 250,
+                  maxWidth: '100%',
                 }}
                 onChange={handleChange}
                 options={[
@@ -532,14 +534,16 @@ export default function AdminMembers() {
                 onChange={onChange}
                 placeholder="From"
                 style={{
-                  width: 270,
+                  width: 250,
+                  maxWidth: '100%',
                 }}
               />
               <DatePicker
                 onChange={onChange}
                 placeholder="To"
                 style={{
-                  width: 270,
+                  width: 250,
+                  maxWidth: '100%',
                 }}
               />
             </Space>

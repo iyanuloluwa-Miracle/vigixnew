@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Layout from '../components/Layout';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { Toaster } from 'sonner';
 
 const queryClient = new QueryClient();
 
@@ -40,7 +41,15 @@ function MyApp({ Component, pageProps }) {
       </Head>
 
       {/* <CookiesProvider> */}
+
       <Layout>
+        <Toaster
+          position="top-right"
+          expand={false}
+          richColors
+          closeButton
+          offset="16px"
+        />
         <QueryClientProvider client={queryClient}>
           <ReactQueryDevtools initialIsOpen={false} />
           <Component {...pageProps} />

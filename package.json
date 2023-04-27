@@ -26,6 +26,8 @@
     "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
     "react-otp-field": "^3.0.1",
+    "react-secure-storage": "^1.2.1",
+    "secure-ls": "^1.2.6",
     "sonner": "^0.3.0",
     "styled-components": "^5.3.9",
     "use-context": "0.0.1"

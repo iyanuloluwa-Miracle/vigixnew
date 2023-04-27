@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { shevronRight, ArrowUp } from '../utility/svg';
 import { Space, Table, Tag } from 'antd';
 import ScrollToTop from './Vectors/ScrollToTop';
+import Link from 'next/link';
 
 export default function HomeTable() {
   const [showButton, setShowButton] = useState(false);
@@ -170,9 +171,11 @@ export default function HomeTable() {
             <h4 className="our-h4">Recent Reports</h4>
           </div>
           <div className="col-auto">
-            <p className="view-all">
-              View all<span className="ms-1">{shevronRight}</span>
-            </p>
+            <Link href="/transaction-reports">
+              <p className="view-all">
+                View all<span className="ms-1">{shevronRight}</span>
+              </p>
+            </Link>
           </div>
         </div>
         <div className="table-wrapper pb-5">

@@ -129,9 +129,9 @@ export default function TransactionReportManual() {
       key: 'TrackingID',
     },
     {
-      title: 'Username',
-      dataIndex: 'Username',
-      key: 'Username',
+      title: 'Company Name',
+      dataIndex: 'companyName',
+      key: 'companyName',
     },
     {
       title: 'Transaction Type',
@@ -149,6 +149,11 @@ export default function TransactionReportManual() {
       dataIndex: 'status',
       key: 'status',
       render: text => <span className={`status ${text}`}>{text}</span>,
+    },
+    {
+      title: 'Reported by',
+      dataIndex: 'reportedby',
+      key: 'reportedby',
     },
     {
       title: 'Date Reported',
@@ -180,92 +185,102 @@ export default function TransactionReportManual() {
     {
       key: '1',
       TrackingID: 'ABC-1234',
-      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Awaiting Confirmation',
+      companyName: 'Dangote',
+      reportedby: 'Specter',
     },
     {
       key: '2',
       TrackingID: 'ABC-1234',
-      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
       status: 'Failed',
+      companyName: 'Specter and CO.',
+      reportedby: 'Jide Ola',
     },
     {
       key: '3',
       TrackingID: 'ABC-1234',
-      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
       status: 'Processed',
+      companyName: 'Vigilant',
+      reportedby: 'Dammy',
     },
     {
       key: '4',
       TrackingID: 'ABC-1234',
-      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Approved',
+      companyName: 'DFM',
+      reportedby: 'Jesse Finn',
     },
     {
       key: '5',
       TrackingID: 'ABC-1234',
-      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Declined',
+      companyName: 'Exoil Mobile',
+      reportedby: 'Dammy',
     },
     {
       key: '6',
       TrackingID: 'ABC-1234',
-      Username: 'Specter',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Initiated',
+      companyName: 'Office Space',
+      reportedby: 'Specter',
     },
     {
       key: '7',
       TrackingID: 'ABC-1234',
-      Username: 'Damilare',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Wrong Transfer',
       transactionReference: '12345678901234567890',
       status: 'Awaiting Confirmation',
+      companyName: 'Howard and CO.',
+      reportedby: 'Jide Ola',
     },
     {
       key: '8',
       TrackingID: 'ABC-1234',
-      Username: 'Jideola',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Card Fraud',
       transactionReference: '12345678901234567890',
       status: 'Failed',
+      companyName: 'Opay',
+      reportedby: 'Dammy',
     },
     {
       key: '9',
       TrackingID: 'ABC-1234',
-      Username: 'Henry',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Processed',
+      companyName: 'Film House',
+      reportedby: 'Henry etta',
     },
     {
       key: '10',
       TrackingID: 'ABC-1234',
-      Username: 'Finn',
       datereported: 'Jan 11th, 2022 18:26',
       transactionType: 'Bank Debit',
       transactionReference: '12345678901234567890',
       status: 'Approved',
+      companyName: 'Apple',
+      reportedby: 'Jesse Finn',
     },
   ];
 
@@ -377,6 +392,8 @@ export default function TransactionReportManual() {
           </div>
         </div>
       </div>
+
+      {/* report modal  */}
 
       <Modal
         title={<div className="text-center">Report Details</div>}
@@ -705,7 +722,7 @@ export default function TransactionReportManual() {
       >
         <div className="headings text-center">
           <h4>Add New Report</h4>
-          <p>Fill the fields below to add a new page.</p>
+          <p>Fill the fields below to add a new report.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="bankName" label="Bank Name" className="heights">
@@ -797,7 +814,7 @@ export default function TransactionReportManual() {
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 my-4"
           >
-            Add Report
+            Submit Report
           </Button>
         </Form>
       </Modal>

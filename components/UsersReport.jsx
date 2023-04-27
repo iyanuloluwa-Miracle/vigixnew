@@ -50,10 +50,12 @@ export default function UsersReport() {
   };
 
   const plainOptions = [
+    'Approved',
     'Awaiting Confirmation',
-    'On Tracking',
-    'Recovery',
-    'Completed',
+    'Declined',
+    'Failed',
+    'Processed',
+    'Initiated',
   ];
 
   const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
@@ -236,6 +238,8 @@ export default function UsersReport() {
         </div>
       </div>
 
+      {/* view details modal  */}
+
       <Modal
         title={<div className="text-center">Report Details</div>}
         centered
@@ -329,6 +333,8 @@ export default function UsersReport() {
         </div>
       </Modal>
 
+      {/* filter modal  */}
+
       <Modal
         title="Filter by:"
         centered
@@ -340,7 +346,7 @@ export default function UsersReport() {
       >
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
-            <>
+            <div className="d-flex flex-column gap-1">
               <Checkbox
                 indeterminate={indeterminate}
                 onChange={onCheckAllChange}
@@ -355,7 +361,7 @@ export default function UsersReport() {
                 value={checkedList}
                 onChange={onChanged}
               />
-            </>
+            </div>
           </Form.Item>
 
           <Form.Item

@@ -606,6 +606,8 @@ export default function Roles() {
         </Form>
       </Modal>
 
+      {/* add role modal  */}
+
       <Modal
         centered
         open={modalAddPage}
@@ -620,7 +622,7 @@ export default function Roles() {
         </div>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="roleName" label="Role Name" className="heights">
-            <Input placeholder="Enter role name here" />
+            <Input placeholder="Enter role name" />
           </Form.Item>
           <Form.Item name="Company" label="Company" className="heights">
             <Input placeholder="Company" />
@@ -631,10 +633,12 @@ export default function Roles() {
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 mt-4"
           >
-            Add Page
+            Add Role
           </Button>
         </Form>
       </Modal>
+
+      {/* edit Role modal  */}
 
       <Modal
         centered
@@ -650,7 +654,7 @@ export default function Roles() {
         </div>
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="roleName" label="Role Name" className="heights">
-            <Input placeholder="Enter role name here" />
+            <Input placeholder="Enter role name" />
           </Form.Item>
           <Form.Item name="Company" label="Company" className="heights">
             <Input placeholder="Company" />
