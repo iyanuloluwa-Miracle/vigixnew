@@ -163,6 +163,7 @@ export default function HomeTable() {
       status: 'Awaiting Confirmation',
     },
   ];
+
   return (
     <>
       <div className="container tabling pb-5 ">
