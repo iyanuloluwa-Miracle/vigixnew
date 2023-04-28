@@ -12,13 +12,14 @@ import {
 import { OverlayContext } from './Layout';
 
 export default function Cards() {
-  const { progressIndicator, user, setUser } = useContext(OverlayContext);
+  const { progressIndicator } = useContext(OverlayContext);
+
+  console.log(progressIndicator);
 
   // useEffect(() => {
   // setUser({ name: 'specter', role: 'admin' });
   // }, []);
 
-  console.log(user);
   return (
     <div className="container">
       <div className="row carding my-4">
@@ -33,7 +34,7 @@ export default function Cards() {
                 <p>+500 Today</p>
               </div>
             </div>
-            <h3>1,234,567,890</h3>
+            <h3>{progressIndicator?.users?.totalUsers || '--'}</h3>
             <h6>Total Users</h6>
           </div>
         </div>
@@ -48,7 +49,7 @@ export default function Cards() {
                 <p>+234 Today</p>
               </div>
             </div>
-            <h3>4,567,890</h3>
+            <h3>{progressIndicator?.reports?.totalReports || '--'}</h3>
             <h6>Total Reports</h6>
           </div>
         </div>
@@ -63,7 +64,7 @@ export default function Cards() {
                 <p>+1234 Today</p>
               </div>
             </div>
-            <h3>67,890</h3>
+            <h3>{progressIndicator?.recoveries?.totalRecoveries || '--'}</h3>
             <h6>Total Recoveries</h6>
           </div>
         </div>
@@ -78,7 +79,7 @@ export default function Cards() {
                 <p>+234 Today</p>
               </div>
             </div>
-            <h3>890</h3>
+            <h3>{progressIndicator?.admin?.totalAdminMembers || '--'}</h3>
             <h6>Total Admin Members</h6>
           </div>
         </div>

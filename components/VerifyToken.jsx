@@ -74,6 +74,10 @@ export default function VerifyAccountLayout() {
         } else {
           // not a first timer login, and route to home page
           toast.success(res?.data?.message[0]);
+          console.log(res?.data?.response?.data?.profile);
+          setUser(res?.data?.response?.data?.profile);
+          setProgressIndicator(res?.data?.response?.data?.progressIndicator);
+          console.log(res?.data?.response?.data?.progressIndicator);
           router.push('/home');
         }
       } else if (res?.data?.code == 'VLT_003') {
@@ -82,10 +86,7 @@ export default function VerifyAccountLayout() {
         toast.error(`${res?.data?.message[0]}, Please resend token`);
       } else if (res?.data?.code == 'EXP_000') {
         toast.error(res?.data?.message[0]);
-        setUser(res?.data?.response?.data?.profile);
-        console.log(res?.data?.response?.data?.profile);
-        setProgressIndicator(res?.data?.response?.data?.progressIndicator);
-        console.log(res?.data?.response?.data?.progressIndicator);
+
         router.push('/');
       } else {
         // router.push('/');

@@ -9,13 +9,13 @@ import { useMutation } from '@tanstack/react-query';
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status != 200 || err.response.status != 201) {
     if (err.response.status == 401) {
-      toast.error('Please login to continue');
+      // toast.error('Please login to continue');
     } else {
       toast.error(err.response.data.msg);
     }
   }
   if (err.response.status == 401) {
-    Router.push('/login');
+    Router.push('/');
   }
   return Promise.reject(err);
 });

@@ -135,7 +135,13 @@ export default function Login() {
             </Form.Item>
 
             <Form.Item className="button-wrapper">
-              <Button type="primary" htmlType="submit" disabled={loading}>
+              <Button
+                type="primary"
+                htmlType="submit"
+                disabled={loading}
+                className={loading ? 'our-btn-fade' : ''}
+                loading={loading}
+              >
                 {loading ? (
                   <Spin className="white-spinner" style={{ color: 'white' }} />
                 ) : (

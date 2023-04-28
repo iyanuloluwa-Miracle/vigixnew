@@ -400,6 +400,10 @@ button:hover {
   line-height: 20px;
   color: #ffffff;
 }
+.our-btn-fade .ant-btn-loading-icon {
+  /* background: rgba(125, 0, 2, 0.8) !important; */
+  display: none;
+}
 .small-btn {
   padding: 6px 0.8rem;
 }

@@ -1,12 +1,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { NavDropdown, LogoutIcon } from '../utility/svg';
 import SettingsVector from './Vectors/Settings';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Modal, Form, Button } from 'antd';
+import { OverlayContext } from './Layout';
 
 export default function NavBar() {
+  const { user } = useContext(OverlayContext);
+
   const [logoutModal, setLogoutModal] = useState(false);
 
   const onFinish = value => {
@@ -69,7 +72,7 @@ export default function NavBar() {
                     />
                   </div>
                   <div>
-                    <h5>Atanda Damilare</h5>
+                    <h5>{user?.names || '--'}</h5>
                   </div>
                   {NavDropdown}
                 </Space>
