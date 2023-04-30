@@ -1,20 +1,52 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useState, useContext } from 'react';
+import { useRouter } from 'next/router';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavDropdown, LogoutIcon } from '../utility/svg';
 import SettingsVector from './Vectors/Settings';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
 import { Dropdown, Space, Modal, Form, Button } from 'antd';
 import { OverlayContext } from './Layout';
+import api from '../apis';
+import secureLocalStorage from 'react-secure-storage';
+import { toast } from 'sonner';
 
 export default function NavBar() {
-  const { user } = useContext(OverlayContext);
+  const { user, handleLogOut, setUser } = useContext(OverlayContext);
+  const [loading, setLoading] = useState(false);
+
+  const router = useRouter();
 
   const [logoutModal, setLogoutModal] = useState(false);
 
-  const onFinish = value => {
-    console.log(value);
-    setLogoutModal(false);
+  const onFinish = async value => {
+    setLoading(true);
+
+    try {
+      router.push('/');
+
+      const res = await api.get(
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/token?action=resendToken',
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+
+      console.log(res);
+
+      toast.error(res?.data?.message);
+      handleLogOut();
+      setLogoutModal(false);
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.data?.message[0]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const items = [
@@ -31,6 +63,10 @@ export default function NavBar() {
       ),
     },
   ];
+
+  useEffect(() => {
+    setUser(JSON.parse(secureLocalStorage.getItem('VigUser')));
+  }, []);
 
   return (
     <header>
@@ -88,7 +124,9 @@ export default function NavBar() {
         title={<div className="text-center">Logout</div>}
         centered
         open={logoutModal}
-        onOk={() => setLogoutModal(false)}
+        onOk={() => {
+          setLogoutModal(false);
+        }}
         onCancel={() => setLogoutModal(false)}
         className="our-modal logout"
         footer={null}
@@ -105,15 +143,13 @@ export default function NavBar() {
           </div>
 
           <Form.Item className="buttons logout-buttons">
-            <Link href="/">
-              <Button
-                htmlType="submit"
-                className="me-3"
-                style={{ background: '#7D0003', color: '#fff' }}
-              >
-                Logout
-              </Button>
-            </Link>
+            <Button
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Logout
+            </Button>
 
             <Button
               type="primary"

@@ -183,6 +183,10 @@ a {
   }
 }
 
+.ant-checkbox-indeterminate .ant-checkbox-inner:after {
+  background-color: var(--primary);
+}
+
 .dropdown-anima {
   display: block;
   animation: dropdown-animation 0.3s ease forwards;

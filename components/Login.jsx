@@ -68,6 +68,7 @@ export default function Login() {
       }
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.data?.message[0]);
     } finally {
       setLoading(false);
     }

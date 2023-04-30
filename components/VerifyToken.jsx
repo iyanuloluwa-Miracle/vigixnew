@@ -1,5 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { Button, Form, Row, Col, message, Statistic } from 'antd';
+import React, { useState, useContext, useEffect } from 'react';
+import { Button, Form, Row, Col, message, Statistic, Spin } from 'antd';
 import { useRouter } from 'next/router';
 import OtpField from 'react-otp-field';
 import { toast } from 'sonner';
@@ -76,6 +76,10 @@ export default function VerifyAccountLayout() {
           toast.success(res?.data?.message[0]);
           console.log(res?.data?.response?.data?.profile);
           setUser(res?.data?.response?.data?.profile);
+          secureLocalStorage.setItem(
+            'VigUser',
+            JSON.stringify(res?.data?.response?.data?.profile)
+          );
           setProgressIndicator(res?.data?.response?.data?.progressIndicator);
           console.log(res?.data?.response?.data?.progressIndicator);
           router.push('/home');
@@ -96,6 +100,7 @@ export default function VerifyAccountLayout() {
       console.log(res);
     } catch (error) {
       console.log(error);
+      toast.error(error?.response?.data?.data?.message[0]);
     } finally {
       setLoading(false);
     }
@@ -127,40 +132,39 @@ export default function VerifyAccountLayout() {
     // }
   };
 
-  //   const handleResendCode = async () => {
-  //     setIsClicked(!isClicked);
-  //     const getUser = secureLocalStorage.getItem('userObject');
-  //     const userData = JSON.parse(getUser);
-  //     const payload = {
-  //       email: userData.email,
-  //     };
-  //     try {
-  //       const res = await resendCode.mutateAsync(payload);
-  //       if (res) {
-  //         toast.success(res.data || 'Code resent successfully', {
-  //           autoClose: 2500,
-  //           hideProgressBar: false,
-  //           closeOnClick: true,
-  //           pauseOnHover: true,
-  //           draggable: true,
-  //           progress: undefined,
-  //           pauseOnHover: true,
-  //           position: 'top-right',
-  //         });
-  //       }
-  //     } catch (error) {
-  //       toast.error(error?.response?.data?.message || 'Error resending code', {
-  //         autoClose: 2500,
-  //         hideProgressBar: false,
-  //         closeOnClick: true,
-  //         pauseOnHover: true,
-  //         draggable: true,
-  //         progress: undefined,
-  //         pauseOnHover: true,
-  //         position: 'top-right',
-  //       });
-  //     }
-  //   };
+  useEffect(() => {
+    if (OTP.length == 6) {
+      handleVerify();
+    }
+  }, [OTP]);
+
+  const handleResendCode = async () => {
+    setLoading(true);
+
+    try {
+      const res = await api.post(
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/token?action=resendToken',
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+
+      console.log(res);
+
+      if (res) {
+        toast.success(res?.data?.message || 'Code resent successfully');
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.response?.data?.data?.message[0]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <AuthenticationCoontainer>
@@ -171,11 +175,7 @@ export default function VerifyAccountLayout() {
               <p className="text-center">Enter Token</p>
             </div>
 
-            <Form
-              name="existing-login"
-              className="mt-5"
-              onFinish={handleVerify}
-            >
+            <Form name="existing-login" className="mt-5">
               <OtpContainer>
                 <div className="otp-input-wrapper">
                   <OtpField
@@ -193,15 +193,24 @@ export default function VerifyAccountLayout() {
                 </div>
               </OtpContainer>
               <div>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="form-button verify-btn"
-                  loading={loading}
-                  disabled={OTP.length < 6 ? true : false}
-                >
-                  Verify Token
-                </Button>
+                {loading && (
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    className="form-button verify-btn our-btn-fade"
+                    loading={loading}
+                    disabled={OTP.length < 6 ? true : false}
+                  >
+                    {loading ? (
+                      <Spin
+                        className="white-spinner"
+                        style={{ color: 'white' }}
+                      />
+                    ) : (
+                      <> Verify Token</>
+                    )}
+                  </Button>
+                )}
               </div>
 
               <div className="d-flex justify-content-center mt-lg-3 mt-2">
@@ -226,6 +235,7 @@ export default function VerifyAccountLayout() {
                         textDecoration: 'underline',
                         fontWeight: '700',
                       }}
+                      onClick={() => handleResendCode()}
                     >
                       Resend token
                     </span>

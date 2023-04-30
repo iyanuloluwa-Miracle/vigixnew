@@ -5,6 +5,7 @@ import Footer from './Footer';
 import { routesWithoutNavBars } from '../config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import secureLocalStorage from 'react-secure-storage';
 
 export const OverlayContext = React.createContext({
   overlay: false,
@@ -51,6 +52,12 @@ const Layout = ({ children }) => {
   const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
 
+  const handleLogOut = () => {
+    secureLocalStorage.removeItem('Token');
+    secureLocalStorage.clear();
+    Router.push('/');
+  };
+
   return (
     <OverlayContext.Provider
       value={{
@@ -74,6 +81,7 @@ const Layout = ({ children }) => {
         setDefaultUSerTab,
         isActive,
         setIsActive,
+        handleLogOut,
       }}
     >
       {!routesWithoutNavBars.includes(router.pathname) && <NavBar />}
