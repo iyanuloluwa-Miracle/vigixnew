@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import api from '../apis';
 import { jsonToHex } from '../apis/util';
 import secureLocalStorage from 'react-secure-storage';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Login() {
   const router = useRouter();
@@ -144,7 +145,10 @@ export default function Login() {
                 loading={loading}
               >
                 {loading ? (
-                  <Spin className="white-spinner" style={{ color: 'white' }} />
+                  <Spin
+                    className="white-spinner d-flex align-items-center justify-content-center"
+                    style={{ color: 'white' }}
+                  />
                 ) : (
                   <>Login {ArrowRight}</>
                 )}

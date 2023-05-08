@@ -182,6 +182,9 @@ a {
     transform: translateY(0);
   }
 }
+.ant-spin .ant-spin-dot-item {
+  background: var(--primary);
+}
 
 .ant-checkbox-indeterminate .ant-checkbox-inner:after {
   background-color: var(--primary);

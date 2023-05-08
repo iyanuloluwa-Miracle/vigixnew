@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddIcon from './Vectors/AddIcon';
 import Link from 'next/link';
 import {
@@ -11,21 +11,35 @@ import {
   Modal,
   Form,
   Radio,
+  Skeleton,
   DatePicker,
   Switch,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import api from '../apis';
+import { useRouter } from 'next/router';
+import { useQuery } from '@tanstack/react-query';
+import secureLocalStorage from 'react-secure-storage';
 
 export default function AdminMembersBank() {
   const { Search } = Input;
+  const router = useRouter();
+  const { query } = router;
 
   const [modalOpen, setModalOpen] = useState(false);
   const [modalAddMember, setModalAddMember] = useState(false);
   const [modalEditMember, setModalEditMember] = useState(false);
   const [value, setValue] = useState('all');
+  const [loading, setLoading] = useState(true);
+  const [banksData, setBanksData] = useState(null);
 
   const onFinish = values => {
     console.log('Success:', values);
+  };
+
+  const addNewBank = values => {
+    console.log('Success:', values);
+    setModalAddMember(false);
   };
 
   const onSearch = value => console.log(value);
@@ -45,6 +59,18 @@ export default function AdminMembersBank() {
   const checkChange = checked => {
     console.log(`switch to ${checked}`);
   };
+
+  const token = secureLocalStorage.getItem('Token');
+
+  // const { data: fetchBanks, isLoading: fetchBanksLoading } = useQuery({
+  //   queryKey: ['get_banks', query],
+  //   queryFn: () => {
+  //     return api.fetchBanks(token, {
+  //       ...query,
+  //     });
+  //   },
+  //   onSuccess: () => {},
+  // });
 
   const columns = [
     {
@@ -70,36 +96,50 @@ export default function AdminMembersBank() {
     },
     {
       title: 'Bank logo url',
-      dataIndex: 'logoUrl',
-      key: 'logoUrl',
+      dataIndex: 'bankLogoUrl',
+      key: 'bankLogoUrl',
       responsive: ['lg'],
       render: text => <div className="page-url">{text}</div>,
     },
     {
       title: 'Added by',
-      dataIndex: 'addedBy',
-      key: 'addedBy',
+      dataIndex: 'bankAddedBy',
+      key: 'bankAddedBy',
       render: text => <div className="max-content">{text}</div>,
     },
     {
       title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
+      dataIndex: 'bankStatus',
+      key: 'bankStatus',
       render: text => (
-        <div>
-          <span className={`user-status ${text}`}>{text}</span>
+        <div className="view-btn">
+          <Switch
+            defaultChecked
+            onChange={checkChange}
+            // style={{ height: '18px' }}
+          />
         </div>
       ),
     },
     {
       title: 'Date Added',
-      dataIndex: 'DateTime',
-      key: 'DateTime',
+      dataIndex: 'bankUpdatedAt',
+      key: 'bankUpdatedAt',
     },
     {
       title: ' ',
       dataIndex: 'views',
       key: 'views',
+      render: text => (
+        <div className="view-btn">
+          <Button
+            className="view-report"
+            onClick={() => setModalEditMember(true)}
+          >
+            Edit
+          </Button>
+        </div>
+      ),
     },
   ];
 
@@ -374,6 +414,48 @@ export default function AdminMembersBank() {
     },
   ];
 
+  useEffect(() => {
+    const getBanks = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(
+          'https://safe.staging.vigilant.ng/manage/api/v1.0/banks?action=fetch',
+          {
+            Authorization: `Bearer ${JSON.parse(
+              secureLocalStorage.getItem('Token')
+            )}`,
+            'x-api-key':
+              '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+          }
+        );
+
+        console.log(res);
+        if (
+          res?.data?.code === 'EXP_000' ||
+          res?.data?.code === 'EXP_001' ||
+          res?.data?.code === 'EXP_002' ||
+          res?.data?.code === 'EXP_003' ||
+          res?.data?.code === 'EXP_004' ||
+          res?.data?.code === 'EXP_005' ||
+          res?.data?.code === 'EXP_006' ||
+          res?.data?.code === 'EXP_007' ||
+          res?.data?.code === 'EXP_008'
+        ) {
+          router.push('/');
+        }
+
+        setLoading(false);
+        setBanksData(res?.data?.response);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getBanks();
+  }, [router]);
+
   return (
     <section>
       <div className="container">
@@ -459,22 +541,35 @@ export default function AdminMembersBank() {
 
       <div className="container">
         <div className="table-wrapper ">
-          <Table columns={columns} dataSource={data} />
+          {loading ? (
+            <Skeleton active paragraph={{ rows: 12 }} />
+          ) : (
+            <Table columns={columns} dataSource={banksData?.data} />
+          )}
+
           <div className="our-pagination d-flex justify-content-center">
-            <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
-              <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
-              </p>
-              <div className="dir">
-                <a href="">
-                  <span className="">{DirLeft}</span>
-                </a>
-                <a href="">
-                  <span className="">{DirRight}</span>
-                </a>
+            {!loading && (
+              <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
+                <p className="det">
+                  Page{' '}
+                  <span className="our-color">
+                    {banksData?.pagination[0]?.pageNo}
+                  </span>{' '}
+                  of{' '}
+                  <span className="our-color">
+                    {banksData?.pagination[0]?.totalPages}
+                  </span>
+                </p>
+                <div className="dir">
+                  <a href="">
+                    <span className="">{DirLeft}</span>
+                  </a>
+                  <a href="">
+                    <span className="">{DirRight}</span>
+                  </a>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
@@ -626,12 +721,12 @@ export default function AdminMembersBank() {
           <h4>Add New Bank</h4>
           <p>Fill the fields below to add a new bank.</p>
         </div>
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={addNewBank}>
           <Form.Item name="bankName" label="Bank Name" className="heights">
-            <Input placeholder="Enter bank name" />
+            <Input placeholder="Enter bank name" required />
           </Form.Item>
           <Form.Item name="bankCode" label="Bank Code" className="heights">
-            <Input placeholder="Enter bank code" />
+            <Input placeholder="Enter bank code" required />
           </Form.Item>
 
           <Form.Item
@@ -639,7 +734,7 @@ export default function AdminMembersBank() {
             label="Bank Logo URL"
             className="heights"
           >
-            <Input placeholder="Enter bank code url" />
+            <Input placeholder="Enter bank code url" required />
           </Form.Item>
 
           <Button

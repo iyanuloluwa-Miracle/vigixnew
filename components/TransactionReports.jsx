@@ -404,10 +404,7 @@ export default function TransactionReports() {
           ) : (
             <Table columns={columns} dataSource={reportData} />
           )}
-          {/* {loading ?
-            (<Skeleton active>) : (<Table columns={columns} dataSource={reportData} /> )
-          } */}
-          {/* {!loading && } */}
+
           <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">

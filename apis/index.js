@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { paramsObjectToQueryString } from './paramObjectToQuery';
 import { toast } from 'sonner';
 import { BASE_URL } from '../utility/constants';
-import { useMutation } from '@tanstack/react-query';
+import secureLocalStorage from 'react-secure-storage';
 
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status != 200 || err.response.status != 201) {
@@ -63,6 +63,13 @@ const api = {
     const url = `${BASE_URL}/insight/${teamId}${paramsObjectToQueryString(
       query
     )}`;
+    return api.get(url, headers);
+  },
+
+  fetchBanks: (token, query) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/token?action=resendToken
+    ${paramsObjectToQueryString(query)}`;
     return api.get(url, headers);
   },
 
@@ -289,9 +296,15 @@ const api = {
     return api.get(url, headers);
   },
 
-  fetchGraph: (token, id, query) => {
+  fetchBanks: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/graph-activity/${id}${paramsObjectToQueryString(
+    const url = `${BASE_URL}/log-team${paramsObjectToQueryString(query)}`;
+    return api.get(url, headers);
+  },
+
+  fetchGraph: (token, query) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/banks?action=fetch${paramsObjectToQueryString(
       query
     )}`;
     return api.get(url, headers);

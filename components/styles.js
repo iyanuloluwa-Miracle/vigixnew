@@ -5,7 +5,7 @@ export const OtpContainer = styled.div`
   .otp-input-wrapper {
     display: flex;
     justify-content: center;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
     .otp-field {
       display: flex;
       justify-content: center;

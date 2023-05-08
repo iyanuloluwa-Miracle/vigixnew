@@ -32,8 +32,6 @@ export default function VerifyAccountLayout() {
   //   onSuccess: () => {},
   // });
 
-  console.log(secureLocalStorage.getItem('Token'));
-
   const handleVerify = async () => {
     setLoading(true);
 
@@ -140,9 +138,8 @@ export default function VerifyAccountLayout() {
 
   const handleResendCode = async () => {
     setLoading(true);
-
     try {
-      const res = await api.post(
+      const res = await api.get(
         'https://safe.staging.vigilant.ng/manage/api/v1.0/token?action=resendToken',
         {
           Authorization: `Bearer ${JSON.parse(
@@ -193,24 +190,12 @@ export default function VerifyAccountLayout() {
                 </div>
               </OtpContainer>
               <div>
-                {loading && (
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    className="form-button verify-btn our-btn-fade"
-                    loading={loading}
-                    disabled={OTP.length < 6 ? true : false}
-                  >
-                    {loading ? (
-                      <Spin
-                        className="white-spinner"
-                        style={{ color: 'white' }}
-                      />
-                    ) : (
-                      <> Verify Token</>
-                    )}
-                  </Button>
-                )}
+                <div
+                  style={{ height: '2rem' }}
+                  className="loader d-flex align-items-center justify-content-center"
+                >
+                  {loading && <Spin />}
+                </div>
               </div>
 
               <div className="d-flex justify-content-center mt-lg-3 mt-2">

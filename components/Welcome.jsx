@@ -9,7 +9,9 @@ export default function Welcome() {
       <div className="container">
         <div className="subs row">
           <div className="col-auto">
-            <span>{user?.company} / PRODUCT DESIGNER</span>
+            <span>
+              {user?.company} / {user?.role}
+            </span>
           </div>
           <div className="col-auto left-to-right">
             <span>Thursday, February 2 2023</span>
