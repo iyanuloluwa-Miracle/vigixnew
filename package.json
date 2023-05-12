@@ -20,6 +20,7 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "ckeditor": "^4.12.1",
     "crypto-js": "^4.1.1",
+    "moment": "^2.29.4",
     "next": "13.1.6",
     "node-rsa": "^1.1.1",
     "react": "18.2.0",

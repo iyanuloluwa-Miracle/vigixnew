@@ -165,6 +165,20 @@ export default function VerifyAccountLayout() {
 
   return (
     <AuthenticationCoontainer>
+      {loading && (
+        <div
+          className="position-fixed"
+          style={{
+            top: '0px',
+            left: '0px',
+            right: '0px',
+            bottom: '0px',
+            background: 'rgba(217, 210, 210, 0.2)',
+            zIndex: '10',
+          }}
+        ></div>
+      )}
+
       <Row wrap={false} className="auth-container" justify="center">
         <Col className="" xs={24} sm={24} md={16} lg={12}>
           <React.Fragment>

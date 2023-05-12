@@ -956,6 +956,7 @@ button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 .search-filter .ant-select-selector {
   width: 124px !important;

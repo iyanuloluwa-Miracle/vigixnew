@@ -20,7 +20,7 @@ export default function BreadCrumb({ tab, location }) {
 
   return (
     <>
-      <section className="primary-bg">
+      <section className="primary-bg" style={{ overflowX: 'clip' }}>
         <div className="container">
           {/* <div
             className={backdrop ? 'backdrop d-block' : 'backdrop d-none'}

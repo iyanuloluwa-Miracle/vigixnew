@@ -143,6 +143,7 @@ export default function Login() {
                 disabled={loading}
                 className={loading ? 'our-btn-fade' : ''}
                 loading={loading}
+                style={{ paddingTop: '6px' }}
               >
                 {loading ? (
                   <Spin

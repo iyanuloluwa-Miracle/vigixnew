@@ -14,12 +14,17 @@ import {
   Skeleton,
   DatePicker,
   Switch,
+  Spin,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 import api from '../apis';
 import { useRouter } from 'next/router';
 import { useQuery } from '@tanstack/react-query';
 import secureLocalStorage from 'react-secure-storage';
+import { toast } from 'sonner';
+import { jsonToHex } from '../apis/util';
+import moment from 'moment';
+import { paramsObjectToQueryString } from '../apis/paramObjectToQuery';
 
 export default function AdminMembersBank() {
   const { Search } = Input;
@@ -31,15 +36,53 @@ export default function AdminMembersBank() {
   const [modalEditMember, setModalEditMember] = useState(false);
   const [value, setValue] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [sunmitLoading, setSubmitLoading] = useState(false);
+  const [switchLoading, setSwitchLoading] = useState(false);
   const [banksData, setBanksData] = useState(null);
+  const [editBankData, setEditBankData] = useState(null);
+  const [dataType, setDataType] = useState(null);
+  const [page, setPage] = useState(1);
 
   const onFinish = values => {
     console.log('Success:', values);
   };
 
-  const addNewBank = values => {
+  // add bank function
+
+  const addNewBank = async values => {
     console.log('Success:', values);
+    setSubmitLoading(true);
+
+    const payload = {
+      remote: jsonToHex({ ...values, action: 'add' }),
+    };
+    try {
+      const res = await api.post(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
+          { ...query, page: page }
+        )}`,
+        payload,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+      console.log(res);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitLoading(false);
+    }
     setModalAddMember(false);
+    getBanks();
+  };
+
+  const onChangeCheck = (e, id) => {
+    setValue(e.target.value);
   };
 
   const onSearch = value => console.log(value);
@@ -49,15 +92,6 @@ export default function AdminMembersBank() {
 
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
-  };
-
-  const onChangeCheck = e => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-  };
-
-  const checkChange = checked => {
-    console.log(`switch to ${checked}`);
   };
 
   const token = secureLocalStorage.getItem('Token');
@@ -111,350 +145,233 @@ export default function AdminMembersBank() {
       title: 'Status',
       dataIndex: 'bankStatus',
       key: 'bankStatus',
-      render: text => (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
+      // render: text => (
+
+      // ),
     },
     {
       title: 'Date Added',
-      dataIndex: 'bankUpdatedAt',
-      key: 'bankUpdatedAt',
+      dataIndex: 'bankCreatedAt',
+      key: 'bankCreatedAt',
     },
     {
       title: ' ',
       dataIndex: 'views',
       key: 'views',
-      render: text => (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-  ];
-
-  const data = [
-    {
-      key: '1',
-      bankName: 'Guarantee Trust Bank',
-      bankCode: '1234',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Finn',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '2',
-      bankName: 'First Bank of Nigeria',
-      bankCode: '5567',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Specter',
-      DateTime: 'Jun 12, 2020 22:15',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '3',
-      bankName: 'United Bank for Africa',
-      bankCode: '3453',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Dammy',
-      DateTime: 'May 8, 2021 18:30',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '4',
-      bankName: 'Zenith Bank',
-      bankCode: '6840',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Jide Ola',
-      DateTime: 'Aug 16, 2020 13:17',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '5',
-      bankName: 'Guarantee Trust Bank',
-      bankCode: '3453',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Dan Fodio',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '6',
-      bankName: 'First Bank of Nigeria',
-      bankCode: '4598',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Specter',
-      DateTime: 'Jun 12, 2020 22:15',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '7',
-      bankName: 'United Bank for Africa',
-      bankCode: '4622',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Dammy',
-      DateTime: 'May 8, 2021 18:30',
-      status: (
-        <div className="view-btn">
-          <Switch
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '8',
-      bankName: 'Zenith Bank',
-      bankCode: '4090',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Jide Ola',
-      DateTime: 'Aug 16, 2020 13:17',
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '9',
-      bankName: 'Kuda',
-      bankCode: '4564',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Atanda',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: (
-        <div className="view-btn">
-          <Switch
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '10',
-      bankName: 'Palmpay',
-      bankCode: '4535',
-      logoUrl: 'https://vigilant.com/dashboard/pagemanagement/page',
-      addedBy: 'Ronaldo',
-      DateTime: 'Jun 12, 2020 22:15',
-
-      status: (
-        <div className="view-btn">
-          <Switch
-            defaultChecked
-            onChange={checkChange}
-            // style={{ height: '18px' }}
-          />
-        </div>
-      ),
-      views: (
-        <div className="view-btn">
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit
-          </Button>
-        </div>
-      ),
     },
   ];
 
   useEffect(() => {
-    const getBanks = async () => {
-      setLoading(true);
-      try {
-        const res = await api.get(
-          'https://safe.staging.vigilant.ng/manage/api/v1.0/banks?action=fetch',
-          {
-            Authorization: `Bearer ${JSON.parse(
-              secureLocalStorage.getItem('Token')
-            )}`,
-            'x-api-key':
-              '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-          }
-        );
+    setDataType(
+      banksData?.data?.map((el, index) => ({
+        ...el,
+        bankStatus: (
+          <div className="view-btn">
+            <Switch
+              checked={el?.bankStatus == 'Enabled' ? true : false}
+              onChange={checked => checkChange(checked, el)}
+            />
+          </div>
+        ),
+        bankUpdatedAt: moment(el?.bankCreatedAt).format('Do MMM YYYY'),
+        views: (
+          <div className="view-btn">
+            <Button
+              className="view-report"
+              onClick={() => {
+                setEditBankData(el);
+                setModalEditMember(true);
+              }}
+            >
+              Edit
+            </Button>
+          </div>
+        ),
+      }))
+    );
+  }, [banksData]);
 
-        console.log(res);
-        if (
-          res?.data?.code === 'EXP_000' ||
-          res?.data?.code === 'EXP_001' ||
-          res?.data?.code === 'EXP_002' ||
-          res?.data?.code === 'EXP_003' ||
-          res?.data?.code === 'EXP_004' ||
-          res?.data?.code === 'EXP_005' ||
-          res?.data?.code === 'EXP_006' ||
-          res?.data?.code === 'EXP_007' ||
-          res?.data?.code === 'EXP_008'
-        ) {
-          router.push('/');
+  const getBanks = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
+          { action: 'fetch', ...query, page: page }
+        )}`,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
         }
+      );
 
-        setLoading(false);
-        setBanksData(res?.data?.response);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+      console.log(res);
+      if (
+        res?.data?.code === 'EXP_000' ||
+        res?.data?.code === 'EXP_001' ||
+        res?.data?.code === 'EXP_002' ||
+        res?.data?.code === 'EXP_003' ||
+        res?.data?.code === 'EXP_004' ||
+        res?.data?.code === 'EXP_005' ||
+        res?.data?.code === 'EXP_006' ||
+        res?.data?.code === 'EXP_007' ||
+        res?.data?.code === 'EXP_008'
+      ) {
+        router.push('/');
       }
+
+      setLoading(false);
+      setBanksData(res?.data?.response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBanks();
+  }, [router, page]);
+
+  const handleInputChange = (event, key) => {
+    setEditBankData(prevState => ({
+      ...prevState,
+      [key]: event.target.value,
+    }));
+  };
+
+  // edit bank function
+
+  const editBank = async values => {
+    console.log('Success:', editBankData);
+    // return;
+    setSubmitLoading(true);
+
+    const payload = {
+      remote: jsonToHex({
+        action: 'edit',
+        bankID: editBankData?.bankID,
+        bankName: editBankData?.bankName,
+        bankCode: editBankData?.bankCode,
+        bankLogoUrl: editBankData?.bankLogoUrl,
+      }),
     };
 
-    getBanks();
-  }, [router]);
+    console.log({ payload });
+
+    try {
+      const res = await api.put(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
+          { ...query, page: page }
+        )}`,
+        payload,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+      console.log(res);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitLoading(false);
+    }
+    setModalEditMember(false);
+    setBanksData(prevState => ({
+      ...prevState,
+      data: prevState?.data.map(el => {
+        if (el?.bankID == editBankData?.bankID) {
+          return editBankData;
+        } else {
+          return el;
+        }
+      }),
+    }));
+  };
+
+  // update status function
+
+  const checkChange = async (checked, bankItem) => {
+    console.log(`switch to ${checked}`);
+
+    // setLoading(true);
+
+    console.log(bankItem?.bankID);
+
+    const payload = {
+      remote: jsonToHex({
+        action: 'updateStatus',
+        bankID: bankItem?.bankID,
+        bankStatus: checked ? 'Enabled' : 'Disabled',
+      }),
+    };
+
+    console.log(payload);
+
+    // return;
+
+    try {
+      const res = await api.put(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
+          { ...query, page: page }
+        )}`,
+        payload,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+      console.log(res);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+
+      setBanksData(prevState => ({
+        ...prevState,
+        data: prevState?.data.map(el => {
+          if (el?.bankID == bankItem?.bankID) {
+            return { ...el, bankStatus: checked ? 'Enabled' : 'Disabled' };
+          } else {
+            return el;
+          }
+        }),
+      }));
+
+      // getBanks();
+    }
+  };
+
+  const lastPgae = () => {
+    console.log('yeah');
+    if (page <= 1) {
+      return;
+    } else {
+      setPage(prevState => prevState - 1);
+    }
+  };
+
+  const nextPgae = () => {
+    if (page == banksData?.pagination[0]?.totalPages) {
+      return;
+    } else {
+      setPage(prevState => prevState + 1);
+      console.log(page);
+    }
+    console.log('yeah');
+  };
+
+  console.log(router);
 
   return (
     <section>
@@ -495,16 +412,24 @@ export default function AdminMembersBank() {
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page{' '}
+                <span className="our-color">
+                  {' '}
+                  {banksData?.pagination[0]?.pageNo}
+                </span>{' '}
+                of{' '}
+                <span className="our-color">
+                  {banksData?.pagination[0]?.totalPages}
+                </span>
               </p>
               <div className="dir">
-                <a href="">
-                  <span className="">{DirLeft}</span>
-                </a>
-                <a href="">
-                  <span className="">{DirRight}</span>
-                </a>
+                <span className="" onClick={() => lastPgae()}>
+                  {DirLeft}
+                </span>
+
+                <span className="" onClick={() => nextPgae()}>
+                  {DirRight}
+                </span>
               </div>
             </div>
             <div>
@@ -544,7 +469,7 @@ export default function AdminMembersBank() {
           {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
-            <Table columns={columns} dataSource={banksData?.data} />
+            <Table columns={columns} dataSource={dataType} />
           )}
 
           <div className="our-pagination d-flex justify-content-center">
@@ -561,12 +486,12 @@ export default function AdminMembersBank() {
                   </span>
                 </p>
                 <div className="dir">
-                  <a href="">
+                  <span className="" onClick={() => lastPgae()}>
                     <span className="">{DirLeft}</span>
-                  </a>
-                  <a href="">
+                  </span>
+                  <span className="" onClick={() => nextPgae()}>
                     <span className="">{DirRight}</span>
-                  </a>
+                  </span>
                 </div>
               </div>
             )}
@@ -722,27 +647,64 @@ export default function AdminMembersBank() {
           <p>Fill the fields below to add a new bank.</p>
         </div>
         <Form layout="vertical" onFinish={addNewBank}>
-          <Form.Item name="bankName" label="Bank Name" className="heights">
-            <Input placeholder="Enter bank name" required />
+          <Form.Item
+            name="bankName"
+            label="Bank Name"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your bank name!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter bank name" />
           </Form.Item>
-          <Form.Item name="bankCode" label="Bank Code" className="heights">
-            <Input placeholder="Enter bank code" required />
+          <Form.Item
+            name="bankCode"
+            label="Bank Code"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your bank code!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter bank code" />
           </Form.Item>
 
           <Form.Item
-            name="bankLogoURL"
+            name="bankLogoUrl"
             label="Bank Logo URL"
             className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your bank code url!',
+              },
+            ]}
           >
-            <Input placeholder="Enter bank code url" required />
+            <Input placeholder="Enter bank code url" />
           </Form.Item>
 
           <Button
             htmlType="submit"
             style={{ background: '#7D0003', color: '#FFF' }}
-            className="w-100 mt-4 mb-4"
+            className={
+              sunmitLoading ? 'our-btn-fade w-100 mt-4 mb-4' : 'w-100 mt-4 mb-4'
+            }
+            loading={sunmitLoading}
+            disabled={sunmitLoading}
           >
-            Add Bank
+            {sunmitLoading ? (
+              <Spin
+                className="white-spinner d-flex align-items-center justify-content-center"
+                style={{ color: 'white' }}
+              />
+            ) : (
+              <>Add Bank</>
+            )}
           </Button>
         </Form>
       </Modal>
@@ -761,28 +723,62 @@ export default function AdminMembersBank() {
           <h4>Edit Bank</h4>
           <p>Fill the fields below to edit bank.</p>
         </div>
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="bankName" label="Bank Name" className="heights">
-            <Input placeholder="Enter bank name" />
-          </Form.Item>
-          <Form.Item name="bankCode" label="Bank Code" className="heights">
-            <Input placeholder="Enter bank code" />
-          </Form.Item>
+        <Form layout="vertical" onFinish={editBank}>
+          <div className="heights mb-4">
+            <label htmlFor="bankName" className="pb-2">
+              Bank Name
+            </label>
 
-          <Form.Item
-            name="bankLogoURL"
-            label="Bank Logo URL"
-            className="heights"
-          >
-            <Input placeholder="Enter bank code url" />
-          </Form.Item>
+            <Input
+              placeholder="Enter bank name"
+              value={editBankData?.bankName}
+              id="bankName"
+              onChange={event => handleInputChange(event, 'bankName')}
+            />
+          </div>
+
+          <div className="heights mb-4">
+            <label htmlFor="bankCode" className="pb-2">
+              Bank Name
+            </label>
+            <Input
+              placeholder="Enter bank code"
+              id="bankCode"
+              value={editBankData?.bankCode}
+              onChange={event => handleInputChange(event, 'bankCode')}
+            />
+          </div>
+
+          <div className="heights mb-4">
+            <label htmlFor="bankLogoUrl" className="pb-2">
+              Bank Logo URL
+            </label>
+
+            <Input
+              placeholder="Enter bank code url"
+              id="bankLogoUrl"
+              value={editBankData?.bankLogoUrl}
+              onChange={event => handleInputChange(event, 'bankLogoUrl')}
+            />
+          </div>
 
           <Button
             htmlType="submit"
             style={{ background: '#7D0003', color: '#FFF' }}
-            className="w-100 mt-4 mb-4"
+            className={
+              sunmitLoading ? 'our-btn-fade w-100 mt-4 mb-4' : 'w-100 mt-4 mb-4'
+            }
+            // loading={sunmitLoading}
+            // disabled={sunmitLoading}
           >
-            Submit
+            {sunmitLoading ? (
+              <Spin
+                className="white-spinner d-flex align-items-center justify-content-center"
+                style={{ color: 'white' }}
+              />
+            ) : (
+              <>Submit</>
+            )}
           </Button>
         </Form>
       </Modal>

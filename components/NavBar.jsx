@@ -5,7 +5,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { NavDropdown, LogoutIcon } from '../utility/svg';
 import SettingsVector from './Vectors/Settings';
 import { DownOutlined, SmileOutlined } from '@ant-design/icons';
-import { Dropdown, Space, Modal, Form, Button } from 'antd';
+import { Dropdown, Space, Modal, Form, Button, Spin } from 'antd';
 import { OverlayContext } from './Layout';
 import api from '../apis';
 import secureLocalStorage from 'react-secure-storage';
@@ -23,10 +23,8 @@ export default function NavBar() {
     setLoading(true);
 
     try {
-      router.push('/');
-
       const res = await api.get(
-        'https://safe.staging.vigilant.ng/manage/api/v1.0/token?action=resendToken',
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/logout',
         {
           Authorization: `Bearer ${JSON.parse(
             secureLocalStorage.getItem('Token')
@@ -38,7 +36,7 @@ export default function NavBar() {
 
       console.log(res);
 
-      toast.error(res?.data?.message);
+      toast.success(res?.data?.message);
       handleLogOut();
       setLogoutModal(false);
     } catch (error) {
@@ -148,7 +146,17 @@ export default function NavBar() {
               className="me-3"
               style={{ background: '#7D0003', color: '#fff' }}
             >
-              Logout
+              {loading ? (
+                <div
+                  className="d-flex align-items-center justify-content-center"
+                  style={{ gap: '10px' }}
+                >
+                  <Spin className="white-spinner" style={{ color: 'white' }} />
+                  Logout
+                </div>
+              ) : (
+                <>Logout </>
+              )}
             </Button>
 
             <Button

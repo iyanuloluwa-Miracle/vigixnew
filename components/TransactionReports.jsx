@@ -27,6 +27,7 @@ import api from '../apis';
 import { useQuery } from '@tanstack/react-query';
 import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
+import moment from 'moment';
 
 export default function TransactionReports() {
   const { Search } = Input;
@@ -38,6 +39,7 @@ export default function TransactionReports() {
   const [value, setValue] = useState('all');
   const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
+  const [reportDetails, setReportDetails] = useState(null);
 
   const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
@@ -47,6 +49,8 @@ export default function TransactionReports() {
   const [checkedList2, setCheckedList2] = useState(defaultCheckedList2);
   const [checkAll, setCheckAll] = useState(false);
   const [checkAll2, setCheckAll2] = useState(false);
+  const [transactionType, setTransactionType] = useState('');
+  const [statusType, setStatusType] = useState('');
 
   const router = useRouter();
 
@@ -108,28 +112,14 @@ export default function TransactionReports() {
 
   const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
 
-  const onChanged = list => {
-    setCheckedList(list);
-    setIndeterminate(!!list.length && list.length < plainOptions.length);
-    setCheckAll(list.length === plainOptions.length);
+  const onChanged = e => {
+    console.log('radio checked', e.target.value);
+    setStatusType(e.target.value);
   };
 
-  const onChanged2 = list => {
-    setCheckedList(list);
-    setIndeterminate2(!!list.length && list.length < transactionOptions.length);
-    setCheckAll2(list.length === transactionOptions.length);
-  };
-
-  const onCheckAllChange = e => {
-    setCheckedList(e.target.checked ? plainOptions : []);
-    setIndeterminate(false);
-    setCheckAll(e.target.checked);
-  };
-
-  const onCheckAllChange2 = e => {
-    setCheckedList(e.target.checked ? transactionOptions : []);
-    setIndeterminate2(false);
-    setCheckAll2(e.target.checked);
+  const onChanged2 = e => {
+    console.log('radio checked', e.target.value);
+    setTransactionType(e.target.value);
   };
 
   const columns = [
@@ -168,115 +158,43 @@ export default function TransactionReports() {
       title: ' ',
       dataIndex: 'details',
       key: 'details',
-      render: text => (
-        <div className="view-btn">
-          <Button className="view-profile" onClick={() => setModalReport(true)}>
-            View details
-          </Button>
+      // render: text => (
+      //   <div className="view-btn">
+      //     <Button className="view-profile" onClick={() => setModalReport(true)}>
+      //       View details
+      //     </Button>
 
-          <Button
-            className="view-report"
-            onClick={() => setModalSignature(true)}
-          >
-            Signatures
-          </Button>
-        </div>
-      ),
+      //     <Button
+      //       className="view-report"
+      //       onClick={() => setModalSignature(true)}
+      //     >
+      //       Signatures
+      //     </Button>
+      //   </div>
+      // ),
     },
   ];
 
-  const data = [
-    {
-      key: '1',
-      TrackingID: 'ABC-1234',
-      Username: 'Specter',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Awaiting Confirmation',
-    },
-    {
-      key: '2',
-      TrackingID: 'ABC-1234',
-      Username: 'Damilare',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Wrong Transfer',
-      transactionReference: '12345678901234567890',
-      status: 'Failed',
-    },
-    {
-      key: '3',
-      TrackingID: 'ABC-1234',
-      Username: 'Jideola',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Card Fraud',
-      transactionReference: '12345678901234567890',
-      status: 'Processed',
-    },
-    {
-      key: '4',
-      TrackingID: 'ABC-1234',
-      Username: 'Henry',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Approved',
-    },
-    {
-      key: '5',
-      TrackingID: 'ABC-1234',
-      Username: 'Finn',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Declined',
-    },
-    {
-      key: '6',
-      TrackingID: 'ABC-1234',
-      Username: 'Specter',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Initiated',
-    },
-    {
-      key: '7',
-      TrackingID: 'ABC-1234',
-      Username: 'Damilare',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Wrong Transfer',
-      transactionReference: '12345678901234567890',
-      status: 'Awaiting Confirmation',
-    },
-    {
-      key: '8',
-      TrackingID: 'ABC-1234',
-      Username: 'Jideola',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Card Fraud',
-      transactionReference: '12345678901234567890',
-      status: 'Failed',
-    },
-    {
-      key: '9',
-      TrackingID: 'ABC-1234',
-      Username: 'Henry',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Processed',
-    },
-    {
-      key: '10',
-      TrackingID: 'ABC-1234',
-      Username: 'Finn',
-      datereported: 'Jan 11th, 2022 18:26',
-      transactionType: 'Bank Debit',
-      transactionReference: '12345678901234567890',
-      status: 'Approved',
-    },
-  ];
+  const dataType = reportData?.map((el, index) => ({
+    ...el,
+    details: (
+      <div className="view-btn">
+        <Button
+          className="view-profile"
+          onClick={() => {
+            setReportDetails(el);
+            setModalReport(true);
+          }}
+        >
+          View details
+        </Button>
+
+        <Button className="view-report" onClick={() => setModalSignature(true)}>
+          Signatures
+        </Button>
+      </div>
+    ),
+  }));
 
   // const { data: getReport, isLoading: getReportLoading } = useQuery({
   //   queryKey: ['get_products'],
@@ -328,6 +246,8 @@ export default function TransactionReports() {
 
     getReports();
   }, [router]);
+
+  console.log(reportDetails);
 
   return (
     <section>
@@ -402,7 +322,7 @@ export default function TransactionReports() {
           {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
-            <Table columns={columns} dataSource={reportData} />
+            <Table columns={columns} dataSource={dataType} />
           )}
 
           <div className="our-pagination d-flex justify-content-center">
@@ -494,55 +414,56 @@ export default function TransactionReports() {
               <h6>
                 Transaction date <span>{CalenderIcon}</span>{' '}
               </h6>
-              <p>Jan 11th, 2022</p>
+              <p>
+                {moment(reportDetails?.transactionDate).format('Do MMM, YYYY')}
+              </p>
             </div>
             <div className="col-md-4 col-6">
               <h6>Account number</h6>
-              <p>0123456789</p>
+              <p>{reportDetails?.accountNo}</p>
             </div>
             <div className="col-md-4 col-6">
               <h6>Transaction type</h6>
-              <p>{BankDebit} Bank Debit</p>
+              <p>{reportDetails?.transactionType}</p>
             </div>
           </div>
           <div className="row ">
             <div className="col-md-4 col-6">
               <h6>Transaction reference</h6>
-              <p>0123456789</p>
+              <p>{reportDetails?.referenceID}</p>
             </div>
             <div className="col-md col-6">
               <h6>Bank Name</h6>
               <p>
-                {' '}
                 <span>
                   <Image
-                    src={'/icons/Bank_logo.png'}
+                    src={reportDetails?.bankLogoUrl}
                     alt="bank logo"
                     width={22}
                     height={22}
                   />
                 </span>{' '}
-                Guarantee Trust Bank
+                {reportDetails?.bankName}
               </p>
             </div>
           </div>
           <div className="row">
             <div className="col-md-4 col-6">
               <h6>Tracking ID </h6>
-              <p>ABC-12345</p>
+              <p>{reportDetails?.trackID}</p>
             </div>
             <div className="col-md col-6">
               <h6>
                 Report date <span>{CalenderIcon}</span>{' '}
               </h6>
-              <p>Jan 11th, 2022</p>
+              <p>{moment(reportDetails?.createdAt).format('Do MMM, YYYY')}</p>
             </div>
           </div>
           <div className="row">
             <div className="col-md-6">
               <h6>Reported by</h6>
               <p className="our-primary-color text-decoration-underline">
-                Atanda Damilare
+                {reportDetails?.names}
               </p>
             </div>
           </div>
@@ -556,7 +477,9 @@ export default function TransactionReports() {
           </div>
           <div className="row">
             <h6>Report status</h6>
-            <p className={`statuses ${currentStatus}`}>• {currentStatus}</p>
+            <p className={`statuses ${reportDetails?.status}`}>
+              • {reportDetails?.status}
+            </p>
           </div>
 
           <div className="row notes">
@@ -707,20 +630,9 @@ export default function TransactionReports() {
         <Form layout="vertical" onFinish={onFinish}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
             <>
-              <div>
-                <Checkbox
-                  indeterminate={indeterminate}
-                  onChange={onCheckAllChange}
-                  checked={checkAll}
-                  className="me-3"
-                >
-                  All
-                </Checkbox>
-              </div>
-
-              <Checkbox.Group
+              <Radio.Group
                 options={plainOptions}
-                value={checkedList}
+                value={statusType}
                 onChange={onChanged}
               />
             </>
@@ -732,20 +644,16 @@ export default function TransactionReports() {
             className="wrap-check-group"
           >
             <>
-              <Checkbox
-                indeterminate={indeterminate2}
-                onChange={onCheckAllChange2}
-                checked={checkAll2}
-                className="me-3"
-              >
-                All
-              </Checkbox>
-
-              <Checkbox.Group
-                options={transactionOptions}
-                value={checkedList}
+              <Radio.Group
                 onChange={onChanged2}
-              />
+                value={transactionType}
+                options={transactionOptions}
+              >
+                {/* <Radio value={1}>A</Radio>
+                <Radio value={2}>B</Radio>
+                <Radio value={3}>C</Radio>
+                <Radio value={4}>D</Radio> */}
+              </Radio.Group>
             </>
           </Form.Item>
           <Form.Item

@@ -29,7 +29,8 @@ export default function Cards() {
               <div className="col-auto card-icon">{CardIcon1}</div>
               <div className="col-auto stat">
                 <p className="highs">
-                  <span className="me-1">{highs}</span>20%
+                  <span className="me-1">{highs}</span>
+                  {progressIndicator?.users?.percentage || '0'}%
                 </p>
                 <p>+500 Today</p>
               </div>

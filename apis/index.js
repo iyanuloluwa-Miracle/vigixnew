@@ -9,9 +9,9 @@ import secureLocalStorage from 'react-secure-storage';
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status != 200 || err.response.status != 201) {
     if (err.response.status == 401) {
-      // toast.error('Please login to continue');
+      toast.error('Please login to continue');
     } else {
-      toast.error(err.response.data.msg);
+      console.log(err);
     }
   }
   if (err.response.status == 401) {
