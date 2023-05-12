@@ -30,6 +30,46 @@ import { useRouter } from 'next/router';
 import moment from 'moment';
 import { paramsObjectToQueryString } from '../apis/util';
 
+const plainOptions = [
+  { label: 'Approved', value: 'Approved' },
+  { label: 'Awaiting Confirmation', value: 'Awaiting Confirmation' },
+  { label: 'Declined', value: 'Declined' },
+  { label: 'Failed', value: 'Failed' },
+  { label: 'Processed', value: 'Processed' },
+  { label: 'Initiated', value: 'Initiated' },
+];
+
+const transactionOptions = [
+  { label: 'Bank debit', value: 1 },
+  { label: 'Wrong Transfer', value: 2 },
+  { label: 'Card Fraud', value: 3 },
+];
+
+const options = [
+  {
+    label: 'All',
+    value: 'All',
+  },
+  {
+    label: 'Pending',
+    value: 'Pending',
+  },
+  {
+    label: 'On Tracking',
+    value: 'On Tracking',
+  },
+  {
+    label: 'Recovery',
+    value: 'Recovery',
+  },
+  {
+    label: 'Completed',
+    value: 'Completed',
+  },
+];
+
+const dateFormat = 'YYYY-MM-DD';
+
 export default function TransactionReports() {
   const { Search } = Input;
   const [modalOpen, setModalOpen] = useState(false);
@@ -52,6 +92,8 @@ export default function TransactionReports() {
   const [checkAll2, setCheckAll2] = useState(false);
   const [transactionType, setTransactionType] = useState('');
   const [statusType, setStatusType] = useState('');
+  const [filterParams, setFilterParams] = useState({});
+  const [filterForm] = Form.useForm();
 
   const router = useRouter();
 
@@ -59,8 +101,18 @@ export default function TransactionReports() {
     console.log(`selected ${value}`);
   };
 
-  const onFinish = values => {
-    console.log('Success:', values);
+  const onFinish = async values => {
+    // console.log('Success:', values);
+    const formattedValues = {
+      status: values?.status,
+      transactionType: values?.transactionType,
+      startDate: moment(values?.dateFrom)?.format('YYYY-MM-DD'),
+      endDate: moment(values?.dateTo)?.format('YYYY-MM-DD'),
+    };
+
+    setFilterParams({ ...formattedValues });
+
+    console.log('Success:', formattedValues);
   };
   const onSearch = value => console.log(value);
 
@@ -78,44 +130,6 @@ export default function TransactionReports() {
 
   const [indeterminate, setIndeterminate] = useState(true);
   const [indeterminate2, setIndeterminate2] = useState(true);
-
-  const options = [
-    {
-      label: 'All',
-      value: 'All',
-    },
-    {
-      label: 'Pending',
-      value: 'Pending',
-    },
-    {
-      label: 'On Tracking',
-      value: 'On Tracking',
-    },
-    {
-      label: 'Recovery',
-      value: 'Recovery',
-    },
-    {
-      label: 'Completed',
-      value: 'Completed',
-    },
-  ];
-
-  const plainOptions = [
-    'Approved',
-    'Awaiting Confirmation',
-    'Declined',
-    'Failed',
-    'Processed',
-    'Initiated',
-  ];
-
-  const transactionOptions = [
-    { label: 'Bank debit', value: 1 },
-    { label: 'Wrong Transfer', value: 2 },
-    { label: 'Card Fraud', value: 3 },
-  ];
 
   const onChanged = e => {
     console.log('radio checked', e.target.value);
@@ -215,7 +229,7 @@ export default function TransactionReports() {
       try {
         const res = await api.get(
           `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
-            { action: 'fetch', transactionType: transactionType }
+            { action: 'fetch', ...filterParams }
           )}`,
           {
             Authorization: `Bearer ${JSON.parse(
@@ -252,8 +266,11 @@ export default function TransactionReports() {
     };
 
     getReports();
-  }, [router, transactionType]);
+  }, [router, filterParams]);
 
+  const handleClearForm = () => {
+    filterForm.resetFields();
+  };
   console.log(reportDetails);
 
   return (
@@ -362,52 +379,66 @@ export default function TransactionReports() {
         className="our-modal filter-transaction"
         footer={null}
       >
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="status" label="Status:" className="wrap-check-group">
+        <Form layout="vertical" onFinish={onFinish} form={filterForm}>
+          {/* <Form.Item label="Status:" className="wrap-check-group">
             <>
               <Radio.Group
+                name="status"
                 options={plainOptions}
-                value={statusType}
-                onChange={onChanged}
+                // value={statusType}
+                // onChange={onChanged}
               />
             </>
+          </Form.Item> */}
+
+          <Form.Item name="status" label="Status:" className="wrap-check-group">
+            <Radio.Group>
+              <Radio value="Approved">Approved</Radio>
+              <Radio value="Awaiting Confirmation">Awaiting Confirmation</Radio>
+              <Radio value="Declined">Declined</Radio>
+              <Radio value="Failed">Failed</Radio>
+              <Radio value="Processed">Processed</Radio>
+              <Radio value="Initiated">Initiated</Radio>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
-            name="transactionType:"
+            name="transactionType"
             label="Transaction type:"
             className="wrap-check-group"
           >
-            <>
-              <Radio.Group
-                onChange={onChanged2}
-                value={transactionType}
-                options={transactionOptions}
-              ></Radio.Group>
-            </>
+            <Radio.Group>
+              <Radio value={'1'}>Bank debit</Radio>
+              <Radio value={'2'}>Wrong Transfer</Radio>
+              <Radio value={'3'}>Card Fraud</Radio>
+            </Radio.Group>
           </Form.Item>
-          <Form.Item
-            name="rangeFilter"
-            label="Date range:"
-            className="date-filter"
-          >
-            <Space direction="" className="flex-wrap">
+
+          <label htmlFor="" className="pb-2">
+            Date range:
+          </label>
+          <Space direction="" className="flex-wrap">
+            <Form.Item className="date-filter" name="dateFrom">
               <DatePicker
-                onChange={onChange}
+                // onChange={onChange}
                 placeholder="From"
                 style={{
                   width: 270,
                 }}
               />
+            </Form.Item>
+
+            <Form.Item className="date-filter" name="dateTo">
               <DatePicker
-                onChange={onChange}
+                // onChange={onChange}
+                format={dateFormat}
                 placeholder="To"
                 style={{
                   width: 270,
                 }}
               />
-            </Space>
-          </Form.Item>
+            </Form.Item>
+          </Space>
 
           <Form.Item className="buttons">
             <Button
@@ -421,7 +452,7 @@ export default function TransactionReports() {
             </Button>
             <Button
               type="primary"
-              onClick={() => setModalOpen(false)}
+              onClick={() => handleClearForm()}
               style={{ background: '#FFF', color: '#1C1C1C' }}
             >
               Clear
