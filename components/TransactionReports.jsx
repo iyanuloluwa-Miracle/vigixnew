@@ -28,6 +28,7 @@ import { useQuery } from '@tanstack/react-query';
 import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { paramsObjectToQueryString } from '../apis/util';
 
 export default function TransactionReports() {
   const { Search } = Input;
@@ -110,7 +111,11 @@ export default function TransactionReports() {
     'Initiated',
   ];
 
-  const transactionOptions = ['Bank debit', 'Wrong Transfer', 'Card Fraud'];
+  const transactionOptions = [
+    { label: 'Bank debit', value: 1 },
+    { label: 'Wrong Transfer', value: 2 },
+    { label: 'Card Fraud', value: 3 },
+  ];
 
   const onChanged = e => {
     console.log('radio checked', e.target.value);
@@ -209,7 +214,9 @@ export default function TransactionReports() {
       setLoading(true);
       try {
         const res = await api.get(
-          'https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history?action=fetch',
+          `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
+            { action: 'fetch', transactionType: transactionType }
+          )}`,
           {
             Authorization: `Bearer ${JSON.parse(
               secureLocalStorage.getItem('Token')
@@ -245,7 +252,7 @@ export default function TransactionReports() {
     };
 
     getReports();
-  }, [router]);
+  }, [router, transactionType]);
 
   console.log(reportDetails);
 
@@ -343,6 +350,85 @@ export default function TransactionReports() {
           </div>
         </div>
       </div>
+
+      {/* filter modal  */}
+
+      <Modal
+        title="Filter by:"
+        centered
+        open={modalOpen}
+        onOk={() => setModalOpen(false)}
+        onCancel={() => setModalOpen(false)}
+        className="our-modal filter-transaction"
+        footer={null}
+      >
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="status" label="Status:" className="wrap-check-group">
+            <>
+              <Radio.Group
+                options={plainOptions}
+                value={statusType}
+                onChange={onChanged}
+              />
+            </>
+          </Form.Item>
+
+          <Form.Item
+            name="transactionType:"
+            label="Transaction type:"
+            className="wrap-check-group"
+          >
+            <>
+              <Radio.Group
+                onChange={onChanged2}
+                value={transactionType}
+                options={transactionOptions}
+              ></Radio.Group>
+            </>
+          </Form.Item>
+          <Form.Item
+            name="rangeFilter"
+            label="Date range:"
+            className="date-filter"
+          >
+            <Space direction="" className="flex-wrap">
+              <DatePicker
+                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+              <DatePicker
+                onChange={onChange}
+                placeholder="To"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Space>
+          </Form.Item>
+
+          <Form.Item className="buttons">
+            <Button
+              // type="primary"
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Apply
+            </Button>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Clear
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
 
       {/* notification modal  */}
 
@@ -614,90 +700,6 @@ export default function TransactionReports() {
             </div>
           </div>
         </div>
-      </Modal>
-
-      {/* filter modal  */}
-
-      <Modal
-        title="Filter by:"
-        centered
-        open={modalOpen}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-        className="our-modal filter-transaction"
-        footer={null}
-      >
-        <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="status" label="Status:" className="wrap-check-group">
-            <>
-              <Radio.Group
-                options={plainOptions}
-                value={statusType}
-                onChange={onChanged}
-              />
-            </>
-          </Form.Item>
-
-          <Form.Item
-            name="transactionType:"
-            label="Transaction type:"
-            className="wrap-check-group"
-          >
-            <>
-              <Radio.Group
-                onChange={onChanged2}
-                value={transactionType}
-                options={transactionOptions}
-              >
-                {/* <Radio value={1}>A</Radio>
-                <Radio value={2}>B</Radio>
-                <Radio value={3}>C</Radio>
-                <Radio value={4}>D</Radio> */}
-              </Radio.Group>
-            </>
-          </Form.Item>
-          <Form.Item
-            name="rangeFilter"
-            label="Date range:"
-            className="date-filter"
-          >
-            <Space direction="" className="flex-wrap">
-              <DatePicker
-                onChange={onChange}
-                placeholder="From"
-                style={{
-                  width: 270,
-                }}
-              />
-              <DatePicker
-                onChange={onChange}
-                placeholder="To"
-                style={{
-                  width: 270,
-                }}
-              />
-            </Space>
-          </Form.Item>
-
-          <Form.Item className="buttons">
-            <Button
-              // type="primary"
-              onClick={() => setModalOpen(false)}
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Apply
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => setModalOpen(false)}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
-            >
-              Clear
-            </Button>
-          </Form.Item>
-        </Form>
       </Modal>
     </section>
   );

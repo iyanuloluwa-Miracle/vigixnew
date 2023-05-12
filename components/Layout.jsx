@@ -55,7 +55,7 @@ const Layout = ({ children }) => {
   const handleLogOut = () => {
     secureLocalStorage.removeItem('Token');
     secureLocalStorage.clear();
-    Router.push('/');
+    router.push('/');
   };
 
   return (

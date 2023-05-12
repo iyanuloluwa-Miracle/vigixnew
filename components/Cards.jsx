@@ -14,12 +14,6 @@ import { OverlayContext } from './Layout';
 export default function Cards() {
   const { progressIndicator } = useContext(OverlayContext);
 
-  console.log(progressIndicator);
-
-  // useEffect(() => {
-  // setUser({ name: 'specter', role: 'admin' });
-  // }, []);
-
   return (
     <div className="container">
       <div className="row carding my-4">
@@ -32,7 +26,9 @@ export default function Cards() {
                   <span className="me-1">{highs}</span>
                   {progressIndicator?.users?.percentage || '0'}%
                 </p>
-                <p>+500 Today</p>
+                <p>
+                  +{progressIndicator?.users?.totalUsersForToday || '0'} Today
+                </p>
               </div>
             </div>
             <h3>{progressIndicator?.users?.totalUsers || '--'}</h3>
@@ -45,9 +41,13 @@ export default function Cards() {
               <div className="col-auto card-icon">{CardIcon2}</div>
               <div className="col-auto stat">
                 <p className="lows">
-                  <span className="me-1">{lows}</span>18%
+                  <span className="me-1">{lows}</span>
+                  {progressIndicator?.reports?.percentage || '0'}%
                 </p>
-                <p>+234 Today</p>
+                <p>
+                  +{progressIndicator?.reports?.totalReportsForToday || '0'}{' '}
+                  Today
+                </p>
               </div>
             </div>
             <h3>{progressIndicator?.reports?.totalReports || '--'}</h3>
@@ -60,9 +60,13 @@ export default function Cards() {
               <div className="col-auto card-icon">{CardIcon3}</div>
               <div className="col-auto stat">
                 <p className="highs">
-                  <span className="me-1">{highs}</span>20%
+                  <span className="me-1">{highs}</span>
+                  {progressIndicator?.recoveries?.percentage || '0'}%
                 </p>
-                <p>+1234 Today</p>
+                <p>
+                  +{progressIndicator?.recoveries?.totalReportsForToday || '0'}{' '}
+                  Today
+                </p>
               </div>
             </div>
             <h3>{progressIndicator?.recoveries?.totalRecoveries || '--'}</h3>
@@ -75,9 +79,12 @@ export default function Cards() {
               <div className="col-auto card-icon">{CardIcon4}</div>
               <div className="col-auto stat">
                 <p className="lows">
-                  <span className="me-1">{lows}</span>18%
+                  <span className="me-1">{lows}</span>
+                  {progressIndicator?.admin?.percentage || '0'}%
                 </p>
-                <p>+234 Today</p>
+                <p>
+                  +{progressIndicator?.admin?.totalReportsForToday || '0'} Today
+                </p>
               </div>
             </div>
             <h3>{progressIndicator?.admin?.totalAdminMembers || '--'}</h3>

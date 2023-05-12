@@ -173,7 +173,7 @@ export default function VerifyAccountLayout() {
             left: '0px',
             right: '0px',
             bottom: '0px',
-            background: 'rgba(217, 210, 210, 0.2)',
+            background: 'rgba(217, 210, 210, 0.3)',
             zIndex: '10',
           }}
         ></div>
