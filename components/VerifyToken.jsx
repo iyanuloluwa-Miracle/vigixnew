@@ -79,6 +79,10 @@ export default function VerifyAccountLayout() {
             JSON.stringify(res?.data?.response?.data?.profile)
           );
           setProgressIndicator(res?.data?.response?.data?.progressIndicator);
+          secureLocalStorage.setItem(
+            'progressIndicator',
+            JSON.stringify(res?.data?.response?.data?.progressIndicator)
+          );
           console.log(res?.data?.response?.data?.progressIndicator);
           router.push('/home');
         }
@@ -98,7 +102,9 @@ export default function VerifyAccountLayout() {
       console.log(res);
     } catch (error) {
       console.log(error);
-      toast.error(error?.response?.data?.data?.message[0]);
+      toast.error(
+        error?.response?.data?.data?.message[0] || 'error verifying token'
+      );
     } finally {
       setLoading(false);
     }

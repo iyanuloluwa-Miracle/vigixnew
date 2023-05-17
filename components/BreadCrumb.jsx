@@ -124,7 +124,7 @@ export default function BreadCrumb({ tab, location }) {
                           <Link href={'/admin-members'}>Members</Link>
                         </li>
                         <li>
-                          <Link href={'/admin-members-banks'}>Banks</Link>
+                          <Link href={'/banks'}>Banks</Link>
                         </li>
                       </ul>
                     </div>

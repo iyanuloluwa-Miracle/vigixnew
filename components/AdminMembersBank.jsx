@@ -42,6 +42,7 @@ export default function AdminMembersBank() {
   const [editBankData, setEditBankData] = useState(null);
   const [dataType, setDataType] = useState(null);
   const [page, setPage] = useState(1);
+  const [rows, seRows] = useState(25);
 
   const onFinish = values => {
     console.log('Success:', values);
@@ -88,6 +89,11 @@ export default function AdminMembersBank() {
   const onSearch = value => console.log(value);
   const handleChange = value => {
     console.log(`selected ${value}`);
+  };
+
+  const handlePerPage = value => {
+    console.log(`selected ${value}`);
+    seRows(value);
   };
 
   const onChange = e => {
@@ -193,10 +199,11 @@ export default function AdminMembersBank() {
 
   const getBanks = async () => {
     setLoading(true);
+
     try {
       const res = await api.get(
         `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { action: 'fetch', ...query, page: page }
+          { action: 'fetch', ...query, page: page, rows }
         )}`,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -233,7 +240,7 @@ export default function AdminMembersBank() {
 
   useEffect(() => {
     getBanks();
-  }, [router, page]);
+  }, [router, page, rows]);
 
   const handleInputChange = (event, key) => {
     setEditBankData(prevState => ({
@@ -371,7 +378,9 @@ export default function AdminMembersBank() {
     console.log('yeah');
   };
 
-  console.log(router);
+  // console.log(JSON.parse(secureLocalStorage.getItem('Token')));
+
+  console.log({ banksData });
 
   return (
     <section>
@@ -398,7 +407,7 @@ export default function AdminMembersBank() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by name..."
+                placeholder="Search by Bank Name"
                 onSearch={onSearch}
                 className="searching"
               />
@@ -423,35 +432,47 @@ export default function AdminMembersBank() {
                 </span>
               </p>
               <div className="dir">
-                <span className="" onClick={() => lastPgae()}>
-                  {DirLeft}
-                </span>
+                <button
+                  className="border-0"
+                  onClick={() => lastPgae()}
+                  disabled={banksData?.pagination[0]?.pageNo <= 1}
+                >
+                  <span className="">{DirLeft}</span>
+                </button>
 
-                <span className="" onClick={() => nextPgae()}>
-                  {DirRight}
-                </span>
+                <button
+                  className="border-0"
+                  onClick={() => nextPgae()}
+                  disabled={
+                    banksData?.pagination[0]?.pageNo >=
+                    banksData?.pagination[0]?.totalPages
+                  }
+                >
+                  <span className="">{DirRight}</span>
+                </button>
               </div>
             </div>
             <div>
               <Space wrap>
                 <Select
-                  defaultValue="10 per page'"
+                  defaultValue="10"
                   style={{
-                    width: 120,
+                    width: 125,
                   }}
-                  onChange={handleChange}
+                  onChange={handlePerPage}
+                  value={`${rows} per page`}
                   options={[
                     {
-                      value: '10',
-                      label: '10 per page',
+                      value: '25',
+                      label: '25',
                     },
                     {
                       value: '100',
-                      label: '100 per page',
+                      label: '100',
                     },
                     {
                       value: '1000',
-                      label: '1000 per page',
+                      label: '1000',
                     },
                   ]}
                 />
@@ -469,7 +490,11 @@ export default function AdminMembersBank() {
           {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
-            <Table columns={columns} dataSource={dataType} />
+            <Table
+              columns={columns}
+              dataSource={dataType}
+              pagination={{ pageSize: rows }}
+            />
           )}
 
           <div className="our-pagination d-flex justify-content-center">
@@ -486,12 +511,23 @@ export default function AdminMembersBank() {
                   </span>
                 </p>
                 <div className="dir">
-                  <span className="" onClick={() => lastPgae()}>
+                  <button
+                    className="border-0"
+                    onClick={() => lastPgae()}
+                    disabled={banksData?.pagination[0]?.pageNo <= 1}
+                  >
                     <span className="">{DirLeft}</span>
-                  </span>
-                  <span className="" onClick={() => nextPgae()}>
+                  </button>
+                  <button
+                    className="border-0"
+                    onClick={() => nextPgae()}
+                    disabled={
+                      banksData?.pagination[0]?.pageNo >=
+                      banksData?.pagination[0]?.totalPages
+                    }
+                  >
                     <span className="">{DirRight}</span>
-                  </span>
+                  </button>
                 </div>
               </div>
             )}

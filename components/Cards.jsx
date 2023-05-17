@@ -22,8 +22,18 @@ export default function Cards() {
             <div className="d-flex justify-content-between ">
               <div className="col-auto card-icon">{CardIcon1}</div>
               <div className="col-auto stat">
-                <p className="highs">
-                  <span className="me-1">{highs}</span>
+                <p
+                  className={
+                    progressIndicator?.users?.guage == 'Negative'
+                      ? 'lows'
+                      : 'highs'
+                  }
+                >
+                  <span className="me-1">
+                    {progressIndicator?.users?.guage == 'Negative'
+                      ? lows
+                      : highs}
+                  </span>
                   {progressIndicator?.users?.percentage || '0'}%
                 </p>
                 <p>
@@ -40,8 +50,18 @@ export default function Cards() {
             <div className="d-flex justify-content-between ">
               <div className="col-auto card-icon">{CardIcon2}</div>
               <div className="col-auto stat">
-                <p className="lows">
-                  <span className="me-1">{lows}</span>
+                <p
+                  className={
+                    progressIndicator?.reports?.guage == 'Negative'
+                      ? 'lows'
+                      : 'highs'
+                  }
+                >
+                  <span className="me-1">
+                    {progressIndicator?.reports?.guage == 'Negative'
+                      ? lows
+                      : highs}
+                  </span>
                   {progressIndicator?.reports?.percentage || '0'}%
                 </p>
                 <p>
@@ -59,8 +79,18 @@ export default function Cards() {
             <div className="d-flex justify-content-between ">
               <div className="col-auto card-icon">{CardIcon3}</div>
               <div className="col-auto stat">
-                <p className="highs">
-                  <span className="me-1">{highs}</span>
+                <p
+                  className={
+                    progressIndicator?.recoveries?.guage == 'Negative'
+                      ? 'lows'
+                      : 'highs'
+                  }
+                >
+                  <span className="me-1">
+                    {progressIndicator?.recoveries?.guage == 'Negative'
+                      ? lows
+                      : highs}
+                  </span>
                   {progressIndicator?.recoveries?.percentage || '0'}%
                 </p>
                 <p>
@@ -78,8 +108,18 @@ export default function Cards() {
             <div className="d-flex justify-content-between ">
               <div className="col-auto card-icon">{CardIcon4}</div>
               <div className="col-auto stat">
-                <p className="lows">
-                  <span className="me-1">{lows}</span>
+                <p
+                  className={
+                    progressIndicator?.admin?.guage == 'Negative'
+                      ? 'lows'
+                      : 'highs'
+                  }
+                >
+                  <span className="me-1">
+                    {progressIndicator?.admin?.guage == 'Negative'
+                      ? lows
+                      : highs}
+                  </span>
                   {progressIndicator?.admin?.percentage || '0'}%
                 </p>
                 <p>

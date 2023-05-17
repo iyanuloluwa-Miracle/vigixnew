@@ -1,8 +1,15 @@
 import React, { useContext } from 'react';
 import { OverlayContext } from './Layout';
+import moment from 'moment';
 
 export default function Welcome() {
   const { user } = useContext(OverlayContext);
+
+  // Get the current date and time
+  const currentDateTime = moment();
+
+  // Format the current date and time
+  const formattedDateTime = currentDateTime.format('dddd, MMMM D YYYY');
 
   return (
     <section className="welcom__block">
@@ -14,7 +21,7 @@ export default function Welcome() {
             </span>
           </div>
           <div className="col-auto left-to-right">
-            <span>Thursday, February 2 2023</span>
+            <span>{formattedDateTime}</span>
           </div>
         </div>
         <h2>

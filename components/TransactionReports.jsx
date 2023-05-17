@@ -94,6 +94,7 @@ export default function TransactionReports() {
   const [statusType, setStatusType] = useState('');
   const [filterParams, setFilterParams] = useState({});
   const [filterForm] = Form.useForm();
+  const [rows, seRows] = useState(25);
 
   const router = useRouter();
 
@@ -194,7 +195,7 @@ export default function TransactionReports() {
     },
   ];
 
-  const dataType = reportData?.map((el, index) => ({
+  const dataType = reportData?.data?.map((el, index) => ({
     ...el,
     details: (
       <div className="view-btn">
@@ -223,55 +224,79 @@ export default function TransactionReports() {
   //   onSuccess: () => {},
   // });
 
-  useEffect(() => {
-    const getReports = async () => {
-      setLoading(true);
-      try {
-        const res = await api.get(
-          `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
-            { action: 'fetch', ...filterParams }
+  const handlePerPage = value => {
+    console.log(`selected ${value}`);
+    seRows(value);
+  };
+
+  const getReports = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
+          { action: 'fetch', ...filterParams, rows: rows }
+        )}`,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
           )}`,
-          {
-            Authorization: `Bearer ${JSON.parse(
-              secureLocalStorage.getItem('Token')
-            )}`,
-            'x-api-key':
-              '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-          }
-        );
-
-        console.log(res);
-        if (
-          res?.data?.code === 'EXP_000' ||
-          res?.data?.code === 'EXP_001' ||
-          res?.data?.code === 'EXP_002' ||
-          res?.data?.code === 'EXP_003' ||
-          res?.data?.code === 'EXP_004' ||
-          res?.data?.code === 'EXP_005' ||
-          res?.data?.code === 'EXP_006' ||
-          res?.data?.code === 'EXP_007' ||
-          res?.data?.code === 'EXP_008'
-        ) {
-          router.push('/');
-          console.log('oyah nah');
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
         }
+      );
 
-        setLoading(false);
-        setReportData(res?.data?.response?.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
+      console.log(res);
+      if (
+        res?.data?.code === 'EXP_000' ||
+        res?.data?.code === 'EXP_001' ||
+        res?.data?.code === 'EXP_002' ||
+        res?.data?.code === 'EXP_003' ||
+        res?.data?.code === 'EXP_004' ||
+        res?.data?.code === 'EXP_005' ||
+        res?.data?.code === 'EXP_006' ||
+        res?.data?.code === 'EXP_007' ||
+        res?.data?.code === 'EXP_008'
+      ) {
+        router.push('/');
+        console.log('oyah nah');
       }
-    };
 
+      setLoading(false);
+      setReportData(res?.data?.response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     getReports();
-  }, [router, filterParams]);
+  }, [router, filterParams, rows]);
 
   const handleClearForm = () => {
     filterForm.resetFields();
   };
   console.log(reportDetails);
+
+  const lastPgae = () => {
+    console.log('yeah');
+    if (page <= 1) {
+      return;
+    } else {
+      setPage(prevState => prevState - 1);
+    }
+  };
+
+  const nextPgae = () => {
+    if (page == reportData?.pagination[0]?.totalPages) {
+      return;
+    } else {
+      setPage(prevState => prevState + 1);
+      console.log(page);
+    }
+    console.log('yeah');
+  };
 
   return (
     <section>
@@ -297,30 +322,47 @@ export default function TransactionReports() {
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
+                Page{' '}
+                <span className="our-color">
+                  {reportData?.pagination[0]?.pageNo}
+                </span>{' '}
+                of{' '}
+                <span className="our-color">
+                  {reportData?.pagination[0]?.totalPages}
+                </span>
               </p>
               <div className="dir">
-                <a href="">
+                <button
+                  className="border-0"
+                  onClick={() => lastPgae()}
+                  disabled={reportData?.pagination[0]?.pageNo <= 1}
+                >
                   <span className="">{DirLeft}</span>
-                </a>
-                <a href="">
+                </button>
+                <button
+                  className="border-0"
+                  onClick={() => nextPgae()}
+                  disabled={
+                    reportData?.pagination[0]?.pageNo >=
+                    reportData?.pagination[0]?.totalPages
+                  }
+                >
                   <span className="">{DirRight}</span>
-                </a>
+                </button>
               </div>
             </div>
             <div>
               <Space wrap>
                 <Select
-                  defaultValue="10 per page'"
+                  defaultValue="25"
                   style={{
                     width: 120,
                   }}
-                  onChange={handleChange}
+                  onChange={handlePerPage}
                   options={[
                     {
-                      value: '10',
-                      label: '10 per page',
+                      value: '25',
+                      label: '25 per page',
                     },
                     {
                       value: '100',
@@ -346,11 +388,15 @@ export default function TransactionReports() {
           {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
-            <Table columns={columns} dataSource={dataType} />
+            <Table
+              columns={columns}
+              dataSource={dataType}
+              pagination={{ pageSize: rows }}
+            />
           )}
 
           <div className="our-pagination d-flex justify-content-center">
-            <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
+            {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
                 Page <span className="our-color">2</span> of{' '}
                 <span className="our-color">1000</span>
@@ -363,7 +409,41 @@ export default function TransactionReports() {
                   <span className="">{DirRight}</span>
                 </a>
               </div>
-            </div>
+            </div> */}
+
+            {!loading && (
+              <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
+                <p className="det">
+                  Page{' '}
+                  <span className="our-color">
+                    {reportData?.pagination[0]?.pageNo}
+                  </span>{' '}
+                  of{' '}
+                  <span className="our-color">
+                    {reportData?.pagination[0]?.totalPages}
+                  </span>
+                </p>
+                <div className="dir">
+                  <button
+                    className="border-0"
+                    onClick={() => lastPgae()}
+                    disabled={reportData?.pagination[0]?.pageNo <= 1}
+                  >
+                    <span className="">{DirLeft}</span>
+                  </button>
+                  <button
+                    className="border-0"
+                    onClick={() => nextPgae()}
+                    disabled={
+                      reportData?.pagination[0]?.pageNo >=
+                      reportData?.pagination[0]?.totalPages
+                    }
+                  >
+                    <span className="">{DirRight}</span>
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
