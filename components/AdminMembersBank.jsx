@@ -378,8 +378,6 @@ export default function AdminMembersBank() {
     console.log('yeah');
   };
 
-  // console.log(JSON.parse(secureLocalStorage.getItem('Token')));
-
   console.log({ banksData });
 
   return (
@@ -543,19 +541,18 @@ export default function AdminMembersBank() {
         open={modalOpen}
         onOk={() => setModalOpen(false)}
         onCancel={() => setModalOpen(false)}
-        className="our-modal"
+        className="our-modal filter-transaction"
         footer={null}
       >
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="status" label="Status:">
+          <Form.Item name="bankStatus" label="Status:">
             <Radio.Group onChange={onChangeCheck} value={value}>
-              <Radio value={'all'}>All</Radio>
-              <Radio value={'active'}>Active</Radio>
-              <Radio value={'inactive'}>Inactive</Radio>
+              <Radio value="Enabled">Enabled</Radio>
+              <Radio value="Disabled">Disabled</Radio>
             </Radio.Group>
           </Form.Item>
 
-          <Space direction="" className="flex-wrap">
+          {/* <Space direction="" className="flex-wrap">
             <Form.Item name="Company" label="Company:" className="range-filter">
               <Select
                 defaultValue="All"
@@ -623,7 +620,7 @@ export default function AdminMembersBank() {
                 ]}
               />
             </Form.Item>
-          </Space>
+          </Space> */}
 
           <Form.Item
             name="dateCreated"
@@ -631,13 +628,16 @@ export default function AdminMembersBank() {
             className="date-filter"
           >
             <Space direction="" className="flex-wrap">
-              <DatePicker
-                onChange={onChange}
-                placeholder="From"
-                style={{
-                  width: 270,
-                }}
-              />
+              <Form.Item className="date-filter" name="startDate">
+                <DatePicker
+                  onChange={onChange}
+                  placeholder="From"
+                  style={{
+                    width: 270,
+                  }}
+                />
+              </Form.Item>
+
               <DatePicker
                 onChange={onChange}
                 placeholder="To"

@@ -81,6 +81,7 @@ export default function TransactionReports() {
   const [loading, setLoading] = useState(true);
   const [reportData, setReportData] = useState(null);
   const [reportDetails, setReportDetails] = useState(null);
+  const [page, setPage] = useState(1);
 
   const [currentStatus, setCurrentStatus] = useState('Awaiting Confirmation');
 
@@ -104,43 +105,17 @@ export default function TransactionReports() {
 
   const onFinish = async values => {
     // console.log('Success:', values);
+
     const formattedValues = {
       status: values?.status,
       transactionType: values?.transactionType,
-      startDate: moment(values?.dateFrom)?.format('YYYY-MM-DD'),
-      endDate: moment(values?.dateTo)?.format('YYYY-MM-DD'),
+      startDate: values?.startDate?.format('YYYY-MM-DD'),
+      endDate: values?.endDate?.format('YYYY-MM-DD'),
     };
 
     setFilterParams({ ...formattedValues });
-
-    console.log('Success:', formattedValues);
   };
   const onSearch = value => console.log(value);
-
-  const onChangeCheck = e => {
-    console.log('radio checked', e.target.value);
-    setValue(e.target.value);
-  };
-  const onChange = e => {
-    console.log(`checked = ${e.target.checked}`);
-  };
-
-  const onChanges = checkedValues => {
-    console.log('checked = ', checkedValues);
-  };
-
-  const [indeterminate, setIndeterminate] = useState(true);
-  const [indeterminate2, setIndeterminate2] = useState(true);
-
-  const onChanged = e => {
-    console.log('radio checked', e.target.value);
-    setStatusType(e.target.value);
-  };
-
-  const onChanged2 = e => {
-    console.log('radio checked', e.target.value);
-    setTransactionType(e.target.value);
-  };
 
   const columns = [
     {
@@ -234,7 +209,7 @@ export default function TransactionReports() {
     try {
       const res = await api.get(
         `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
-          { action: 'fetch', ...filterParams, rows: rows }
+          { action: 'fetch', ...filterParams, rows: rows, page: page }
         )}`,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -275,9 +250,10 @@ export default function TransactionReports() {
   }, [router, filterParams, rows]);
 
   const handleClearForm = () => {
+    console.log('yeahhhhh');
+    // filterForm.resetFields();
     filterForm.resetFields();
   };
-  console.log(reportDetails);
 
   const lastPgae = () => {
     console.log('yeah');
@@ -359,18 +335,19 @@ export default function TransactionReports() {
                     width: 120,
                   }}
                   onChange={handlePerPage}
+                  value={`${rows} per page`}
                   options={[
                     {
                       value: '25',
-                      label: '25 per page',
+                      label: '25',
                     },
                     {
                       value: '100',
-                      label: '100 per page',
+                      label: '100',
                     },
                     {
                       value: '1000',
-                      label: '1000 per page',
+                      label: '1000',
                     },
                   ]}
                 />
@@ -459,18 +436,7 @@ export default function TransactionReports() {
         className="our-modal filter-transaction"
         footer={null}
       >
-        <Form layout="vertical" onFinish={onFinish} form={filterForm}>
-          {/* <Form.Item label="Status:" className="wrap-check-group">
-            <>
-              <Radio.Group
-                name="status"
-                options={plainOptions}
-                // value={statusType}
-                // onChange={onChanged}
-              />
-            </>
-          </Form.Item> */}
-
+        {/* <Form form={filterForm} onFinish={onFinish}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
             <Radio.Group>
               <Radio value="Approved">Approved</Radio>
@@ -494,13 +460,11 @@ export default function TransactionReports() {
             </Radio.Group>
           </Form.Item>
 
-          <label htmlFor="" className="pb-2">
-            Date range:
-          </label>
           <Space direction="" className="flex-wrap">
-            <Form.Item className="date-filter" name="dateFrom">
+            <Form.Item className="date-filter" name="startDate">
               <DatePicker
-                // onChange={onChange}
+                // defaultValue={null}
+                format={dateFormat}
                 placeholder="From"
                 style={{
                   width: 270,
@@ -508,9 +472,9 @@ export default function TransactionReports() {
               />
             </Form.Item>
 
-            <Form.Item className="date-filter" name="dateTo">
+            <Form.Item className="date-filter" name="endDate">
               <DatePicker
-                // onChange={onChange}
+                // defaultValue={null}
                 format={dateFormat}
                 placeholder="To"
                 style={{
@@ -519,6 +483,76 @@ export default function TransactionReports() {
               />
             </Form.Item>
           </Space>
+
+          <Form.Item>
+            <Button
+              type="primary"
+              onClick={() => setModalOpen(false)}
+              htmlType="submit"
+              className="me-3"
+              style={{ background: '#7D0003', color: '#fff' }}
+            >
+              Apply
+            </Button>
+          
+
+            <Button
+              type="primary"
+              onClick={() => handleClearForm()}
+              style={{ background: '#FFF', color: '#1C1C1C' }}
+            >
+              Clear
+            </Button>
+          </Form.Item>
+        </Form> */}
+
+        <Form layout="vertical" onFinish={onFinish} form={filterForm}>
+          <Form.Item name="status" label="Status:" className="wrap-check-group">
+            <Radio.Group>
+              <Radio value="Approved">Approved</Radio>
+              <Radio value="Awaiting Confirmation">Awaiting Confirmation</Radio>
+              <Radio value="Declined">Declined</Radio>
+              <Radio value="Failed">Failed</Radio>
+              <Radio value="Processed">Processed</Radio>
+              <Radio value="Initiated">Initiated</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="transactionType"
+            label="Transaction type:"
+            className="wrap-check-group"
+          >
+            <Radio.Group>
+              <Radio value={'1'}>Bank debit</Radio>
+              <Radio value={'2'}>Wrong Transfer</Radio>
+              <Radio value={'3'}>Card Fraud</Radio>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item className="date-filter" name="startDate">
+            <DatePicker
+              // defaultValue={null}
+              format={dateFormat}
+              placeholder="From"
+              style={{
+                width: 270,
+              }}
+            />
+          </Form.Item>
+
+          <Form.Item className="date-filter" name="endDate">
+            <DatePicker
+              // defaultValue={null}
+              format={dateFormat}
+              placeholder="To"
+              style={{
+                width: 270,
+              }}
+            />
+          </Form.Item>
+
+          <Space direction="" className="flex-wrap"></Space>
 
           <Form.Item className="buttons">
             <Button

@@ -83,6 +83,11 @@ export default function BreadCrumb({ tab, location }) {
                             Authorized Manual Transaction reports
                           </Link>
                         </li>
+                        <li>
+                          <Link href={'/transaction-type'}>
+                            Transaction types
+                          </Link>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -125,6 +130,9 @@ export default function BreadCrumb({ tab, location }) {
                         </li>
                         <li>
                           <Link href={'/banks'}>Banks</Link>
+                        </li>
+                        <li>
+                          <Link href={'/partners'}>Partners</Link>
                         </li>
                       </ul>
                     </div>

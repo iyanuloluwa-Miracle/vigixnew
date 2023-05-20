@@ -5,9 +5,13 @@ import { paramsObjectToQueryString } from './paramObjectToQuery';
 import { toast } from 'sonner';
 import { BASE_URL } from '../utility/constants';
 import secureLocalStorage from 'react-secure-storage';
+import { message } from 'antd';
 
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status != 200 || err.response.status != 201) {
+    if (err.code === 'ERR_NETWORK') {
+      message.error('Network Error, please try again');
+    }
     if (err.response.status == 401) {
       toast.error('Please login to continue');
     } else {
@@ -25,13 +29,11 @@ const api = {
     const url = `${BASE_URL}/signup`;
     return api.post(url, payload);
   },
-
   loginAccount: (payload, token) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/login`;
     return api.post(url, payload, headers);
   },
-
   verifyToken: (payload, token) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/token`;

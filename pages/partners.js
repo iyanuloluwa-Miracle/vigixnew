@@ -1,9 +1,7 @@
-import React from 'react';
-import AdminMembers from '../components/AdminMembers';
 import BreadCrumb from '../components/BreadCrumb';
 import Welcome from '../components/Welcome';
 
-export default function adminmembers() {
+export default function partners() {
   return (
     <>
       <Welcome />
@@ -11,7 +9,6 @@ export default function adminmembers() {
         tab={'adminMembers'}
         location={[{ link: '', location: 'Admin Members' }]}
       />
-      <AdminMembers />
     </>
   );
 }
