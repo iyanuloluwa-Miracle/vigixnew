@@ -405,17 +405,18 @@ export default function AdminMembersBank() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by Bank Name"
+                placeholder="Search by Bank name, bank code,..."
                 onSearch={onSearch}
                 className="searching"
               />
             </div>
-            <div className="filter-btn-wrapper">
+            {/* <div className="filter-btn-wrapper">
               <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
               </Button>
-            </div>
+            </div> */}
           </div>
+
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
@@ -535,7 +536,7 @@ export default function AdminMembersBank() {
 
       {/* filter by modal */}
 
-      <Modal
+      {/* <Modal
         title="Filter by:"
         centered
         open={modalOpen}
@@ -551,76 +552,6 @@ export default function AdminMembersBank() {
               <Radio value="Disabled">Disabled</Radio>
             </Radio.Group>
           </Form.Item>
-
-          {/* <Space direction="" className="flex-wrap">
-            <Form.Item name="Company" label="Company:" className="range-filter">
-              <Select
-                defaultValue="All"
-                style={{
-                  width: 270,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: 'All',
-                    label: 'All',
-                  },
-                  {
-                    value: 'Vigilant',
-                    label: 'Vigilant',
-                  },
-                  {
-                    value: 'CBN',
-                    label: 'CBN',
-                  },
-                  {
-                    value: 'NPF',
-                    label: 'NPF',
-                  },
-                  {
-                    value: 'E-tranzact',
-                    label: 'E-tranzact',
-                  },
-                ]}
-              />
-            </Form.Item>
-
-            <Form.Item
-              name="Role"
-              label="Role access:"
-              className="range-filter"
-            >
-              <Select
-                defaultValue="All"
-                style={{
-                  width: 270,
-                }}
-                onChange={handleChange}
-                options={[
-                  {
-                    value: 'All',
-                    label: 'All',
-                  },
-                  {
-                    value: 'Customer support',
-                    label: 'Customer support',
-                  },
-                  {
-                    value: 'Consumer protection',
-                    label: 'Consumer protection',
-                  },
-                  {
-                    value: 'Inspector general',
-                    label: 'Inspector general',
-                  },
-                  {
-                    value: 'E-tranzact',
-                    label: 'E-tranzact',
-                  },
-                ]}
-              />
-            </Form.Item>
-          </Space> */}
 
           <Form.Item
             name="dateCreated"
@@ -666,7 +597,7 @@ export default function AdminMembersBank() {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
 
       {/* add Bank modal */}
 

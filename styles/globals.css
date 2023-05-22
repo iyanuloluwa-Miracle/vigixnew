@@ -736,8 +736,7 @@ button:hover {
   height: auto;
   border: none;
 }
-.Login-page .username-input input {
-}
+
 .Login-page form .ant-btn {
   background: var(--primary2);
   border-radius: 4px;
@@ -1079,9 +1078,7 @@ button:hover {
   padding: 1rem 2rem;
   height: auto;
 }
-.our-modal label {
-  /* font-family: 'dm-sans-medium'; */
-}
+
 .our-modal p {
   font-weight: 400;
   font-size: 0.9rem;
@@ -1416,18 +1413,10 @@ button:hover {
   background: #150404;
 }
 
-.page-navigation .nav-item .parent:hover .backdrop {
-  /* display: block; */
-  /* visibility: visible; */
-}
-
 .page-navigation .nav-item .parent .backdrop:hover {
   visibility: hidden;
 }
-.page-navigation .nav-item .parent .backdrop:hover {
-  /* display: none; */
-  /* visibility: hidden; */
-}
+
 /* user details  */
 .details-header {
   margin-top: 40px;

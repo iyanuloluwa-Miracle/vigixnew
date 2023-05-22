@@ -96,6 +96,7 @@ export default function TransactionReports() {
   const [filterParams, setFilterParams] = useState({});
   const [filterForm] = Form.useForm();
   const [rows, seRows] = useState(25);
+  const [search, setSearch] = useState(null);
 
   const router = useRouter();
 
@@ -115,7 +116,10 @@ export default function TransactionReports() {
 
     setFilterParams({ ...formattedValues });
   };
-  const onSearch = value => console.log(value);
+  const onSearch = value => {
+    setPage(1);
+    setSearch(value);
+  };
 
   const columns = [
     {
@@ -209,7 +213,7 @@ export default function TransactionReports() {
     try {
       const res = await api.get(
         `https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history${paramsObjectToQueryString(
-          { action: 'fetch', ...filterParams, rows: rows, page: page }
+          { action: 'fetch', ...filterParams, rows: rows, page: page, search }
         )}`,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -247,7 +251,7 @@ export default function TransactionReports() {
 
   useEffect(() => {
     getReports();
-  }, [router, filterParams, rows]);
+  }, [router, filterParams, rows, search]);
 
   const handleClearForm = () => {
     console.log('yeahhhhh');
@@ -284,7 +288,7 @@ export default function TransactionReports() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by name..."
+                placeholder="Search by Username, tracking ID, reference..."
                 onSearch={onSearch}
                 className="searching"
               />
