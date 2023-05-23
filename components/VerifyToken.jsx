@@ -63,6 +63,8 @@ export default function VerifyAccountLayout() {
         }
       );
 
+      console.log({ res });
+
       if (res?.data?.code === 'OK') {
         // checking if it actually verified successfully
         if (res?.data?.response?.changePassword === 'Yes') {

@@ -43,6 +43,7 @@ export default function AdminMembersBank() {
   const [dataType, setDataType] = useState(null);
   const [page, setPage] = useState(1);
   const [rows, seRows] = useState(25);
+  const [search, setSearch] = useState(null);
 
   const onFinish = values => {
     console.log('Success:', values);
@@ -86,9 +87,9 @@ export default function AdminMembersBank() {
     setValue(e.target.value);
   };
 
-  const onSearch = value => console.log(value);
-  const handleChange = value => {
-    console.log(`selected ${value}`);
+  const onSearch = value => {
+    setPage(1);
+    setSearch(value);
   };
 
   const handlePerPage = value => {
@@ -203,7 +204,7 @@ export default function AdminMembersBank() {
     try {
       const res = await api.get(
         `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { action: 'fetch', ...query, page: page, rows }
+          { action: 'fetch', ...query, page: page, rows, search }
         )}`,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -240,7 +241,7 @@ export default function AdminMembersBank() {
 
   useEffect(() => {
     getBanks();
-  }, [router, page, rows]);
+  }, [router, page, rows, search]);
 
   const handleInputChange = (event, key) => {
     setEditBankData(prevState => ({
@@ -360,7 +361,6 @@ export default function AdminMembersBank() {
   };
 
   const lastPgae = () => {
-    console.log('yeah');
     if (page <= 1) {
       return;
     } else {
@@ -373,9 +373,7 @@ export default function AdminMembersBank() {
       return;
     } else {
       setPage(prevState => prevState + 1);
-      console.log(page);
     }
-    console.log('yeah');
   };
 
   console.log({ banksData });

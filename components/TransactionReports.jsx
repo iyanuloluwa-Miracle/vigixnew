@@ -119,6 +119,7 @@ export default function TransactionReports() {
   const onSearch = value => {
     setPage(1);
     setSearch(value);
+    console.log(value);
   };
 
   const columns = [

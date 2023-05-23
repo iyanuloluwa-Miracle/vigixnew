@@ -1,7 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import ExportZone from './ExportZone';
-import AddIcon from './Vectors/AddIcon';
-import api from '../apis';
+import React, { useState } from 'react';
 import {
   Button,
   Input,
@@ -18,109 +15,44 @@ import {
   Spin,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
-import secureLocalStorage from 'react-secure-storage';
+import AddIcon from './Vectors/AddIcon';
 
-const typeData = [
-  {
-    id: 1,
-    transactionType: 'Bank Fraud',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-  },
-  {
-    id: 2,
-    transactionType: 'Wrong Transfer',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-  },
-  {
-    id: 3,
-    transactionType: 'Card Fraud',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-  },
-  {
-    id: 4,
-    transactionType: 'Bank Fraud',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-  },
-  {
-    id: 5,
-    transactionType: 'Wrong Transfer',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-  },
-  {
-    id: 6,
-    transactionType: 'Card Fraud',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-  },
-  {
-    id: 7,
-    transactionType: 'Bank Fraud',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-  },
-  {
-    id: 8,
-    transactionType: 'Wrong Transfer',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-  },
-  {
-    id: 9,
-    transactionType: 'Card Fraud',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-  },
-  {
-    id: 10,
-    transactionType: 'Card Fraud',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-  },
-];
-
-const dateFormat = 'YYYY-MM-DD';
-
-export default function TransactionType() {
+export default function Partners() {
   const { Search } = Input;
-
-  const [loading, setLoading] = useState(true);
+  const [modalAddPartner, setModalAddPartner] = useState(false);
+  const [sunmitLoading, setSubmitLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [rows, seRows] = useState(25);
-  const [typeData, setTypeData] = useState(null);
-  const [sunmitLoading, setSubmitLoading] = useState(false);
-  const [modalAddTransactionType, setModalAddTransactionType] = useState(false);
-  const [modalEditTransactionType, setModalEditTransactionType] =
-    useState(false);
-  const [filterModal, setFilterModal] = useState(false);
-  const [filterForm] = Form.useForm();
+  const [search, setSearch] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [modalEditPartners, setModalEditPartners] = useState(false);
 
-  const onSearch = value => console.log(value);
+  const onSearch = value => {
+    // setPage(1);
+    // setSearch(value);
+  };
 
   const columns = [
     {
-      title: 'Transaction Type',
-      dataIndex: 'transactionType',
-      key: 'transactionType',
+      title: ' ',
+      dataIndex: 'checkbox',
+      key: 'checkbox',
       render: text => (
         <>
-          <Checkbox className="me-3" /> {text}
+          <Checkbox className="me-3" />
         </>
       ),
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Logo url',
+      dataIndex: 'logoURL',
+      key: 'logoURL',
+      render: text => <div className="page-url">{text}</div>,
     },
     {
       title: 'Added by',
@@ -154,8 +86,7 @@ export default function TransactionType() {
           <Button
             className="view-report"
             onClick={() => {
-              //   setEditBankData(el);
-              setModalEditTransactionType(true);
+              setModalEditPartners(true);
             }}
           >
             Edit
@@ -165,86 +96,110 @@ export default function TransactionType() {
     },
   ];
 
-  //   const lastPgae = () => {
-  //     console.log('yeah');
-  //     if (page <= 1) {
-  //       return;
-  //     } else {
-  //       setPage(prevState => prevState - 1);
-  //     }
-  //   };
+  const typeData = [
+    {
+      id: 1,
+      name: 'Central Bank of Nigeria (CBN)',
+      addedBy: 'Dammy',
+      Status: 'Enabled',
+      dateCreated: 'Sept 17, 2022 11:20',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 2,
+      name: 'The Nigeria Police Force (NPF)',
+      addedBy: 'Jide Ola',
+      Status: 'Disabled',
+      dateCreated: 'Jun 12, 2020 22:15',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 3,
+      name: 'NIBSS',
+      addedBy: 'Specter',
+      Status: 'Enabled',
+      dateCreated: 'May 8, 2021 18:30',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 4,
+      name: 'Central Bank of Nigeria (CBN)',
+      addedBy: 'Dammy',
+      Status: 'Enabled',
+      dateCreated: 'Sept 17, 2022 11:20',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 5,
+      name: 'The Nigeria Police Force (NPF)',
+      addedBy: 'Jide Ola',
+      Status: 'Disabled',
+      dateCreated: 'Jun 12, 2020 22:15',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 6,
+      name: 'NIBSS',
+      addedBy: 'Specter',
+      Status: 'Enabled',
+      dateCreated: 'May 8, 2021 18:30',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 7,
+      name: 'Central Bank of Nigeria (CBN)',
+      addedBy: 'Dammy',
+      Status: 'Enabled',
+      dateCreated: 'Sept 17, 2022 11:20',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 8,
+      name: 'The Nigeria Police Force (NPF)',
+      addedBy: 'Jide Ola',
+      Status: 'Disabled',
+      dateCreated: 'Jun 12, 2020 22:15',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 9,
+      name: 'NIBSS',
+      addedBy: 'Specter',
+      Status: 'Enabled',
+      dateCreated: 'May 8, 2021 18:30',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+    {
+      id: 10,
+      name: 'Central Bank of Nigeria (CBN)',
+      addedBy: 'Specter',
+      Status: 'Enabled',
+      dateCreated: 'May 8, 2021 18:30',
+      logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
+    },
+  ];
 
-  //   const nextPgae = () => {
-  //     if (page == reportData?.pagination[0]?.totalPages) {
-  //       return;
-  //     } else {
-  //       setPage(prevState => prevState + 1);
-  //       console.log(page);
-  //     }
-  //     console.log('yeah');
-  //   };
-
-  const addNewType = values => {
-    console.log(`success in : ${values}`);
+  const addPartner = values => {
+    console.log(values);
   };
 
-  const addEditType = values => {
-    console.log(`success in : ${values}`);
+  const editPartner = values => {
+    console.log(values);
   };
-
-  const onFinish = values => {
-    console.log(`success in : ${values}`);
-  };
-
-  const handleClearForm = () => {
-    console.log('yeahhhhh');
-    // filterForm.resetFields();
-    filterForm.resetFields();
-  };
-
-  const getTypes = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get(
-        'https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history?action=fetch',
-        {
-          Authorization: `Bearer ${JSON.parse(
-            secureLocalStorage.getItem('Token')
-          )}`,
-          'x-api-key':
-            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-        }
-      );
-
-      console.log(res);
-
-      setLoading(false);
-      setTypeData(res?.data?.response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getTypes();
-  }, [rows]);
-
   return (
-    <div>
+    <>
       <div className="container">
         <div className="row _tabs-wrapper">
           <div className="col-auto">
-            <h4 className="_tabs">Transaction type</h4>
+            <h4 className="_tabs">Partners </h4>
           </div>
           <div className="col-auto d-flex gap-4">
             <Button
               icon={<AddIcon />}
               style={{ background: '#7D0003', color: '#fff', width: 'auto' }}
-              onClick={() => setModalAddTransactionType(true)}
+              onClick={() => setModalAddPartner(true)}
             >
-              Add new transaction type
+              Add new partner
             </Button>
           </div>
         </div>
@@ -256,15 +211,10 @@ export default function TransactionType() {
             <div className="the-search">
               <Search
                 prefix={SearchIcon}
-                placeholder="Search by transaction type..."
+                placeholder="Search by partner name..."
                 onSearch={onSearch}
                 className="searching"
               />
-            </div>
-            <div className="filter-btn-wrapper">
-              <Button icon={FilterIcon} onClick={() => setFilterModal(true)}>
-                Filter by:
-              </Button>
             </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
@@ -394,114 +344,47 @@ export default function TransactionType() {
         </div>
       </div>
 
-      {/* filter modal  */}
-
-      <Modal
-        title="Filter by:"
-        centered
-        open={filterModal}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-        className="our-modal filter-transaction"
-        footer={null}
-      >
-        <Form layout="vertical" onFinish={onFinish} form={filterForm}>
-          <Form.Item name="status" label="Status:" className="wrap-check-group">
-            <Radio.Group>
-              <Radio value="Approved">Approved</Radio>
-              <Radio value="Awaiting Confirmation">Awaiting Confirmation</Radio>
-              <Radio value="Declined">Declined</Radio>
-              <Radio value="Failed">Failed</Radio>
-              <Radio value="Processed">Processed</Radio>
-              <Radio value="Initiated">Initiated</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item
-            name="transactionType"
-            label="Transaction type:"
-            className="wrap-check-group"
-          >
-            <Radio.Group>
-              <Radio value={'1'}>Bank debit</Radio>
-              <Radio value={'2'}>Wrong Transfer</Radio>
-              <Radio value={'3'}>Card Fraud</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item className="date-filter" name="startDate">
-            <DatePicker
-              // defaultValue={null}
-              format={dateFormat}
-              placeholder="From"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item className="date-filter" name="endDate">
-            <DatePicker
-              // defaultValue={null}
-              format={dateFormat}
-              placeholder="To"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
-
-          <Space direction="" className="flex-wrap"></Space>
-
-          <Form.Item className="buttons">
-            <Button
-              // type="primary"
-              onClick={() => setModalOpen(false)}
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Apply
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => handleClearForm()}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
-            >
-              Clear
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
-
-      {/* add type modal  */}
+      {/* add partners  */}
 
       <Modal
         centered
-        open={modalAddTransactionType}
-        onOk={() => setModalAddTransactionType(false)}
-        onCancel={() => setModalAddTransactionType(false)}
+        open={modalAddPartner}
+        onOk={() => setModalAddPartner(false)}
+        onCancel={() => setModalAddPartner(false)}
         className="our-modal add-page-modal"
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Add New Transaction Type</h4>
-          <p>Fill the fields below to add a new transaction type.</p>
+          <h4>Add New Partner</h4>
+          <p>Fill the fields below to add a new partner.</p>
         </div>
-
-        <Form layout="vertical" onFinish={addNewType}>
+        <Form layout="vertical" onFinish={addPartner}>
           <Form.Item
-            name="transactionType"
-            label="Transaction Type"
+            name="partnerName"
+            label="Partner Name"
             className="heights"
             rules={[
               {
                 required: true,
-                message: 'Please input Transaction Type!',
+                message: 'Please input your partner name!',
               },
             ]}
           >
             <Input placeholder="Enter partner name" />
+          </Form.Item>
+
+          <Form.Item
+            name="logoUrl"
+            label="Logo URL"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your logo url!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter logo url" />
           </Form.Item>
 
           <Button
@@ -519,19 +402,19 @@ export default function TransactionType() {
                 style={{ color: 'white' }}
               />
             ) : (
-              <>Add Transaction Type</>
+              <>Add Bank</>
             )}
           </Button>
         </Form>
       </Modal>
 
-      {/* edit type modal  */}
+      {/* edit partners  */}
 
       <Modal
         centered
-        open={modalEditTransactionType}
-        onOk={() => setModalEditTransactionType(false)}
-        onCancel={() => setModalEditTransactionType(false)}
+        open={modalEditPartners}
+        onOk={() => setModalEditPartners(false)}
+        onCancel={() => setModalEditPartners(false)}
         className="our-modal add-page-modal"
         footer={null}
       >
@@ -540,19 +423,33 @@ export default function TransactionType() {
           <p>Fill the fields below to add a new transaction type.</p>
         </div>
 
-        <Form layout="vertical" onFinish={addEditType}>
+        <Form layout="vertical" onFinish={editPartner}>
           <Form.Item
-            name="transactionType"
-            label="Transaction Type"
+            name="partnerName"
+            label="Partner Name"
             className="heights"
             rules={[
               {
                 required: true,
-                message: 'Please input Transaction Type!',
+                message: 'Please input your partner name!',
               },
             ]}
           >
             <Input placeholder="Enter partner name" />
+          </Form.Item>
+
+          <Form.Item
+            name="logoUrl"
+            label="Logo URL"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your logo url!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter logo url" />
           </Form.Item>
 
           <Button
@@ -570,11 +467,13 @@ export default function TransactionType() {
                 style={{ color: 'white' }}
               />
             ) : (
-              <>Add Transaction Type</>
+              <>Edit Partner</>
             )}
           </Button>
         </Form>
       </Modal>
-    </div>
+    </>
   );
 }
+
+/* add Bank modal */
