@@ -71,8 +71,6 @@ const Layout = ({ children }) => {
     router.push('/');
   };
 
-  console.log(progressIndicator);
-
   return (
     <OverlayContext.Provider
       value={{

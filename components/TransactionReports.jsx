@@ -359,9 +359,9 @@ export default function TransactionReports() {
               </Space>
             </div>
           </div>
-          <div className="select-all">
-            {/* <Checkbox onChange={onChange}>Select All</Checkbox> */}
-          </div>
+          {/* <div className="select-all">
+            <Checkbox onChange={onChange}>Select All</Checkbox>
+          </div> */}
         </div>
       </div>
 
@@ -378,21 +378,6 @@ export default function TransactionReports() {
           )}
 
           <div className="our-pagination d-flex justify-content-center">
-            {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
-              <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
-              </p>
-              <div className="dir">
-                <a href="">
-                  <span className="">{DirLeft}</span>
-                </a>
-                <a href="">
-                  <span className="">{DirRight}</span>
-                </a>
-              </div>
-            </div> */}
-
             {!loading && (
               <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                 <p className="det">
@@ -441,76 +426,6 @@ export default function TransactionReports() {
         className="our-modal filter-transaction"
         footer={null}
       >
-        {/* <Form form={filterForm} onFinish={onFinish}>
-          <Form.Item name="status" label="Status:" className="wrap-check-group">
-            <Radio.Group>
-              <Radio value="Approved">Approved</Radio>
-              <Radio value="Awaiting Confirmation">Awaiting Confirmation</Radio>
-              <Radio value="Declined">Declined</Radio>
-              <Radio value="Failed">Failed</Radio>
-              <Radio value="Processed">Processed</Radio>
-              <Radio value="Initiated">Initiated</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item
-            name="transactionType"
-            label="Transaction type:"
-            className="wrap-check-group"
-          >
-            <Radio.Group>
-              <Radio value={'1'}>Bank debit</Radio>
-              <Radio value={'2'}>Wrong Transfer</Radio>
-              <Radio value={'3'}>Card Fraud</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Space direction="" className="flex-wrap">
-            <Form.Item className="date-filter" name="startDate">
-              <DatePicker
-                // defaultValue={null}
-                format={dateFormat}
-                placeholder="From"
-                style={{
-                  width: 270,
-                }}
-              />
-            </Form.Item>
-
-            <Form.Item className="date-filter" name="endDate">
-              <DatePicker
-                // defaultValue={null}
-                format={dateFormat}
-                placeholder="To"
-                style={{
-                  width: 270,
-                }}
-              />
-            </Form.Item>
-          </Space>
-
-          <Form.Item>
-            <Button
-              type="primary"
-              onClick={() => setModalOpen(false)}
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Apply
-            </Button>
-          
-
-            <Button
-              type="primary"
-              onClick={() => handleClearForm()}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
-            >
-              Clear
-            </Button>
-          </Form.Item>
-        </Form> */}
-
         <Form layout="vertical" onFinish={onFinish} form={filterForm}>
           <Form.Item name="status" label="Status:" className="wrap-check-group">
             <Radio.Group>
@@ -549,7 +464,8 @@ export default function TransactionReports() {
           <Form.Item className="date-filter" name="endDate">
             <DatePicker
               // defaultValue={null}
-              format={dateFormat}
+              // format={dateFormat}
+              format="YYYY-MM-DD"
               placeholder="To"
               style={{
                 width: 270,

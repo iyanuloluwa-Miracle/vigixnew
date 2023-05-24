@@ -39,49 +39,35 @@ export default function AdminMembersBank() {
   const [sunmitLoading, setSubmitLoading] = useState(false);
   const [switchLoading, setSwitchLoading] = useState(false);
   const [banksData, setBanksData] = useState(null);
-  const [editBankData, setEditBankData] = useState(null);
+  const [editBankData, setEditBankData] = useState({});
   const [dataType, setDataType] = useState(null);
   const [page, setPage] = useState(1);
   const [rows, seRows] = useState(25);
   const [search, setSearch] = useState(null);
+  const [form] = Form.useForm();
 
-  const onFinish = values => {
+  const onFinish = async values => {
     console.log('Success:', values);
+
+    let payload = {
+      // startDate: moment(values?.stateData).format('YYYY-MM-DD'),
+      // endDate: moment(values?.endDate).format('YYYY-MM-DD'),
+      bankStatus: values?.bankStatus,
+    };
+
+    console.log({ payload });
+
+    setPage(1);
+
+    router.push(
+      `/banks${paramsObjectToQueryString({
+        ...query,
+        ...payload,
+      })}`
+    );
   };
 
   // add bank function
-
-  const addNewBank = async values => {
-    console.log('Success:', values);
-    setSubmitLoading(true);
-
-    const payload = {
-      remote: jsonToHex({ ...values, action: 'add' }),
-    };
-    try {
-      const res = await api.post(
-        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { ...query, page: page }
-        )}`,
-        payload,
-        {
-          Authorization: `Bearer ${JSON.parse(
-            secureLocalStorage.getItem('Token')
-          )}`,
-          'x-api-key':
-            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-        }
-      );
-      console.log(res);
-      toast.success(res?.data?.message);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setSubmitLoading(false);
-    }
-    setModalAddMember(false);
-    getBanks();
-  };
 
   const onChangeCheck = (e, id) => {
     setValue(e.target.value);
@@ -100,18 +86,6 @@ export default function AdminMembersBank() {
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
   };
-
-  const token = secureLocalStorage.getItem('Token');
-
-  // const { data: fetchBanks, isLoading: fetchBanksLoading } = useQuery({
-  //   queryKey: ['get_banks', query],
-  //   queryFn: () => {
-  //     return api.fetchBanks(token, {
-  //       ...query,
-  //     });
-  //   },
-  //   onSuccess: () => {},
-  // });
 
   const columns = [
     {
@@ -152,9 +126,16 @@ export default function AdminMembersBank() {
       title: 'Status',
       dataIndex: 'bankStatus',
       key: 'bankStatus',
-      // render: text => (
-
-      // ),
+      render: (text, index) => (
+        <div className="view-btn">
+          <Switch
+            checked={text == 'Enabled' ? true : false}
+            onChange={checked => {
+              updateBanks(checked, index);
+            }}
+          />
+        </div>
+      ),
     },
     {
       title: 'Date Added',
@@ -165,38 +146,53 @@ export default function AdminMembersBank() {
       title: ' ',
       dataIndex: 'views',
       key: 'views',
+      render: (text, index) => (
+        <div className="view-btn">
+          <Button
+            className="view-report"
+            onClick={() => {
+              setEditBankData(index);
+              setModalEditMember(true);
+            }}
+          >
+            Edit
+          </Button>
+        </div>
+      ),
     },
   ];
 
-  useEffect(() => {
-    setDataType(
-      banksData?.data?.map((el, index) => ({
-        ...el,
-        bankStatus: (
-          <div className="view-btn">
-            <Switch
-              checked={el?.bankStatus == 'Enabled' ? true : false}
-              onChange={checked => checkChange(checked, el)}
-            />
-          </div>
-        ),
-        bankUpdatedAt: moment(el?.bankCreatedAt).format('Do MMM YYYY'),
-        views: (
-          <div className="view-btn">
-            <Button
-              className="view-report"
-              onClick={() => {
-                setEditBankData(el);
-                setModalEditMember(true);
-              }}
-            >
-              Edit
-            </Button>
-          </div>
-        ),
-      }))
-    );
-  }, [banksData]);
+  const addNewBank = async values => {
+    console.log('Success:', values);
+    setSubmitLoading(true);
+
+    const payload = {
+      remote: jsonToHex({ ...values, action: 'add' }),
+    };
+
+    console.log({ payload });
+    try {
+      const res = await api.post(
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/banks',
+        payload,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+      console.log(res);
+      toast.success(res?.data?.message);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSubmitLoading(false);
+      setModalAddMember(false);
+      getBanks();
+    }
+  };
 
   const getBanks = async () => {
     setLoading(true);
@@ -271,9 +267,7 @@ export default function AdminMembersBank() {
 
     try {
       const res = await api.put(
-        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { ...query, page: page }
-        )}`,
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/banks',
         payload,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -305,17 +299,17 @@ export default function AdminMembersBank() {
 
   // update status function
 
-  const checkChange = async (checked, bankItem) => {
+  const updateBanks = async (checked, editData) => {
     console.log(`switch to ${checked}`);
 
-    // setLoading(true);
+    console.log(editData);
 
-    console.log(bankItem?.bankID);
+    // setLoading(true);
 
     const payload = {
       remote: jsonToHex({
         action: 'updateStatus',
-        bankID: bankItem?.bankID,
+        bankID: editData?.bankID,
         bankStatus: checked ? 'Enabled' : 'Disabled',
       }),
     };
@@ -326,9 +320,7 @@ export default function AdminMembersBank() {
 
     try {
       const res = await api.put(
-        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { ...query, page: page }
-        )}`,
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/banks',
         payload,
         {
           Authorization: `Bearer ${JSON.parse(
@@ -348,7 +340,7 @@ export default function AdminMembersBank() {
       setBanksData(prevState => ({
         ...prevState,
         data: prevState?.data.map(el => {
-          if (el?.bankID == bankItem?.bankID) {
+          if (el?.bankID == editData?.bankID) {
             return { ...el, bankStatus: checked ? 'Enabled' : 'Disabled' };
           } else {
             return el;
@@ -376,7 +368,11 @@ export default function AdminMembersBank() {
     }
   };
 
-  console.log({ banksData });
+  const handleClearForm = () => {
+    form.resetFields();
+  };
+
+  console.log({ editBankData });
 
   return (
     <section>
@@ -408,11 +404,11 @@ export default function AdminMembersBank() {
                 className="searching"
               />
             </div>
-            {/* <div className="filter-btn-wrapper">
+            <div className="filter-btn-wrapper">
               <Button icon={FilterIcon} onClick={() => setModalOpen(true)}>
                 Filter by:
               </Button>
-            </div> */}
+            </div>
           </div>
 
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
@@ -489,7 +485,7 @@ export default function AdminMembersBank() {
           ) : (
             <Table
               columns={columns}
-              dataSource={dataType}
+              dataSource={banksData?.data}
               pagination={{ pageSize: rows }}
             />
           )}
@@ -534,7 +530,7 @@ export default function AdminMembersBank() {
 
       {/* filter by modal */}
 
-      {/* <Modal
+      <Modal
         title="Filter by:"
         centered
         open={modalOpen}
@@ -543,7 +539,7 @@ export default function AdminMembersBank() {
         className="our-modal filter-transaction"
         footer={null}
       >
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={onFinish} form={form}>
           <Form.Item name="bankStatus" label="Status:">
             <Radio.Group onChange={onChangeCheck} value={value}>
               <Radio value="Enabled">Enabled</Radio>
@@ -551,31 +547,25 @@ export default function AdminMembersBank() {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item
-            name="dateCreated"
-            label="Date created:"
-            className="date-filter"
-          >
-            <Space direction="" className="flex-wrap">
-              <Form.Item className="date-filter" name="startDate">
-                <DatePicker
-                  onChange={onChange}
-                  placeholder="From"
-                  style={{
-                    width: 270,
-                  }}
-                />
-              </Form.Item>
-
+          <Space direction="" className="flex-wrap">
+            <Form.Item className="date-filter" name="startDate">
               <DatePicker
-                onChange={onChange}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Form.Item>
+
+            <Form.Item className="date-filter" name="endDate">
+              <DatePicker
                 placeholder="To"
                 style={{
                   width: 270,
                 }}
               />
-            </Space>
-          </Form.Item>
+            </Form.Item>
+          </Space>
 
           <Form.Item className="buttons">
             <Button
@@ -588,14 +578,14 @@ export default function AdminMembersBank() {
             </Button>
             <Button
               type="primary"
-              onClick={() => setModalOpen(false)}
+              onClick={() => handleClearForm()}
               style={{ background: '#FFF', color: '#1C1C1C' }}
             >
               Clear
             </Button>
           </Form.Item>
         </Form>
-      </Modal> */}
+      </Modal>
 
       {/* add Bank modal */}
 

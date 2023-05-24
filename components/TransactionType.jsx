@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import ExportZone from './ExportZone';
 import AddIcon from './Vectors/AddIcon';
-import api from '../apis';
 import {
   Button,
   Input,
@@ -19,6 +18,7 @@ import {
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 import secureLocalStorage from 'react-secure-storage';
+import api from '../apis';
 
 const typeData = [
   {
@@ -101,21 +101,81 @@ export default function TransactionType() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [rows, seRows] = useState(25);
-  const [typeData, setTypeData] = useState(null);
+  const [transactiontypes, setTransactiontypes] = useState(null);
   const [sunmitLoading, setSubmitLoading] = useState(false);
   const [modalAddTransactionType, setModalAddTransactionType] = useState(false);
   const [modalEditTransactionType, setModalEditTransactionType] =
     useState(false);
-  const [filterModal, setFilterModal] = useState(false);
-  const [filterForm] = Form.useForm();
+  const [editTypeData, setEditTypeData] = useState(null);
+
+  const [form] = Form.useForm();
 
   const onSearch = value => console.log(value);
+
+  const lastPgae = () => {
+    if (page <= 1) {
+      console.log('no more page');
+      return;
+    } else {
+      setPage(prevState => prevState - 1);
+    }
+  };
+
+  const nextPgae = () => {
+    if (page => transactiontypes?.pagination[0]?.totalPages) {
+      console.log('no more pages');
+      return;
+    } else {
+      setPage(prevState => prevState + 1);
+      console.log(page);
+    }
+    console.log('yeah');
+  };
+
+  const addNewType = values => {
+    console.log(`success in : ${values}`);
+  };
+
+  const addEditType = values => {
+    console.log(`success in : ${values}`);
+  };
+
+  const handlePerPage = value => {
+    console.log(`selected ${value}`);
+    seRows(value);
+  };
+
+  const getTypes = async () => {
+    setLoading(true);
+    try {
+      const res = await api.get(
+        'https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_type?action=fetch',
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+      console.log(res);
+      setTransactiontypes(res?.data?.response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getTypes();
+  }, [rows, page]);
 
   const columns = [
     {
       title: 'Transaction Type',
-      dataIndex: 'transactionType',
-      key: 'transactionType',
+      dataIndex: 'type',
+      key: 'type',
       render: text => (
         <>
           <Checkbox className="me-3" /> {text}
@@ -129,8 +189,8 @@ export default function TransactionType() {
     },
     {
       title: 'Status',
-      dataIndex: 'Status',
-      key: 'Status',
+      dataIndex: 'status',
+      key: 'status',
       render: text => (
         <div className="view-btn">
           <Switch
@@ -142,20 +202,21 @@ export default function TransactionType() {
     },
     {
       title: 'Date created',
-      dataIndex: 'dateCreated',
-      key: 'dateCreated',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
     },
     {
       title: ' ',
       dataIndex: 'edit',
       key: 'edit',
-      render: text => (
+      render: (text, index) => (
         <div className="view-btn">
           <Button
             className="view-report"
             onClick={() => {
-              //   setEditBankData(el);
+              setEditTypeData(index);
               setModalEditTransactionType(true);
+              // console.log();
             }}
           >
             Edit
@@ -165,71 +226,10 @@ export default function TransactionType() {
     },
   ];
 
-  //   const lastPgae = () => {
-  //     console.log('yeah');
-  //     if (page <= 1) {
-  //       return;
-  //     } else {
-  //       setPage(prevState => prevState - 1);
-  //     }
-  //   };
-
-  //   const nextPgae = () => {
-  //     if (page == reportData?.pagination[0]?.totalPages) {
-  //       return;
-  //     } else {
-  //       setPage(prevState => prevState + 1);
-  //       console.log(page);
-  //     }
-  //     console.log('yeah');
-  //   };
-
-  const addNewType = values => {
-    console.log(`success in : ${values}`);
-  };
-
-  const addEditType = values => {
-    console.log(`success in : ${values}`);
-  };
-
-  const onFinish = values => {
-    console.log(`success in : ${values}`);
-  };
-
-  const handleClearForm = () => {
-    console.log('yeahhhhh');
-    // filterForm.resetFields();
-    filterForm.resetFields();
-  };
-
-  const getTypes = async () => {
-    setLoading(true);
-    try {
-      const res = await api.get(
-        'https://safe.staging.vigilant.ng/manage/api/v1.0/transaction_report_history?action=fetch',
-        {
-          Authorization: `Bearer ${JSON.parse(
-            secureLocalStorage.getItem('Token')
-          )}`,
-          'x-api-key':
-            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-        }
-      );
-
-      console.log(res);
-
-      setLoading(false);
-      setTypeData(res?.data?.response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   useEffect(() => {
-    getTypes();
-  }, [rows]);
+    // Set the form values after the data has been fetched
+    form.setFieldsValue(editTypeData);
+  }, [editTypeData, form]);
 
   return (
     <div>
@@ -261,44 +261,41 @@ export default function TransactionType() {
                 className="searching"
               />
             </div>
-            <div className="filter-btn-wrapper">
-              <Button icon={FilterIcon} onClick={() => setFilterModal(true)}>
-                Filter by:
-              </Button>
-            </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
-            <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
-              <p className="det">
-                Page{' '}
-                <span className="our-color">
-                  2{/* {reportData?.pagination[0]?.pageNo} */}
-                </span>{' '}
-                of{' '}
-                <span className="our-color">
-                  0{/* {reportData?.pagination[0]?.totalPages} */}
-                </span>
-              </p>
-              <div className="dir">
-                <button
-                  className="border-0"
-                  //   onClick={() => lastPgae()}
-                  //   disabled={reportData?.pagination[0]?.pageNo <= 1}
-                >
-                  <span className="">{DirLeft}</span>
-                </button>
-                <button
-                  className="border-0"
-                  //   onClick={() => nextPgae()}
-                  //   disabled={
-                  //     reportData?.pagination[0]?.pageNo >=
-                  //     reportData?.pagination[0]?.totalPages
-                  //   }
-                >
-                  <span className="">{DirRight}</span>
-                </button>
+            {!loading && (
+              <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
+                <p className="det">
+                  Page{' '}
+                  <span className="our-color">
+                    {transactiontypes?.pagination[0]?.pageNo}
+                  </span>{' '}
+                  of{' '}
+                  <span className="our-color">
+                    {transactiontypes?.pagination[0]?.totalPages}
+                  </span>
+                </p>
+                <div className="dir">
+                  <button
+                    className="border-0"
+                    onClick={() => lastPgae()}
+                    disabled={transactiontypes?.pagination[0]?.pageNo <= 1}
+                  >
+                    <span className="">{DirLeft}</span>
+                  </button>
+                  <button
+                    className="border-0"
+                    onClick={() => nextPgae()}
+                    disabled={
+                      transactiontypes?.pagination[0]?.pageNo >=
+                      transactiontypes?.pagination[0]?.totalPages
+                    }
+                  >
+                    <span className="">{DirRight}</span>
+                  </button>
+                </div>
               </div>
-            </div>
+            )}
             <div>
               <Space wrap>
                 <Select
@@ -306,19 +303,20 @@ export default function TransactionType() {
                   style={{
                     width: 120,
                   }}
-                  //   onChange={handlePerPage}
+                  onChange={handlePerPage}
+                  value={`${rows} per page`}
                   options={[
                     {
                       value: '25',
-                      label: '25 per page',
+                      label: '25',
                     },
                     {
                       value: '100',
-                      label: '100 per page',
+                      label: '100',
                     },
                     {
                       value: '1000',
-                      label: '1000 per page',
+                      label: '1000',
                     },
                   ]}
                 />
@@ -331,148 +329,53 @@ export default function TransactionType() {
 
       <div className="container">
         <div className="table-wrapper ">
-          {!loading ? (
+          {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
             <Table
               columns={columns}
-              dataSource={typeData}
+              dataSource={transactiontypes?.data}
               pagination={{ pageSize: rows }}
             />
           )}
 
           <div className="our-pagination d-flex justify-content-center">
-            <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
-              <p className="det">
-                Page <span className="our-color">2</span> of{' '}
-                <span className="our-color">1000</span>
-              </p>
-              <div className="dir">
-                <a href="">
-                  <span className="">{DirLeft}</span>
-                </a>
-                <a href="">
-                  <span className="">{DirRight}</span>
-                </a>
-              </div>
-            </div>
-
-            {/* {!loading && (
+            {!loading && (
               <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                 <p className="det">
                   Page{' '}
                   <span className="our-color">
-                    {reportData?.pagination[0]?.pageNo}
+                    {transactiontypes?.pagination[0]?.pageNo}
                   </span>{' '}
                   of{' '}
                   <span className="our-color">
-                    {reportData?.pagination[0]?.totalPages}
+                    {transactiontypes?.pagination[0]?.totalPages}
                   </span>
                 </p>
                 <div className="dir">
                   <button
                     className="border-0"
-                    onClick={() => lastPgae()}
-                    disabled={reportData?.pagination[0]?.pageNo <= 1}
+                    //   onClick={() => lastPgae()}
+                    disabled={transactiontypes?.pagination[0]?.pageNo <= 1}
                   >
                     <span className="">{DirLeft}</span>
                   </button>
                   <button
                     className="border-0"
-                    onClick={() => nextPgae()}
+                    //   onClick={() => nextPgae()}
                     disabled={
-                      reportData?.pagination[0]?.pageNo >=
-                      reportData?.pagination[0]?.totalPages
+                      transactiontypes?.pagination[0]?.pageNo >=
+                      transactiontypes?.pagination[0]?.totalPages
                     }
                   >
                     <span className="">{DirRight}</span>
                   </button>
                 </div>
               </div>
-            )} */}
+            )}
           </div>
         </div>
       </div>
-
-      {/* filter modal  */}
-
-      <Modal
-        title="Filter by:"
-        centered
-        open={filterModal}
-        onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
-        className="our-modal filter-transaction"
-        footer={null}
-      >
-        <Form layout="vertical" onFinish={onFinish} form={filterForm}>
-          <Form.Item name="status" label="Status:" className="wrap-check-group">
-            <Radio.Group>
-              <Radio value="Approved">Approved</Radio>
-              <Radio value="Awaiting Confirmation">Awaiting Confirmation</Radio>
-              <Radio value="Declined">Declined</Radio>
-              <Radio value="Failed">Failed</Radio>
-              <Radio value="Processed">Processed</Radio>
-              <Radio value="Initiated">Initiated</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item
-            name="transactionType"
-            label="Transaction type:"
-            className="wrap-check-group"
-          >
-            <Radio.Group>
-              <Radio value={'1'}>Bank debit</Radio>
-              <Radio value={'2'}>Wrong Transfer</Radio>
-              <Radio value={'3'}>Card Fraud</Radio>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item className="date-filter" name="startDate">
-            <DatePicker
-              // defaultValue={null}
-              format={dateFormat}
-              placeholder="From"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item className="date-filter" name="endDate">
-            <DatePicker
-              // defaultValue={null}
-              format={dateFormat}
-              placeholder="To"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
-
-          <Space direction="" className="flex-wrap"></Space>
-
-          <Form.Item className="buttons">
-            <Button
-              // type="primary"
-              onClick={() => setModalOpen(false)}
-              htmlType="submit"
-              className="me-3"
-              style={{ background: '#7D0003', color: '#fff' }}
-            >
-              Apply
-            </Button>
-            <Button
-              type="primary"
-              onClick={() => handleClearForm()}
-              style={{ background: '#FFF', color: '#1C1C1C' }}
-            >
-              Clear
-            </Button>
-          </Form.Item>
-        </Form>
-      </Modal>
 
       {/* add type modal  */}
 
@@ -540,9 +443,9 @@ export default function TransactionType() {
           <p>Fill the fields below to add a new transaction type.</p>
         </div>
 
-        <Form layout="vertical" onFinish={addEditType}>
+        <Form layout="vertical" onFinish={addEditType} form={form}>
           <Form.Item
-            name="transactionType"
+            name="type"
             label="Transaction Type"
             className="heights"
             rules={[
