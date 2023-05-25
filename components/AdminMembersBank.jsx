@@ -263,8 +263,6 @@ export default function AdminMembersBank() {
       }),
     };
 
-    console.log({ payload });
-
     try {
       const res = await api.put(
         'https://safe.staging.vigilant.ng/manage/api/v1.0/banks',

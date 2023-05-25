@@ -119,7 +119,6 @@ export default function TransactionReports() {
   const onSearch = value => {
     setPage(1);
     setSearch(value);
-    console.log(value);
   };
 
   const columns = [
@@ -196,14 +195,6 @@ export default function TransactionReports() {
     ),
   }));
 
-  // const { data: getReport, isLoading: getReportLoading } = useQuery({
-  //   queryKey: ['get_products'],
-  //   queryFn: () => {
-  //     return api.getReportHistory(token);
-  //   },
-  //   onSuccess: () => {},
-  // });
-
   const handlePerPage = value => {
     console.log(`selected ${value}`);
     seRows(value);
@@ -252,7 +243,7 @@ export default function TransactionReports() {
 
   useEffect(() => {
     getReports();
-  }, [router, filterParams, rows, search]);
+  }, [router, filterParams, rows, search, page]);
 
   const handleClearForm = () => {
     console.log('yeahhhhh');
@@ -261,7 +252,6 @@ export default function TransactionReports() {
   };
 
   const lastPgae = () => {
-    console.log('yeah');
     if (page <= 1) {
       return;
     } else {
@@ -274,9 +264,7 @@ export default function TransactionReports() {
       return;
     } else {
       setPage(prevState => prevState + 1);
-      console.log(page);
     }
-    console.log('yeah');
   };
 
   return (
@@ -359,9 +347,9 @@ export default function TransactionReports() {
               </Space>
             </div>
           </div>
-          {/* <div className="select-all">
-            <Checkbox onChange={onChange}>Select All</Checkbox>
-          </div> */}
+          <div className="select-all">
+            {/* <Checkbox onChange={onChange}>Select All</Checkbox> */}
+          </div>
         </div>
       </div>
 
@@ -450,30 +438,28 @@ export default function TransactionReports() {
             </Radio.Group>
           </Form.Item>
 
-          <Form.Item className="date-filter" name="startDate">
-            <DatePicker
-              // defaultValue={null}
-              format={dateFormat}
-              placeholder="From"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
+          <Space direction="" className="flex-wrap">
+            <Form.Item className="date-filter" name="startDate">
+              <DatePicker
+                // defaultValue={null}
+                format={dateFormat}
+                placeholder="From"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Form.Item>
 
-          <Form.Item className="date-filter" name="endDate">
-            <DatePicker
-              // defaultValue={null}
-              // format={dateFormat}
-              format="YYYY-MM-DD"
-              placeholder="To"
-              style={{
-                width: 270,
-              }}
-            />
-          </Form.Item>
-
-          <Space direction="" className="flex-wrap"></Space>
+            <Form.Item className="date-filter" name="endDate">
+              <DatePicker
+                format="YYYY-MM-DD"
+                placeholder="To"
+                style={{
+                  width: 270,
+                }}
+              />
+            </Form.Item>
+          </Space>
 
           <Form.Item className="buttons">
             <Button

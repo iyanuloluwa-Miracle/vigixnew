@@ -21,92 +21,13 @@ import secureLocalStorage from 'react-secure-storage';
 import api from '../apis';
 import { jsonToHex } from '../apis/util';
 import { toast } from 'sonner';
-
-const typeData = [
-  {
-    id: 1,
-    name: 'Central Bank of Nigeria (CBN)',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 2,
-    name: 'The Nigeria Police Force (NPF)',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 3,
-    name: 'NIBSS',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 4,
-    name: 'Central Bank of Nigeria (CBN)',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 5,
-    name: 'The Nigeria Police Force (NPF)',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 6,
-    name: 'NIBSS',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 7,
-    name: 'Central Bank of Nigeria (CBN)',
-    addedBy: 'Dammy',
-    Status: 'Enabled',
-    dateCreated: 'Sept 17, 2022 11:20',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 8,
-    name: 'The Nigeria Police Force (NPF)',
-    addedBy: 'Jide Ola',
-    Status: 'Disabled',
-    dateCreated: 'Jun 12, 2020 22:15',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 9,
-    name: 'NIBSS',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-  {
-    id: 10,
-    name: 'Central Bank of Nigeria (CBN)',
-    addedBy: 'Specter',
-    Status: 'Enabled',
-    dateCreated: 'May 8, 2021 18:30',
-    logoURL: 'https://vigilant.com/dashboard/pagemanagement/page',
-  },
-];
+import { paramsObjectToQueryString } from '../apis/paramObjectToQuery';
+import { useRouter } from 'next/router';
 
 export default function Partners() {
   const { Search } = Input;
+  const router = useRouter();
+  const { query } = router;
   const [modalAddPartner, setModalAddPartner] = useState(false);
   const [sunmitLoading, setSubmitLoading] = useState(false);
   const [page, setPage] = useState(1);
@@ -120,9 +41,9 @@ export default function Partners() {
   const [form] = Form.useForm();
 
   const onSearch = value => {
-    // setPage(1);
-    // setSearch(value);
-    console.log({ searchvalue: value });
+    setPage(1);
+    setSearch(value);
+    // console.log({ searchvalue: value });
   };
 
   const columns = [
@@ -336,7 +257,15 @@ export default function Partners() {
     setLoading(true);
     try {
       const res = await api.get(
-        'https://safe.staging.vigilant.ng/manage/api/v1.0/partners?action=fetch',
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/partners${paramsObjectToQueryString(
+          {
+            action: 'fetch',
+            ...query,
+            page: page,
+            rows,
+            search,
+          }
+        )}`,
         {
           Authorization: `Bearer ${JSON.parse(
             secureLocalStorage.getItem('Token')
@@ -386,7 +315,7 @@ export default function Partners() {
 
   useEffect(() => {
     getParters();
-  }, [rows, page]);
+  }, [router, rows, page, search]);
 
   useEffect(() => {
     // Set the form values after the data has been fetched
