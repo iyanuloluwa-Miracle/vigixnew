@@ -1735,6 +1735,9 @@ button:hover {
 .hide-button {
   display: none;
 }
+.uploads .upload-wrapper {
+  width: 100%;
+}
 
 /* animation  */
 

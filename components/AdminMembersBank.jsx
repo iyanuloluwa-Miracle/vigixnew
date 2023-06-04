@@ -14,7 +14,9 @@ import {
   Skeleton,
   DatePicker,
   Switch,
+  Upload,
   Spin,
+  message,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 import api from '../apis';
@@ -25,6 +27,9 @@ import { toast } from 'sonner';
 import { jsonToHex } from '../apis/util';
 import moment from 'moment';
 import { paramsObjectToQueryString } from '../apis/paramObjectToQuery';
+import Image from 'next/image';
+import { UploadOutlined, PlusOutlined } from '@ant-design/icons';
+import axios from 'axios';
 
 export default function AdminMembersBank() {
   const { Search } = Input;
@@ -44,21 +49,17 @@ export default function AdminMembersBank() {
   const [page, setPage] = useState(1);
   const [rows, seRows] = useState(25);
   const [search, setSearch] = useState(null);
+  const [bankLogoUrl, setBankLogoUrl] = useState('');
   const [form] = Form.useForm();
 
   const onFinish = async values => {
     console.log('Success:', values);
-
     let payload = {
       // startDate: moment(values?.stateData).format('YYYY-MM-DD'),
       // endDate: moment(values?.endDate).format('YYYY-MM-DD'),
       bankStatus: values?.bankStatus,
     };
-
-    console.log({ payload });
-
     setPage(1);
-
     router.push(
       `/banks${paramsObjectToQueryString({
         ...query,
@@ -67,7 +68,52 @@ export default function AdminMembersBank() {
     );
   };
 
-  // add bank function
+  const newProps = {
+    name: 'file',
+    multiple: false,
+    accept: '.png, .jpg',
+    maxCount: 1,
+    onChange(info) {
+      const { status } = info.file;
+      if (status === 'done') {
+        // message.success(`${info.file.name} file uploaded successfully.`);
+        const formData = new FormData();
+        formData.append('file', info.file.originFileObj);
+        formData.append('upload_preset', 'f2omycfl');
+        axios
+          .post(
+            'https://api.cloudinary.com/v1_1/southside-food/image/upload',
+            formData
+          )
+          .then(function (response) {
+            if (response.status === 200) {
+              toast.success(`${info.file.name} file uploaded successfully.`, {
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                pauseOnHover: true,
+                position: 'top-right',
+              });
+              setBankLogoUrl(response?.data?.secure_url);
+              console.log(response?.data?.secure_url);
+            }
+          })
+          .catch(function (error) {});
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
+  const normFile = e => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e?.fileList;
+  };
 
   const onChangeCheck = (e, id) => {
     setValue(e.target.value);
@@ -79,7 +125,6 @@ export default function AdminMembersBank() {
   };
 
   const handlePerPage = value => {
-    console.log(`selected ${value}`);
     seRows(value);
   };
 
@@ -89,12 +134,13 @@ export default function AdminMembersBank() {
 
   const columns = [
     {
-      title: ' ',
-      dataIndex: 'checkbox',
-      key: 'checkbox',
+      title: 'Bank Logo',
+      dataIndex: 'bankLogoUrl',
+      key: 'bankLogoUrl',
       render: text => (
-        <div>
+        <div className="d-flex gap-3">
           <Checkbox onChange={onChange} />
+          <Image src={text} alt="bank logo" width={32} height={32} />
         </div>
       ),
     },
@@ -109,13 +155,13 @@ export default function AdminMembersBank() {
       dataIndex: 'bankCode',
       key: 'bankCode',
     },
-    {
-      title: 'Bank logo url',
-      dataIndex: 'bankLogoUrl',
-      key: 'bankLogoUrl',
-      responsive: ['lg'],
-      render: text => <div className="page-url">{text}</div>,
-    },
+    // {
+    //   title: 'Bank logo url',
+    //   dataIndex: 'bankLogoUrl',
+    //   key: 'bankLogoUrl',
+    //   responsive: ['lg'],
+    //   render: text => <div className="page-url">{text}</div>,
+    // },
     {
       title: 'Added by',
       dataIndex: 'bankAddedBy',
@@ -162,15 +208,14 @@ export default function AdminMembersBank() {
     },
   ];
 
+  // add bank function
+
   const addNewBank = async values => {
     console.log('Success:', values);
     setSubmitLoading(true);
-
     const payload = {
       remote: jsonToHex({ ...values, action: 'add' }),
     };
-
-    console.log({ payload });
     try {
       const res = await api.post(
         'https://safe.staging.vigilant.ng/manage/api/v1.0/banks',
@@ -477,7 +522,7 @@ export default function AdminMembersBank() {
       </div>
 
       <div className="container">
-        <div className="table-wrapper ">
+        <div className="table-wrapper">
           {loading ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
@@ -639,6 +684,41 @@ export default function AdminMembersBank() {
             ]}
           >
             <Input placeholder="Enter bank code url" />
+          </Form.Item>
+
+          <Form.Item
+            name="storeLogo"
+            label="Bank Logo URL"
+            className="heights uploads"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            rules={[
+              {
+                required: true,
+                message: 'Please upload your store logo',
+              },
+            ]}
+          >
+            <Upload name="file" {...newProps} listType="picture">
+              <Button
+                className="upload-wrapper d-flex align-item-center justify-content-center"
+                style={{ color: '#7D0003' }}
+              >
+                <div>
+                  <UploadOutlined
+                    style={{
+                      color: '#7D0003',
+                      fontSize: '18px',
+                    }}
+                  />
+                </div>
+                <div
+                // style={{ color: '#7D0003', textDecorationLine: 'underline' }}
+                >
+                  Click to upload bank image
+                </div>
+              </Button>
+            </Upload>
           </Form.Item>
 
           <Button
