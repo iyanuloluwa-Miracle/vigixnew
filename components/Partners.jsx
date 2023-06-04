@@ -31,7 +31,7 @@ export default function Partners() {
   const [modalAddPartner, setModalAddPartner] = useState(false);
   const [sunmitLoading, setSubmitLoading] = useState(false);
   const [page, setPage] = useState(1);
-  const [rows, seRows] = useState(25);
+  const [rows, seRows] = useState(null);
   const [search, setSearch] = useState(null);
   const [loading, setLoading] = useState(true);
   const [modalEditPartners, setModalEditPartners] = useState(false);
@@ -118,8 +118,11 @@ export default function Partners() {
   ];
 
   const handlePerPage = value => {
-    console.log(`selected ${value}`);
-    seRows(value);
+    if (value == 10) {
+      seRows(null);
+    } else {
+      seRows(value);
+    }
   };
 
   const lastPgae = () => {
@@ -169,11 +172,11 @@ export default function Partners() {
       console.log({ res });
 
       toast.success(res?.data?.message);
+      setModalAddPartner(false);
     } catch (error) {
       console.log(error);
     } finally {
       setSubmitLoading(false);
-      setModalAddPartner(false);
       getParters();
     }
   };
@@ -207,11 +210,11 @@ export default function Partners() {
       console.log({ res });
 
       toast.success(res?.data?.message);
+      setModalEditPartners(false);
     } catch (error) {
       console.log(error);
     } finally {
       setSubmitLoading(false);
-      setModalEditPartners(false);
       getParters();
     }
   };
@@ -322,8 +325,6 @@ export default function Partners() {
     form.setFieldsValue(editPartnerData);
   }, [editPartnerData, form]);
 
-  console.log({ editPartnerData });
-
   return (
     <>
       <div className="container">
@@ -398,8 +399,12 @@ export default function Partners() {
                     width: 120,
                   }}
                   onChange={handlePerPage}
-                  value={`${rows} per page`}
+                  value={`${rows ? rows : 10} per page`}
                   options={[
+                    {
+                      value: '10',
+                      label: '10',
+                    },
                     {
                       value: '25',
                       label: '25',
@@ -546,8 +551,8 @@ export default function Partners() {
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Add New Transaction Type</h4>
-          <p>Fill the fields below to add a new transaction type.</p>
+          <h4>Edit Partner</h4>
+          <p>Fill the fields below to edit partner.</p>
         </div>
 
         <Form layout="vertical" onFinish={editPartner} form={form}>

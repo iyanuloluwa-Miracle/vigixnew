@@ -1769,5 +1769,8 @@ button:hover {
     transform: translateX(0);
   }
 }
+.uploads .ant-upload-select {
+  width: 100%;
+}
 
 /* Apply the animation to an element */

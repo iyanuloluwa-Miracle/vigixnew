@@ -29,7 +29,6 @@ import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 import { paramsObjectToQueryString } from '../apis/util';
-import axios from 'axios';
 
 const plainOptions = [
   { label: 'Approved', value: 'Approved' },
@@ -96,7 +95,7 @@ export default function TransactionReports() {
   const [statusType, setStatusType] = useState('');
   const [filterParams, setFilterParams] = useState({});
   const [filterForm] = Form.useForm();
-  const [rows, seRows] = useState(25);
+  const [rows, seRows] = useState(null);
   const [search, setSearch] = useState(null);
 
   const router = useRouter();
@@ -197,8 +196,11 @@ export default function TransactionReports() {
   }));
 
   const handlePerPage = value => {
-    console.log(`selected ${value}`);
-    seRows(value);
+    if (value == 10) {
+      seRows(null);
+    } else {
+      seRows(value);
+    }
   };
 
   const getReports = async () => {
@@ -247,8 +249,6 @@ export default function TransactionReports() {
   }, [router, filterParams, rows, search, page]);
 
   const handleClearForm = () => {
-    console.log('yeahhhhh');
-    // filterForm.resetFields();
     filterForm.resetFields();
   };
 
@@ -329,8 +329,12 @@ export default function TransactionReports() {
                     width: 120,
                   }}
                   onChange={handlePerPage}
-                  value={`${rows} per page`}
+                  value={`${rows ? rows : 10} per page`}
                   options={[
+                    {
+                      value: '10',
+                      label: '10',
+                    },
                     {
                       value: '25',
                       label: '25',

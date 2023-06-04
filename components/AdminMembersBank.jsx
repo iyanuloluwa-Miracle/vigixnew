@@ -47,10 +47,12 @@ export default function AdminMembersBank() {
   const [editBankData, setEditBankData] = useState({});
   const [dataType, setDataType] = useState(null);
   const [page, setPage] = useState(1);
-  const [rows, seRows] = useState(25);
+  const [rows, seRows] = useState(null);
   const [search, setSearch] = useState(null);
   const [bankLogoUrl, setBankLogoUrl] = useState('');
+  const [editBankLogoUrl, setEditBankLogoUrl] = useState('');
   const [form] = Form.useForm();
+  const [formEdit] = Form.useForm();
 
   const onFinish = async values => {
     console.log('Success:', values);
@@ -79,10 +81,11 @@ export default function AdminMembersBank() {
         // message.success(`${info.file.name} file uploaded successfully.`);
         const formData = new FormData();
         formData.append('file', info.file.originFileObj);
-        formData.append('upload_preset', 'f2omycfl');
+        formData.append('upload_preset', 'qsts7ybb');
+        formData.append('folder', 'bank-floder');
         axios
           .post(
-            'https://api.cloudinary.com/v1_1/southside-food/image/upload',
+            'https://api.cloudinary.com/v1_1/dhu41wkkq/image/upload/',
             formData
           )
           .then(function (response) {
@@ -98,10 +101,53 @@ export default function AdminMembersBank() {
                 position: 'top-right',
               });
               setBankLogoUrl(response?.data?.secure_url);
-              console.log(response?.data?.secure_url);
             }
           })
-          .catch(function (error) {});
+          .catch(function (error) {
+            console.log(error);
+          });
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+  };
+
+  const newEditProps = {
+    name: 'file',
+    multiple: false,
+    accept: '.png, .jpg',
+    maxCount: 1,
+    onChange(info) {
+      const { status } = info.file;
+      if (status === 'done') {
+        // message.success(`${info.file.name} file uploaded successfully.`);
+        const formData = new FormData();
+        formData.append('file', info.file.originFileObj);
+        formData.append('upload_preset', 'qsts7ybb');
+        formData.append('folder', 'bank-floder');
+        axios
+          .post(
+            'https://api.cloudinary.com/v1_1/dhu41wkkq/image/upload/',
+            formData
+          )
+          .then(function (response) {
+            if (response.status === 200) {
+              toast.success(`${info.file.name} file uploaded successfully.`, {
+                autoClose: 2500,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                pauseOnHover: true,
+                position: 'top-right',
+              });
+              setEditBankLogoUrl(response?.data?.secure_url);
+            }
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
       } else if (status === 'error') {
         message.error(`${info.file.name} file upload failed.`);
       }
@@ -125,7 +171,11 @@ export default function AdminMembersBank() {
   };
 
   const handlePerPage = value => {
-    seRows(value);
+    if (value == 10) {
+      seRows(null);
+    } else {
+      seRows(value);
+    }
   };
 
   const onChange = e => {
@@ -137,12 +187,15 @@ export default function AdminMembersBank() {
       title: 'Bank Logo',
       dataIndex: 'bankLogoUrl',
       key: 'bankLogoUrl',
-      render: text => (
-        <div className="d-flex gap-3">
-          <Checkbox onChange={onChange} />
-          <Image src={text} alt="bank logo" width={32} height={32} />
-        </div>
-      ),
+      render: text =>
+        text ? (
+          <div className="d-flex gap-3">
+            <Checkbox onChange={onChange} />
+            <Image src={text} alt="bank logo" width={32} height={32} />
+          </div>
+        ) : (
+          ''
+        ),
     },
     {
       title: 'Bank name',
@@ -208,13 +261,66 @@ export default function AdminMembersBank() {
     },
   ];
 
+  const getBanks = async () => {
+    setLoading(true);
+
+    try {
+      const res = await api.get(
+        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
+          { action: 'fetch', ...query, page: page, rows, search }
+        )}`,
+        {
+          Authorization: `Bearer ${JSON.parse(
+            secureLocalStorage.getItem('Token')
+          )}`,
+          'x-api-key':
+            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+        }
+      );
+
+      if (
+        res?.data?.code === 'EXP_000' ||
+        res?.data?.code === 'EXP_001' ||
+        res?.data?.code === 'EXP_002' ||
+        res?.data?.code === 'EXP_003' ||
+        res?.data?.code === 'EXP_004' ||
+        res?.data?.code === 'EXP_005' ||
+        res?.data?.code === 'EXP_006' ||
+        res?.data?.code === 'EXP_007' ||
+        res?.data?.code === 'EXP_008'
+      ) {
+        router.push('/');
+      }
+
+      setLoading(false);
+      console.log(res);
+      setBanksData(res?.data?.response);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getBanks();
+  }, [router, page, rows, search]);
+
+  const handleInputChange = (event, key) => {
+    setEditBankData(prevState => ({
+      ...prevState,
+      [key]: event.target.value,
+    }));
+  };
+
   // add bank function
 
   const addNewBank = async values => {
     console.log('Success:', values);
+    // const body = { ...values, bankLogoUrl };
     setSubmitLoading(true);
     const payload = {
-      remote: jsonToHex({ ...values, action: 'add' }),
+      remote: jsonToHex({ ...values, action: 'add', bankLogoUrl }),
     };
     try {
       const res = await api.post(
@@ -239,74 +345,26 @@ export default function AdminMembersBank() {
     }
   };
 
-  const getBanks = async () => {
-    setLoading(true);
-
-    try {
-      const res = await api.get(
-        `https://safe.staging.vigilant.ng/manage/api/v1.0/banks${paramsObjectToQueryString(
-          { action: 'fetch', ...query, page: page, rows, search }
-        )}`,
-        {
-          Authorization: `Bearer ${JSON.parse(
-            secureLocalStorage.getItem('Token')
-          )}`,
-          'x-api-key':
-            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
-        }
-      );
-
-      console.log(res);
-      if (
-        res?.data?.code === 'EXP_000' ||
-        res?.data?.code === 'EXP_001' ||
-        res?.data?.code === 'EXP_002' ||
-        res?.data?.code === 'EXP_003' ||
-        res?.data?.code === 'EXP_004' ||
-        res?.data?.code === 'EXP_005' ||
-        res?.data?.code === 'EXP_006' ||
-        res?.data?.code === 'EXP_007' ||
-        res?.data?.code === 'EXP_008'
-      ) {
-        router.push('/');
-      }
-
-      setLoading(false);
-      setBanksData(res?.data?.response);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    getBanks();
-  }, [router, page, rows, search]);
-
-  const handleInputChange = (event, key) => {
-    setEditBankData(prevState => ({
-      ...prevState,
-      [key]: event.target.value,
-    }));
-  };
-
   // edit bank function
 
   const editBank = async values => {
-    console.log('Success:', editBankData);
-    // return;
+    console.log('Success:', values);
+    console.log(editBankLogoUrl);
+
     setSubmitLoading(true);
 
     const payload = {
       remote: jsonToHex({
         action: 'edit',
         bankID: editBankData?.bankID,
-        bankName: editBankData?.bankName,
-        bankCode: editBankData?.bankCode,
-        bankLogoUrl: editBankData?.bankLogoUrl,
+        bankName: values?.bankName,
+        bankCode: values?.bankCode,
+        bankLogoUrl: editBankLogoUrl,
+        bankStatus: editBankData?.editBankData,
       }),
     };
+
+    console.log(payload);
 
     try {
       const res = await api.put(
@@ -320,7 +378,6 @@ export default function AdminMembersBank() {
             '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
         }
       );
-      console.log(res);
       toast.success(res?.data?.message);
     } catch (error) {
       console.log(error);
@@ -332,12 +389,13 @@ export default function AdminMembersBank() {
       ...prevState,
       data: prevState?.data.map(el => {
         if (el?.bankID == editBankData?.bankID) {
-          return editBankData;
+          return { ...editBankData, bankLogoUrl: editBankLogoUrl };
         } else {
           return el;
         }
       }),
     }));
+    setEditBankData({});
   };
 
   // update status function
@@ -345,9 +403,16 @@ export default function AdminMembersBank() {
   const updateBanks = async (checked, editData) => {
     console.log(`switch to ${checked}`);
 
-    console.log(editData);
-
-    // setLoading(true);
+    setBanksData(prevState => ({
+      ...prevState,
+      data: prevState?.data.map(el => {
+        if (el?.bankID == editData?.bankID) {
+          return { ...el, bankStatus: checked ? 'Enabled' : 'Disabled' };
+        } else {
+          return el;
+        }
+      }),
+    }));
 
     const payload = {
       remote: jsonToHex({
@@ -380,17 +445,6 @@ export default function AdminMembersBank() {
     } finally {
       setLoading(false);
 
-      setBanksData(prevState => ({
-        ...prevState,
-        data: prevState?.data.map(el => {
-          if (el?.bankID == editData?.bankID) {
-            return { ...el, bankStatus: checked ? 'Enabled' : 'Disabled' };
-          } else {
-            return el;
-          }
-        }),
-      }));
-
       // getBanks();
     }
   };
@@ -413,9 +467,19 @@ export default function AdminMembersBank() {
 
   const handleClearForm = () => {
     form.resetFields();
+    setModalOpen(false);
+    router.push('/banks');
   };
 
-  console.log({ editBankData });
+  useEffect(() => {
+    formEdit.resetFields();
+    // Set the form values after the data has been fetched
+    formEdit.setFieldsValue({
+      bankName: editBankData?.bankName,
+      bankCode: editBankData?.bankCode,
+    });
+    setEditBankLogoUrl(editBankData?.bankLogoUrl);
+  }, [editBankData, formEdit]);
 
   return (
     <section>
@@ -496,8 +560,12 @@ export default function AdminMembersBank() {
                     width: 125,
                   }}
                   onChange={handlePerPage}
-                  value={`${rows} per page`}
+                  value={`${rows ? rows : 10} per page`}
                   options={[
+                    {
+                      value: '10',
+                      label: '10',
+                    },
                     {
                       value: '25',
                       label: '25',
@@ -578,7 +646,10 @@ export default function AdminMembersBank() {
         centered
         open={modalOpen}
         onOk={() => setModalOpen(false)}
-        onCancel={() => setModalOpen(false)}
+        onCancel={() => {
+          setModalOpen(false);
+          // form.resetFields();
+        }}
         className="our-modal filter-transaction"
         footer={null}
       >
@@ -658,6 +729,7 @@ export default function AdminMembersBank() {
           >
             <Input placeholder="Enter bank name" />
           </Form.Item>
+
           <Form.Item
             name="bankCode"
             label="Bank Code"
@@ -674,20 +746,6 @@ export default function AdminMembersBank() {
 
           <Form.Item
             name="bankLogoUrl"
-            label="Bank Logo URL"
-            className="heights"
-            rules={[
-              {
-                required: true,
-                message: 'Please input your bank code url!',
-              },
-            ]}
-          >
-            <Input placeholder="Enter bank code url" />
-          </Form.Item>
-
-          <Form.Item
-            name="storeLogo"
             label="Bank Logo URL"
             className="heights uploads"
             valuePropName="fileList"
@@ -709,6 +767,7 @@ export default function AdminMembersBank() {
                     style={{
                       color: '#7D0003',
                       fontSize: '18px',
+                      marginRight: '8px',
                     }}
                   />
                 </div>
@@ -748,7 +807,9 @@ export default function AdminMembersBank() {
         centered
         open={modalEditMember}
         onOk={() => setModalEditMember(false)}
-        onCancel={() => setModalEditMember(false)}
+        onCancel={() => {
+          setModalEditMember(false);
+        }}
         className="our-modal add-page-modal"
         footer={null}
       >
@@ -756,44 +817,70 @@ export default function AdminMembersBank() {
           <h4>Edit Bank</h4>
           <p>Fill the fields below to edit bank.</p>
         </div>
-        <Form layout="vertical" onFinish={editBank}>
-          <div className="heights mb-4">
-            <label htmlFor="bankName" className="pb-2">
-              Bank Name
-            </label>
+        <Form layout="vertical" onFinish={editBank} form={formEdit}>
+          <Form.Item
+            name="bankName"
+            label="Bank Name"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your bank name!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter bank name" />
+          </Form.Item>
 
-            <Input
-              placeholder="Enter bank name"
-              value={editBankData?.bankName}
-              id="bankName"
-              onChange={event => handleInputChange(event, 'bankName')}
-            />
-          </div>
+          <Form.Item
+            name="bankCode"
+            label="Bank Code"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your bank code!',
+              },
+            ]}
+          >
+            <Input placeholder="Enter bank code" />
+          </Form.Item>
 
-          <div className="heights mb-4">
-            <label htmlFor="bankCode" className="pb-2">
-              Bank Name
-            </label>
-            <Input
-              placeholder="Enter bank code"
-              id="bankCode"
-              value={editBankData?.bankCode}
-              onChange={event => handleInputChange(event, 'bankCode')}
-            />
-          </div>
-
-          <div className="heights mb-4">
-            <label htmlFor="bankLogoUrl" className="pb-2">
-              Bank Logo URL
-            </label>
-
-            <Input
-              placeholder="Enter bank code url"
-              id="bankLogoUrl"
-              value={editBankData?.bankLogoUrl}
-              onChange={event => handleInputChange(event, 'bankLogoUrl')}
-            />
-          </div>
+          <Form.Item
+            name="bankLogoUrl"
+            label="Bank Logo URL"
+            className="heights uploads"
+            valuePropName="fileList"
+            getValueFromEvent={normFile}
+            rules={[
+              {
+                required: true,
+                message: 'Please upload your store logo',
+              },
+            ]}
+          >
+            <Upload name="file" {...newEditProps} listType="picture">
+              <Button
+                className="upload-wrapper d-flex align-item-center justify-content-center"
+                style={{ color: '#7D0003' }}
+              >
+                <div>
+                  <UploadOutlined
+                    style={{
+                      color: '#7D0003',
+                      fontSize: '18px',
+                      marginRight: '8px',
+                    }}
+                  />
+                </div>
+                <div
+                // style={{ color: '#7D0003', textDecorationLine: 'underline' }}
+                >
+                  Click to upload bank image
+                </div>
+              </Button>
+            </Upload>
+          </Form.Item>
 
           <Button
             htmlType="submit"

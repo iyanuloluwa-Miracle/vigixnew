@@ -21,6 +21,7 @@ axios.interceptors.response.use(undefined, err => {
   if (err.response.status == 401) {
     Router.push('/');
   }
+
   return Promise.reject(err);
 });
 
