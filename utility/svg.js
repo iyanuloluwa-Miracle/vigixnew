@@ -29,6 +29,7 @@ export const LogoutIcon = (
     />
   </svg>
 );
+
 export const CardIcon1 = (
   <svg
     width="40"
@@ -310,6 +311,7 @@ export const DirLeft = (
     />
   </svg>
 );
+
 export const DirRight = (
   <svg
     width="10"
