@@ -488,11 +488,7 @@ export default function TransactionReportManualAuthorized() {
             </h6>
 
             <div>
-              <Input.TextArea
-                rows={5}
-                placeholder="what did you notice"
-                maxLength={8}
-              />
+              <Input.TextArea rows={5} placeholder="what did you notice" />
             </div>
           </div>
 
