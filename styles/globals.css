@@ -685,6 +685,9 @@ button:hover {
   background-image: url('/images/Login-bg.png');
   background-size: cover;
 }
+.Login-page > div {
+  max-width: 100%;
+}
 .Login-page label {
   font-weight: 500;
   font-size: 14.4px;

@@ -169,7 +169,7 @@ export default function HomeTable() {
       <div className="container tabling pb-5 ">
         <div className="row justify-content-between mb-4">
           <div className="col-auto">
-            <h4 className="our-h4">Recent Reports</h4>
+            <h4 className="our-h4">Recent Incidents</h4>
           </div>
           <div className="col-auto">
             <Link href="/transaction-reports">

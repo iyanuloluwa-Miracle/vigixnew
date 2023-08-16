@@ -36,8 +36,6 @@ export default function Login() {
 
     const binaryData = jsonToHex(values);
 
-    console.log(binaryData);
-
     const payload = {
       remote: binaryData,
     };
@@ -67,8 +65,12 @@ export default function Login() {
         toast.error(res?.data?.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.data?.message[0]);
+      console.error(error);
+      if (error?.response?.data?.data?.message[0]) {
+        toast.error(error?.response?.data?.data?.message[0]);
+      } else {
+        toast.error('Login unsuccessful');
+      }
     } finally {
       setLoading(false);
     }

@@ -270,7 +270,7 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <ExportZone h4="All Transaction Reports" />
+      <ExportZone h4="Incidents" />
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
