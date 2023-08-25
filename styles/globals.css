@@ -4,6 +4,7 @@
   padding: 0;
   margin: 0;
 }
+
 @font-face {
   font-family: 'dm-sans-regular';
   src: url('/fonts/DMSans-Regular.ttf');
@@ -19,6 +20,10 @@
 @font-face {
   font-family: 'aeonik-regular';
   src: url('/fonts/Aeonik-Regular.otf');
+}
+@font-face {
+  font-family: 'aeonik-medium';
+  src: url('/fonts/DMSans-Medium.ttf');
 }
 @font-face {
   font-family: 'aeonik-bold';
@@ -387,13 +392,17 @@ header .navbar-brand {
 .ant-dropdown-trigger {
   cursor: pointer;
 }
-button {
+/* button:hover {
   transition: transform 0.8s;
+  transition: 0.3s;
+} */
+button {
+  transition: transform 0.8s !important;
 }
 button:hover {
-  -ms-transform: scale(1.05); /* IE 9 */
-  -webkit-transform: scale(1.05); /* Safari 3-8 */
-  transform: scale(1.05);
+  -ms-transform: scale(1.03); /* IE 9 */
+  -webkit-transform: scale(1.03); /* Safari 3-8 */
+  transform: scale(1.03);
 }
 .our-btn {
   background: #7d0003;
@@ -543,6 +552,13 @@ button:hover {
   font-size: 14.4px;
   line-height: 19px;
   text-decoration-line: underline;
+}
+
+.breadCrumb{
+  overflow-x: clip;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 .page-navigation {
   margin-bottom: 1.5rem;

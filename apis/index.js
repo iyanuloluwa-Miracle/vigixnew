@@ -26,73 +26,9 @@ axios.interceptors.response.use(undefined, err => {
 });
 
 const api = {
-  createAccount: payload => {
-    const url = `${BASE_URL}/signup`;
-    return api.post(url, payload);
-  },
-  loginAccount: (payload, token) => {
+  fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/login`;
-    return api.post(url, payload, headers);
-  },
-  verifyToken: (payload, token) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/token`;
-    return api.post(url, payload, headers);
-  },
-  getReportHistory: token => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/transaction_report_history?action=fetch
-    `;
-    return api.get(url, payload, headers);
-  },
-
-  addInfo: (payload, token) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/add-user`;
-    return api.post(url, payload, headers);
-  },
-
-  fetchInsightSummary: (teamId, token, query) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/insight-summary/${teamId}${paramsObjectToQueryString(
-      query
-    )}`;
-    return api.get(url, headers);
-  },
-
-  fetchInsight: (teamId, token, query) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/insight/${teamId}${paramsObjectToQueryString(
-      query
-    )}`;
-    return api.get(url, headers);
-  },
-
-  fetchBanks: (token, query) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/token?action=resendToken
-    ${paramsObjectToQueryString(query)}`;
-    return api.get(url, headers);
-  },
-
-  fetchInsightPost: (teamId, token, query) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/insight-posts/${teamId}${paramsObjectToQueryString(
-      query
-    )}`;
-    return api.get(url, headers);
-  },
-
-  fetchUserByCompany: token => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/user-company`;
-    return api.get(url, headers);
-  },
-
-  fetchBlockerManagement: (token, query) => {
-    const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/blockers${paramsObjectToQueryString(query)}`;
+    const url = `${BASE_URL}/incidents${paramsObjectToQueryString(query)}`;
     console.log(url);
     return api.get(url, headers);
   },

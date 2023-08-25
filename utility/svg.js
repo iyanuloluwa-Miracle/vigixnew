@@ -465,3 +465,18 @@ export const listIcon = (
     </defs>
   </svg>
 );
+
+export const ReplyIcon = (
+  <svg
+    width="30"
+    height="30"
+    viewBox="0 0 30 30"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M12.5 11.25V6.25L3.75 15L12.5 23.75V18.625C18.75 18.625 23.125 20.625 26.25 25C25 18.75 21.25 12.5 12.5 11.25Z"
+      fill="#1C1C1C"
+    />
+  </svg>
+);

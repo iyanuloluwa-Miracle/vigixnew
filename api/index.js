@@ -3,7 +3,7 @@ import axios from 'axios';
 export const createHTTPHeader = authToken => {
   const token = authToken === null ? 'test' : authToken;
   return {
-    'x-access-token': `${token}`,
+    'content-type': 'application/json',
   };
 };
 

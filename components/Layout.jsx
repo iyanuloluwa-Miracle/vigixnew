@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import NavBar from './NavBar';
 import { useRouter } from 'next/router';
-import Footer from './Footer';
+import Footer from '../src/components/Footer';
 import { routesWithoutNavBars } from '../config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
@@ -101,7 +101,8 @@ const Layout = ({ children }) => {
       <main>
         <>{children}</>
       </main>
-      {<Footer />}
+      <Footer />
+      {/* {<Footer />} */}
     </OverlayContext.Provider>
   );
 };

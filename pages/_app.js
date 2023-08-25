@@ -12,7 +12,7 @@ const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Head>
+      {/* <Head>
         <link
           href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
           rel="stylesheet"
@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }) {
           href="/favicon/logo1.png"
         />
         <title>Vigilant</title>
-      </Head>
+      </Head> */}
 
       {/* <CookiesProvider> */}
 

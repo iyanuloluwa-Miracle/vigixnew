@@ -44,16 +44,6 @@ export default function ManageUsers() {
   const [key, setKey] = useState('');
   const [iv, setIv] = useState('');
 
-  // const generateRandomNumber = () => {
-  //   const randomBytes = CryptoJS.lib.WordArray.random(16);
-  //   console.log(randomBytes);
-  //   const randomHex = randomBytes.toString(CryptoJS.enc.Hex);
-  //   console.log(randomHex);
-  //   const random16Digits = randomHex.substr(0, 16);
-  //   console.log(random16Digits);
-  //   setKey(random16Digits);
-  // };
-
   const handleEncrypt = () => {
     // const encryptedData = key.encrypt(plaintext, 'base64');
     // setEncrypted(encryptedData);

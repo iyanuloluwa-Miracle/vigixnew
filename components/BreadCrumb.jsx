@@ -4,9 +4,6 @@ import { HomeNav } from '../utility/svg';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const reportStyles = {
-  width: 'max-content',
-};
 export default function BreadCrumb({ tab, location }) {
   const router = useRouter();
   const [backdrop, setBackdrop] = useState(false);
@@ -20,7 +17,7 @@ export default function BreadCrumb({ tab, location }) {
 
   return (
     <>
-      <section className="primary-bg" style={{ overflowX: 'clip' }}>
+      <section className="primary-bg breadCrumb">
         <div className="container">
           {/* <div
             className={backdrop ? 'backdrop d-block' : 'backdrop d-none'}
