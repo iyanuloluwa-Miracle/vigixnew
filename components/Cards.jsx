@@ -14,8 +14,6 @@ import { OverlayContext } from './Layout';
 export default function Cards() {
   const { user, progressIndicator } = useContext(OverlayContext);
 
-  console.log(user);
-
   return (
     <div className="container">
       <div className="row carding my-4">

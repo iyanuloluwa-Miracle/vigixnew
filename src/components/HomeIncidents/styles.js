@@ -2,6 +2,9 @@ import styled from 'styled-components';
 import { device } from '../../../utility/device';
 
 export const IncidentsWrapper = styled.div`
+  .ant-table-row {
+    cursor: pointer;
+  }
   .ant-table-cell {
     .image-action {
       width: 72px;

@@ -161,6 +161,10 @@ export const DetailsWrapper = styled.div`
       font-weight: 400;
       line-height: normal;
       width: fit-content;
+      &.Incident.Received {
+        color: red;
+        background: #fff0f0;
+      }
     }
     .toggle-show {
       border-radius: 2px;
@@ -275,6 +279,7 @@ export const StatusWrapper = styled.div`
       background: #fff6ee;
       width: max-content;
       max-width: 100%;
+      color: #f70;
 
       &.Investigation {
         color: #f70;
@@ -283,6 +288,10 @@ export const StatusWrapper = styled.div`
         font-style: normal;
         font-weight: 400;
         line-height: normal;
+      }
+      &.Incident.Received {
+        color: red;
+        background: #fff0f0;
       }
     }
     .comment {

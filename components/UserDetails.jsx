@@ -11,13 +11,18 @@ import UserBVN from './UserBVN';
 
 export default function UserDetails() {
   const { defaultUserTab } = useContext(OverlayContext);
+  const router = useRouter();
+
+  const backFunction = () => {
+    router.back();
+  };
 
   return (
     <section>
       <div className="container">
         <div className="row justify-content-between details-header">
           <div className="col-auto go-back">
-            <Button href={''}>
+            <Button onClick={() => backFunction()}>
               {back}
               <span>Go back</span>
             </Button>

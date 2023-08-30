@@ -18,10 +18,18 @@ import {
   message,
 } from 'antd';
 
-export default function Details() {
+export default function Details({ data }) {
   const [incidentModal, setIncidentModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [formAssign] = Form.useForm();
+
+  function generateRandom20DigitNumber() {
+    let randomNumber = '';
+    for (let i = 0; i < 20; i++) {
+      randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+    }
+    return randomNumber;
+  }
 
   const editBank = values => {
     console.log(values);
@@ -38,27 +46,31 @@ export default function Details() {
           <div className="col-7 d-flex flex-wrap">
             <div className="col-6">
               <h4>Bank ID</h4>
-              <p>ABC 1234</p>
+              <p>{data?.bank?.bank_id}</p>
 
               <h4>Reported By:</h4>
-              <p>Adeyanju Gabriel</p>
+              <p>
+                {data?.user?.first_name} {data?.user?.last_name}`
+              </p>
 
               <h4>Transaction Reference</h4>
-              <p>12345678901234567890</p>
+              <p>{generateRandom20DigitNumber()}</p>
 
               <h4>Notes</h4>
-              <p>Uhm, help me find my money</p>
+              <p>{data?.incident?.details}</p>
             </div>
 
             <div className="col-6">
               <h4>Date</h4>
-              <p>Jan 11th, 2022 18:26</p>
+              <p>{data?.incident?.created_at}</p>
 
               <h4>Transaction Type</h4>
-              <p>Bank Debit</p>
+              <p>{data?.transaction?.name}</p>
 
               <h4>Status</h4>
-              <p className="status">Newly Reported</p>
+              <p className={`status ${data?.incident?.status_name}`}>
+                {data?.incident?.status_name}
+              </p>
             </div>
 
             <div className="col-12">

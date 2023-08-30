@@ -14,9 +14,42 @@ import Details from './Details';
 import Comments from './Comments';
 import Logs from './Logs';
 import Status from './Status';
+import api from '../../../apis';
+import { useQuery } from '@tanstack/react-query';
 
 export default function IncidentsDetails() {
+  const router = useRouter();
+  const { query } = router;
   const { defaultUserTab } = useContext(OverlayContext);
+  const [search_query, setSearchQuery] = useState(null);
+  const [incidentData, setIncidentData] = useState([]);
+
+  function generateRandom20DigitNumber() {
+    let randomNumber = '';
+    for (let i = 0; i < 20; i++) {
+      randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+    }
+    return randomNumber;
+  }
+
+  const { data: fetcIncident, isLoading: loadingIncident } = useQuery({
+    queryKey: ['get_incidents', search_query],
+    queryFn: () => {
+      return api.fetchSingleIncidents(null, router.query?.incidentId);
+    },
+    onSuccess: data => {
+      setIncidentData(data?.data[0]);
+    },
+    onError: err => {
+      console.log(err);
+    },
+    retry: false,
+    refetchInterval: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  });
+
+  console.log(incidentData);
 
   return (
     <>
@@ -45,16 +78,16 @@ export default function IncidentsDetails() {
             <div className="user-details-content">
               <Tabs defaultActiveKey={defaultUserTab}>
                 <Tabs.TabPane tab="Details" key="1">
-                  <Details />
+                  <Details data={incidentData} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Status" key="2">
-                  <Status />
+                  <Status data={incidentData?.incident} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Comments" key="3">
-                  <Comments />
+                  <Comments data={incidentData} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Incident Logs" key="4">
-                  <Logs />
+                  <Logs data={incidentData} />
                 </Tabs.TabPane>
               </Tabs>
             </div>

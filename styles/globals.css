@@ -554,7 +554,7 @@ button:hover {
   text-decoration-line: underline;
 }
 
-.breadCrumb{
+.breadCrumb {
   overflow-x: clip;
   position: sticky;
   top: 0;
@@ -652,6 +652,10 @@ button:hover {
 .status.Awaiting.Confirmation {
   color: #ff7700;
   background: #fff6ee;
+}
+.status.Incident.Received {
+  color: red;
+  background: #fff0f0;
 }
 .status.Failed {
   color: #7d0003;

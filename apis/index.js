@@ -28,8 +28,13 @@ axios.interceptors.response.use(undefined, err => {
 const api = {
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incidents${paramsObjectToQueryString(query)}`;
-    console.log(url);
+    const url = `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/incident/incidents`;
+    return api.get(url, headers);
+  },
+
+  fetchSingleIncidents: (token, id) => {
+    const headers = createHTTPHeader(token);
+    const url = `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/incident/incident/${id}`;
     return api.get(url, headers);
   },
 
