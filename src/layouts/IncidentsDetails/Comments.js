@@ -6,6 +6,8 @@ export default function Comments() {
   return (
     <CommentsWrapper>
       <div className="contain">
+        <div></div>
+
         <div className="chat-wrapper">
           <div className="chat">
             <div className="chat-header">
