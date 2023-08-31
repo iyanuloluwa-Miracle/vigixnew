@@ -20,7 +20,7 @@ export default function VerifyAccountLayout() {
   const [isClicked, setIsClicked] = useState(false);
   const [countdown, setCountdown] = useState(false);
 
-  const { setUser, setProgressIndicator } = useContext(OverlayContext);
+  const { setUser, setProgressIndicator } = OverlayContext();
 
   const verifyAccount = useMutation({
     mutationFn: payload => api.verifyToken(payload, null),
@@ -63,8 +63,6 @@ export default function VerifyAccountLayout() {
         }
       );
 
-      console.log({ res });
-
       if (res?.data?.code === 'OK') {
         // checking if it actually verified successfully
         if (res?.data?.response?.changePassword === 'Yes') {
@@ -86,7 +84,7 @@ export default function VerifyAccountLayout() {
             JSON.stringify(res?.data?.response?.data?.progressIndicator)
           );
           console.log(res?.data?.response?.data?.progressIndicator);
-          router.push('/home');
+          router.push('/dashboard');
         }
       } else if (res?.data?.code == 'VLT_003') {
         toast.error(res?.data?.message[0], 'Please resend token');
@@ -94,14 +92,11 @@ export default function VerifyAccountLayout() {
         toast.error(`${res?.data?.message[0]}, Please resend token`);
       } else if (res?.data?.code == 'EXP_000') {
         toast.error(res?.data?.message[0]);
-
         router.push('/');
       } else {
         // router.push('/');
         // do nothing
       }
-
-      console.log(res);
     } catch (error) {
       console.log(error);
       toast.error(
@@ -125,7 +120,7 @@ export default function VerifyAccountLayout() {
     // console.log( res );
     // if (res) {
     //   toast.success(res.data || 'Account verified successfully');
-    //   // router.push('/home');
+    //   // router.push('/dashboard');
     //   setLoading(false);
     // }
     // }

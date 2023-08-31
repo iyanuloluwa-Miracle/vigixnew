@@ -3,13 +3,16 @@ import { OverlayContext } from './Layout';
 import moment from 'moment';
 
 export default function Welcome() {
-  const { user } = useContext(OverlayContext);
+  const { user, userData } = OverlayContext();
 
   // Get the current date and time
   const currentDateTime = moment();
 
   // Format the current date and time
   const formattedDateTime = currentDateTime.format('dddd, MMMM D YYYY');
+
+  console.log({ user });
+  console.log({ userData });
 
   return (
     <section className="welcom__block">

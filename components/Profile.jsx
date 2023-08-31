@@ -7,7 +7,7 @@ import { OverlayContext } from './Layout';
 import { LockIcon } from '../utility/svg';
 
 export default function Profile({ activeStatus }) {
-  const { isActive, setIsActive } = useContext(OverlayContext);
+  const { isActive, setIsActive } = OverlayContext();
   // const [isActive, setIsActive] = useState(true);
   const [confirmDeactivation, setConfirmDeactivation] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);

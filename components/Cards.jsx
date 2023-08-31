@@ -12,7 +12,9 @@ import {
 import { OverlayContext } from './Layout';
 
 export default function Cards() {
-  const { user, progressIndicator } = useContext(OverlayContext);
+  const { user, progressIndicator } = OverlayContext();
+
+  console.log('user', user);
 
   return (
     <div className="container">

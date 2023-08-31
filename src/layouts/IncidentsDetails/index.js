@@ -20,7 +20,7 @@ import { useQuery } from '@tanstack/react-query';
 export default function IncidentsDetails() {
   const router = useRouter();
   const { query } = router;
-  const { defaultUserTab } = useContext(OverlayContext);
+  const { defaultUserTab } = OverlayContext();
   const [search_query, setSearchQuery] = useState(null);
   const [incidentData, setIncidentData] = useState([]);
 
@@ -49,18 +49,16 @@ export default function IncidentsDetails() {
     refetchOnMount: true,
   });
 
-  console.log(incidentData);
-
   return (
     <>
       <IncidentsDetailsWrapper>
-        <Welcome />
+        {/* <Welcome /> */}
         <BreadCrumb />
         <section>
           <div className="container">
             <div className="row justify-content-between details-header">
               <div className="col-auto go-back">
-                <Button href={''}>
+                <Button onClick={() => router.back()}>
                   {back}
                   <span>Go back</span>
                 </Button>
@@ -80,13 +78,10 @@ export default function IncidentsDetails() {
                 <Tabs.TabPane tab="Details" key="1">
                   <Details data={incidentData} />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Status" key="2">
-                  <Status data={incidentData?.incident} />
-                </Tabs.TabPane>
-                <Tabs.TabPane tab="Comments" key="3">
+                <Tabs.TabPane tab="Comments" key="2">
                   <Comments data={incidentData} />
                 </Tabs.TabPane>
-                <Tabs.TabPane tab="Incident Logs" key="4">
+                <Tabs.TabPane tab="Incident Logs" key="3">
                   <Logs data={incidentData} />
                 </Tabs.TabPane>
               </Tabs>

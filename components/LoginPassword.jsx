@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { ArrowRight } from '../utility/svg';
 import { useRouter } from 'next/router';
@@ -9,29 +9,103 @@ import api from '../apis';
 import { jsonToHex } from '../apis/util';
 import secureLocalStorage from 'react-secure-storage';
 import { useQuery } from '@tanstack/react-query';
+import { OverlayContext } from './Layout';
 
 export default function LoginPassword() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const { setUserData, useData, setUser, setProgressIndicator } =
+    OverlayContext();
+
   const loginAccount = useMutation({
     mutationFn: payload => api.loginAccount(payload),
     onSuccess: () => {
       router.push('/dashboard');
     },
   });
+
   const onFinish = async values => {
+    console.log(values);
+
+    setProgressIndicator({
+      recoveries: {
+        guage: 'Positive',
+        percentage: 54,
+        totalReportsForToday: 38,
+        totalRecoveries: 203,
+      },
+      admin: {
+        guage: 'Negative',
+        percentage: 20,
+        totalReportsForToday: 74,
+        totalAdminMembers: 1000,
+      },
+      reports: {
+        guage: 'Negative',
+        percentage: 13,
+        totalReportsForToday: 92,
+        totalReports: 3041,
+      },
+      users: {
+        guage: 'Positive',
+        percentage: 60,
+        totalUsersForToday: 12,
+        totalUsers: 101,
+      },
+    });
+
+    // setUser({
+    //   recoveries: {
+    //     guage: 'Positive',
+    //     percentage: 54,
+    //     totalReportsForToday: 38,
+    //     totalRecoveries: 203,
+    //   },
+    //   admin: {
+    //     guage: 'Negative',
+    //     percentage: 20,
+    //     totalReportsForToday: 74,
+    //     totalAdminMembers: 1000,
+    //   },
+    //   reports: {
+    //     guage: 'Negative',
+    //     percentage: 13,
+    //     totalReportsForToday: 92,
+    //     totalReports: 3041,
+    //   },
+    //   users: {
+    //     guage: 'Positive',
+    //     percentage: 60,
+    //     totalUsersForToday: 12,
+    //     totalUsers: 101,
+    //   },
+    // });
+    setUser({
+      email: 'specter.omojolowo@gmail.com',
+      names: 'specter omo',
+      entity: 'Vigilant',
+      role: 'Customer Service',
+      company: 'Vigilant',
+    });
+    setUserData({
+      email: 'specter.omojolowo@gmail.com',
+      names: 'specter omo',
+      entity: 'Vigilant',
+      role: 'Customer Service',
+      company: 'Vigilant',
+    });
+
     setLoading(true);
-    console.log('Success:', values);
-    const binaryData = jsonToHex(values);
-    const payload = {
-      remote: binaryData,
-    };
+
+    router.push('/dashboard');
     setLoading(false);
   };
 
   const onFinishFailed = errorInfo => {
     console.error('Failed:', errorInfo);
   };
+
+  console.log({ useData });
 
   return (
     <div className="Login-page container-fluid">
@@ -56,7 +130,6 @@ export default function LoginPassword() {
                 width={168}
                 height={80}
                 alt="Vigilant Logo"
-                objectFit="cover"
                 quality={100}
                 priority={true}
               />
@@ -91,7 +164,7 @@ export default function LoginPassword() {
                     style={{ color: 'white' }}
                   />
                 ) : (
-                  <>Continue {ArrowRight}</>
+                  <>Login {ArrowRight}</>
                 )}
               </Button>
             </Form.Item>

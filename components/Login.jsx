@@ -103,7 +103,6 @@ export default function Login() {
                 width={168}
                 height={80}
                 alt="Vigilant Logo"
-                objectFit="cover"
                 quality={100}
                 priority={true}
               />

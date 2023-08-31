@@ -6,7 +6,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { OverlayContext } from './Layout';
 
 export default function UserBVN({ activeStatus }) {
-  const { isActive, setIsActive } = useContext(OverlayContext);
+  const { isActive, setIsActive } = OverlayContext();
   // const [isActive, setIsActive] = useState(true);
   const [confirmDeactivation, setConfirmDeactivation] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);

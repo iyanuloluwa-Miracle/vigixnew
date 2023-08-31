@@ -56,18 +56,18 @@ export default function Logs() {
   return (
     <LogsWrapper>
       <div className="contain">
-        <div className=" headers">
+        <div className="headers">
           <div className="col-5">
             <h5>Time</h5>
           </div>
 
           <div className="col">
-            <h5 className="text-center">incident Logs</h5>
+            <h5 className="">incident Logs</h5>
           </div>
         </div>
 
         {logData?.map(el => (
-          <div className=" logged-item">
+          <div className="logged-item">
             <div className="col-5">
               <p className="time">9:00am</p>
             </div>

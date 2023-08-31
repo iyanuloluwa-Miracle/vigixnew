@@ -7,7 +7,7 @@ import { OverlayContext } from './Layout';
 import { CopyIcon, LockIcon } from '../utility/svg';
 
 export default function AdminProfile() {
-  const { isActive, setIsActive } = useContext(OverlayContext);
+  const { isActive, setIsActive } = OverlayContext();
   const [modalAddPage, setModalAddPage] = useState(false);
 
   // const [isActive, setIsActive] = useState(true);

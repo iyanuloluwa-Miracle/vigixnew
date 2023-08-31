@@ -12,7 +12,7 @@ import secureLocalStorage from 'react-secure-storage';
 import { toast } from 'sonner';
 
 export default function NavBar() {
-  const { user, handleLogOut, setUser } = useContext(OverlayContext);
+  const { user, handleLogOut, setUser } = OverlayContext();
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
@@ -62,16 +62,16 @@ export default function NavBar() {
     },
   ];
 
-  useEffect(() => {
-    setUser(JSON.parse(secureLocalStorage.getItem('VigUser')));
-  }, []);
+  // useEffect(() => {
+  //   setUser(JSON.parse(secureLocalStorage.getItem('VigUser')));
+  // }, []);
 
   return (
     <header>
       <nav className="container">
         <div className="row justify-content-between gap-3 gap-lg-4">
           <div className="col-auto nav-logo">
-            <Link href="/home" passHref>
+            <Link href="/dashboard" passHref>
               <Image
                 src={'/icons/VigilantAppLogo.svg'}
                 alt="logo"
@@ -82,10 +82,6 @@ export default function NavBar() {
           </div>
 
           <div className="col-auto r-side">
-            {/* <div>
-              <SettingsVector />
-            </div> */}
-
             <Dropdown
               menu={{
                 items,

@@ -10,7 +10,7 @@ import { OverlayContext } from './Layout';
 import UserBVN from './UserBVN';
 
 export default function UserDetails() {
-  const { defaultUserTab } = useContext(OverlayContext);
+  const { defaultUserTab } = OverlayContext();
   const router = useRouter();
 
   const backFunction = () => {

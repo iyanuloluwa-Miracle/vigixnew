@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { DetailsWrapper } from './styles';
 import Image from 'next/image';
 import {
@@ -12,16 +12,19 @@ import {
   Radio,
   Skeleton,
   DatePicker,
-  Switch,
+  Popconfirm,
   Spin,
   Button,
   message,
 } from 'antd';
+import { VigilantAssignOption, BankAssignOption } from '../../../utility/enum';
+import { OverlayContext } from '../../../components/Layout';
 
 export default function Details({ data }) {
   const [incidentModal, setIncidentModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [formAssign] = Form.useForm();
+  const { user } = OverlayContext();
 
   function generateRandom20DigitNumber() {
     let randomNumber = '';
@@ -38,6 +41,17 @@ export default function Details({ data }) {
   useEffect(() => {
     formAssign.resetFields();
   }, [formAssign]);
+
+  const confirm = e => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+  const cancel = e => {
+    console.log(e);
+    message.error('Click on No');
+  };
+
+  console.log({ user });
 
   return (
     <DetailsWrapper>
@@ -95,10 +109,56 @@ export default function Details({ data }) {
       </div>
 
       <div className="actions">
-        <button className="btn" onClick={() => setIncidentModal(true)}>
-          Assign
-        </button>
-        <button className="btn void">Void</button>
+        {user?.entity === 'Vigilant' || user?.entity === 'Bank' ? (
+          <button className="btn" onClick={() => setIncidentModal(true)}>
+            Assign
+          </button>
+        ) : (
+          ''
+        )}
+
+        {user?.entity === 'NPF' && (
+          <>
+            <Popconfirm
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              {/* <button className="btn danger"> Proceed to arrest</button> */}
+              <Button danger>Investigate</Button>
+            </Popconfirm>
+
+            <Popconfirm
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              {/* <button className="btn danger"> Proceed to arrest</button> */}
+              <Button danger>Proceed to arrest</Button>
+            </Popconfirm>
+          </>
+        )}
+
+        {user?.entity === 'Vigilant' && (
+          <>
+            <Popconfirm
+              title="Void this incident"
+              description="Are you sure to void this incident?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <button className="btn void">Void</button>
+            </Popconfirm>
+          </>
+        )}
       </div>
 
       <Modal
@@ -117,46 +177,35 @@ export default function Details({ data }) {
         </div>
         <Form layout="vertical" onFinish={editBank} form={formAssign}>
           <Form.Item
-            name="segment"
-            label="Segment"
+            name="entity"
+            label="Entity"
             className="heights"
             rules={[
               {
                 required: true,
-                message: 'Please select assign segment!',
+                message: 'Please select assign entity!',
               },
             ]}
           >
-            <Select
-              placeholder="Enter segment name"
-              style={{
-                width: '100%',
-              }}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
-                },
-                {
-                  value: 'Bank',
-                  label: 'Bank',
-                },
-                {
-                  value: 'NPF',
-                  label: 'NPF',
-                },
-              ]}
-            />
+            <Radio.Group>
+              <Space direction="vertical">
+                {user?.entity === 'Vigilant'
+                  ? VigilantAssignOption?.map(item => (
+                      <Radio value={item?.value}>{item?.label}</Radio>
+                    ))
+                  : user?.entity === 'Bank'
+                  ? BankAssignOption?.map(item => (
+                      <Radio value={item?.value}>{item?.label}</Radio>
+                    ))
+                  : ' '}
+              </Space>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
             name="note"
             label="Note"
-            className="heights"
+            className=""
             row={4}
             rules={[
               {

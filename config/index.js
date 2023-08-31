@@ -8,4 +8,5 @@ export const routesWithoutNavBars = [
   '/404',
   '/500',
   '/verify-token',
+  '/login-password',
 ];

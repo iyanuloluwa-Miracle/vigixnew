@@ -24,11 +24,7 @@ export default function LoginUsername() {
 
   const onFinish = async values => {
     setLoading(true);
-    console.log('Success:', values);
-    const binaryData = jsonToHex(values);
-    const payload = {
-      remote: binaryData,
-    };
+    router.push('/login-password');
     setLoading(false);
   };
 
@@ -59,7 +55,6 @@ export default function LoginUsername() {
                 width={168}
                 height={80}
                 alt="Vigilant Logo"
-                objectFit="cover"
                 quality={100}
                 priority={true}
               />
@@ -73,7 +68,7 @@ export default function LoginUsername() {
               rules={[
                 {
                   required: true,
-                  message: 'Please input your username!',
+                  message: 'Please input your email or username!',
                 },
               ]}
             >

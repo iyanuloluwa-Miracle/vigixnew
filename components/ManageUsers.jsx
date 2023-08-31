@@ -28,7 +28,7 @@ import { OverlayContext } from './Layout';
 const key = new NodeRSA({ b: 256 });
 
 export default function ManageUsers() {
-  const { setDefaultUSerTab } = useContext(OverlayContext);
+  const { setDefaultUSerTab } = OverlayContext();
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);

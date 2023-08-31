@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { createContext, useEffect, useState, useContext } from 'react';
 import NavBar from './NavBar';
 import { useRouter } from 'next/router';
 import Footer from '../src/components/Footer';
@@ -7,37 +7,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import secureLocalStorage from 'react-secure-storage';
 
-export const OverlayContext = React.createContext({
-  overlay: false,
-  setOverlay: () => {},
+const UserContext = createContext();
 
-  setLoggedIn: () => {},
-  loggedIn: false,
+export const OverlayContext = () => useContext(UserContext);
 
-  info: null,
-  setInfo: () => {},
-
-  loading: false,
-  setloading: () => {},
-
-  user: null,
-  setUser: () => {},
-
-  progressIndicator: null,
-  setProgressIndicator: () => {},
-
-  setdashboardInfo: () => {},
-  dashboardInfo: {},
-
-  walletBalance: {},
-  setwalletBalance: () => {},
-
-  isActive: true,
-  setIsActive: () => {},
-
-  defaultUserTab: '1',
-  setDefaultUSerTab: () => {},
-});
+// export const OverlayContext = React.createContext();
 
 const Layout = ({ children }) => {
   const [overlay, setOverlay] = useState(false);
@@ -48,15 +22,16 @@ const Layout = ({ children }) => {
   const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
   const [user, setUser] = useState({});
-  // const [progressIndicator, setProgressIndicator] = useState({});
+  const [useData, setUserData] = useState({});
+  const [progressIndicator, setProgressIndicator] = useState({});
   const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
 
-  const [progressIndicator, setProgressIndicator] = useState(() => {
-    // Retrieve data from localStorage or set default value
-    const storedData = secureLocalStorage.getItem('progressIndicator');
-    return storedData ? JSON.parse(storedData) : {};
-  });
+  // const [progressIndicator, setProgressIndicator] = useState(() => {
+  //   // Retrieve data from localStorage or set default value
+  //   const storedData = secureLocalStorage.getItem('progressIndicator');
+  //   return storedData ? JSON.parse(storedData) : {};
+  // });
 
   // useEffect(() => {
   //   secureLocalStorage.setItem(
@@ -72,10 +47,8 @@ const Layout = ({ children }) => {
   };
 
   return (
-    <OverlayContext.Provider
+    <UserContext.Provider
       value={{
-        overlay,
-        setOverlay,
         walletBalance,
         setwalletBalance,
         loading,
@@ -88,12 +61,12 @@ const Layout = ({ children }) => {
         setInfo,
         user,
         setUser,
+        useData,
+        setUserData,
         progressIndicator,
         setProgressIndicator,
         defaultUserTab,
         setDefaultUSerTab,
-        isActive,
-        setIsActive,
         handleLogOut,
       }}
     >
@@ -103,7 +76,7 @@ const Layout = ({ children }) => {
       </main>
       <Footer />
       {/* {<Footer />} */}
-    </OverlayContext.Provider>
+    </UserContext.Provider>
   );
 };
 
