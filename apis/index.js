@@ -8,19 +8,19 @@ import secureLocalStorage from 'react-secure-storage';
 import { message } from 'antd';
 
 axios.interceptors.response.use(undefined, err => {
-  if (err.response.status != 200 || err.response.status != 201) {
-    if (err.code === 'ERR_NETWORK') {
-      message.error('Network Error, please try again');
-    }
-    if (err.response.status == 401) {
-      toast.error('Please login to continue');
-    } else {
-      console.log(err);
-    }
-  }
-  if (err.response.status == 401) {
-    Router.push('/');
-  }
+  // if (err.response.status != 200 || err.response.status != 201) {
+  //   if (err.code === 'ERR_NETWORK') {
+  //     message.error('Network Error, please try again');
+  //   }
+  //   if (err.response.status == 401) {
+  //     toast.error('Please login to continue');
+  //   } else {
+  //     console.log(err);
+  //   }
+  // }
+  // if (err.response.status == 401) {
+  //   Router.push('/');
+  // }
 
   return Promise.reject(err);
 });

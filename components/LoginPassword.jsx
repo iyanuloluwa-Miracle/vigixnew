@@ -54,40 +54,7 @@ export default function LoginPassword() {
       },
     });
 
-    // setUser({
-    //   recoveries: {
-    //     guage: 'Positive',
-    //     percentage: 54,
-    //     totalReportsForToday: 38,
-    //     totalRecoveries: 203,
-    //   },
-    //   admin: {
-    //     guage: 'Negative',
-    //     percentage: 20,
-    //     totalReportsForToday: 74,
-    //     totalAdminMembers: 1000,
-    //   },
-    //   reports: {
-    //     guage: 'Negative',
-    //     percentage: 13,
-    //     totalReportsForToday: 92,
-    //     totalReports: 3041,
-    //   },
-    //   users: {
-    //     guage: 'Positive',
-    //     percentage: 60,
-    //     totalUsersForToday: 12,
-    //     totalUsers: 101,
-    //   },
-    // });
     setUser({
-      email: 'specter.omojolowo@gmail.com',
-      names: 'specter omo',
-      entity: 'Vigilant',
-      role: 'Customer Service',
-      company: 'Vigilant',
-    });
-    setUserData({
       email: 'specter.omojolowo@gmail.com',
       names: 'specter omo',
       entity: 'Vigilant',

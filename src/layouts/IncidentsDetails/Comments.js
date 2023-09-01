@@ -61,7 +61,7 @@ export default function Comments() {
           </div>
         </div>
 
-        {chatData?.map(comment => (
+        {comments?.map(comment => (
           <>
             <div
               className={
