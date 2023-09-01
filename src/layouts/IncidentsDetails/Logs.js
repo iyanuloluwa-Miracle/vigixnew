@@ -66,8 +66,8 @@ export default function Logs() {
           </div>
         </div>
 
-        {logData?.map(el => (
-          <div className="logged-item">
+        {logData?.map((el, index) => (
+          <div className="logged-item" key={index}>
             <div className="col-5">
               <p className="time">9:00am</p>
             </div>

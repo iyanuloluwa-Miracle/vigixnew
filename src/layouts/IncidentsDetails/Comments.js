@@ -54,19 +54,20 @@ export default function Comments() {
         <div className="chat-wrapper d-flex gap-lg-3 gap-2">
           <Input
             placeholder="Add comment"
-            onChange={useCommentText(e.terget.vale)}
+            onChange={e => useCommentText(e.terget.vale)}
           />
           <div>
             <button className="btn">send</button>
           </div>
         </div>
 
-        {comments?.map(comment => (
+        {comments?.map((comment, index) => (
           <>
             <div
               className={
                 comment?.reply ? `chat-wrapper multi-reply` : `chat-wrapper`
               }
+              key={index}
             >
               <div className="chat">
                 <div className="chat-header">
