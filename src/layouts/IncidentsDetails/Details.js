@@ -146,7 +146,7 @@ export default function Details({ data }) {
           </>
         )}
 
-        {user?.entity === 'Vigilant' && (
+        {user?.role?.name === 'VIGILANT CUSTOMER SERVICE' && (
           <>
             <Popconfirm
               title="Void this incident"
@@ -191,12 +191,16 @@ export default function Details({ data }) {
             <Radio.Group>
               <Space direction="vertical">
                 {user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
-                  ? VigilantAssignOption?.map(item => (
-                      <Radio value={item?.value}>{item?.label}</Radio>
+                  ? VigilantAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
                     ))
                   : user?.role?.name === 'BANK'
-                  ? BankAssignOption?.map(item => (
-                      <Radio value={item?.value}>{item?.label}</Radio>
+                  ? BankAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
                     ))
                   : ' '}
               </Space>

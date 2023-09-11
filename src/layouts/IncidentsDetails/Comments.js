@@ -44,7 +44,7 @@ const chatData = [
 
 export default function Comments() {
   const [comments, useComments] = useState(chatData);
-  const [commentText, useCommentText] = useState('');
+  const [commentText, setCommentText] = useState('');
 
   console.log(commentText);
 
@@ -54,7 +54,7 @@ export default function Comments() {
         <div className="chat-wrapper d-flex gap-lg-3 gap-2">
           <Input
             placeholder="Add comment"
-            onChange={e => useCommentText(e.terget.vale)}
+            onChange={e => setCommentText(e.terget.vale)}
           />
           <div>
             <button className="btn">send</button>
