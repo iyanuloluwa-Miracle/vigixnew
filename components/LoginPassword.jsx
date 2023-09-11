@@ -133,7 +133,10 @@ export default function LoginPassword() {
                 },
               ]}
             >
-              <Input.Password placeholder="Input password" />
+              <Input.Password
+                placeholder="Input password"
+                autoComplete="current-password"
+              />
             </Form.Item>
 
             <Form.Item className="button-wrapper">

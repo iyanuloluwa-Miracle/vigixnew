@@ -206,7 +206,6 @@ export default function HomeIncidents() {
           status: incident?.incident?.status_name,
         }))
       );
-      console.log(data);
     },
     onError: err => {
       console.log(err);

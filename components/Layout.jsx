@@ -21,8 +21,8 @@ const Layout = ({ children }) => {
   const [loggedIn, setLoggedIn] = useState(false);
   const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
-  const [user, setUser] = useState({});
-  // const [useData, setUserData] = useState({});
+  // const [user, setUser] = useState({});
+  const [useData, setUserData] = useState({});
   // const [progressIndicator, setProgressIndicator] = useState({});
   const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
@@ -30,13 +30,14 @@ const Layout = ({ children }) => {
   const [progressIndicator, setProgressIndicator] = useState(() => {
     // Retrieve data from localStorage or set default value
     const storedData = secureLocalStorage.getItem('progressIndicator');
-    return storedData ? JSON.parse(storedData) : {};
+    return storedData ? JSON.parse(storedData) : null;
   });
 
-  const [useData, setUserData] = useState(() => {
+  const [user, setUser] = useState(() => {
     // Retrieve data from localStorage or set default value
-    const storedData = secureLocalStorage.getItem('user');
-    return storedData ? JSON.parse(storedData) : {};
+    const storedUser = secureLocalStorage.getItem('user');
+    console.log(storedUser);
+    return storedUser ? JSON.parse(storedUser) : null;
   });
 
   // useEffect(() => {

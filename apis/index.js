@@ -44,6 +44,12 @@ const api = {
     return api.post(url, payload, headers);
   },
 
+  getRoles: (token, query) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/roles${paramsObjectToQueryString(query)}`;
+    return api.get(url, headers);
+  },
+
   editMemberProfile: (payload, token, userId) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/user/${userId}`;

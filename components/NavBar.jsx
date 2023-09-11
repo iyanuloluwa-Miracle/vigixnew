@@ -10,10 +10,12 @@ import { OverlayContext } from './Layout';
 import api from '../apis';
 import secureLocalStorage from 'react-secure-storage';
 import { toast } from 'sonner';
+import Cookies from 'js-cookie';
 
 export default function NavBar() {
   const { user, handleLogOut, setUser } = OverlayContext();
   const [loading, setLoading] = useState(false);
+  const token = Cookies.get('token');
 
   const router = useRouter();
 
@@ -23,14 +25,11 @@ export default function NavBar() {
     setLoading(true);
 
     try {
-      const res = await api.get(
-        'https://safe.staging.vigilant.ng/manage/api/v1.0/logout',
+      const res = await api.post(
+        `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/user/logout-admin/${user.id}`,
+        {},
         {
-          Authorization: `Bearer ${JSON.parse(
-            secureLocalStorage.getItem('Token')
-          )}`,
-          'x-api-key':
-            '68457553374b4a676e2b574452596d4b4c3439724737707341434e3652423834466775463033674637624e636d526662614c6e697774646a394e42697473534e785878483852416d2b577551617434743453496137505664342b75776b546e5168313350653876343672666b4848674577626864792b77676b47734761356e456d59767632666b486b3342576a6e394945564364416d4f7a4e50576d5337726b4f443774617a662f7036616142784766685479655133696734446f6c684d6e6c4449377857486d794d6463614963497a386d755551474a7a417447367a34314b69456a4179516a79623262306a37477957332b74496f392f50393559505a6137537a62656e4d2b665a446644564957555872556351734d737269637651536746546b714f42656b674b61542f566165527346473031672b6f346238462f4c54694b6346514567354c682b5470566e65777770487553773d3d',
+          Authorization: `Bearer ${token}`,
         }
       );
 
@@ -61,11 +60,7 @@ export default function NavBar() {
       ),
     },
   ];
-
-  // useEffect(() => {
-  //   setUser(JSON.parse(secureLocalStorage.getItem('VigUser')));
-  // }, []);
-
+  console.log(user);
   return (
     <header>
       <nav className="container">
@@ -102,7 +97,11 @@ export default function NavBar() {
                     />
                   </div>
                   <div>
-                    <h5>{user?.names || '--'}</h5>
+                    <h5>
+                      {user?.first_name
+                        ? `${user?.first_name} ${user?.last_name}`
+                        : '--'}
+                    </h5>
                   </div>
                   {NavDropdown}
                 </Space>

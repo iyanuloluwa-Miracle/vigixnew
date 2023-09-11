@@ -52,4 +52,10 @@ export const BankAssignOption = [
   },
 ];
 
+export const companyEnum = {
+  1: 'CBN',
+  2: 'NPF',
+  3: 'VIGILANT',
+  4: 'BAnk',
+};
 // NPF cant assign they can only proceed to arrest or investigate

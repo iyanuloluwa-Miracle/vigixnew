@@ -584,48 +584,40 @@ export default function AdminMembers() {
           <p>Fill the fields below to add a new member.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item
-            name="fullName"
-            label="Full Name (Optional)"
-            className="heights"
-          >
+          <Form.Item name="first_name" label="First Name" className="heights">
             <Input placeholder="Enter full name" />
           </Form.Item>
-          <Form.Item name="username" label="Username" className="heights">
-            <Input placeholder="Enter username" />
+
+          <Form.Item name="last_name" label="Last Name" className="heights">
+            <Input placeholder="Enter full name" />
           </Form.Item>
 
           <Form.Item name="email" label="Email address" className="heights">
             <Input placeholder="Enter email" type="email" />
           </Form.Item>
 
-          <Form.Item name="company" label="Company">
+          <Form.Item name="entity_id" label="Entity Id">
             <Select
-              defaultValue="All"
               style={{
                 width: '100%',
               }}
               onChange={handleChange}
               options={[
                 {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
-                },
-                {
-                  value: 'CBN',
+                  value: 1,
                   label: 'CBN',
                 },
                 {
-                  value: 'NPF',
+                  value: 2,
                   label: 'NPF',
                 },
                 {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
+                  value: 3,
+                  label: 'VIGILANT',
+                },
+                {
+                  value: 4,
+                  label: 'BANK',
                 },
               ]}
             />
@@ -633,28 +625,27 @@ export default function AdminMembers() {
 
           <Form.Item name="Role access" label="Role access">
             <Select
-              defaultValue="All"
               onChange={handleChange}
               options={[
+                {
+                  value: 1,
+                  label: 'CBN',
+                },
                 {
                   value: 'All',
                   label: 'All',
                 },
                 {
-                  value: 'Customer support',
-                  label: 'Customer support',
+                  value: 'All',
+                  label: 'All',
                 },
                 {
-                  value: 'Consumer protection',
-                  label: 'Consumer protection',
+                  value: 'All',
+                  label: 'All',
                 },
                 {
-                  value: 'Inspector general',
-                  label: 'Inspector general',
-                },
-                {
-                  value: 'E-tranzact',
-                  label: 'E-tranzact',
+                  value: 'All',
+                  label: 'All',
                 },
               ]}
             />
