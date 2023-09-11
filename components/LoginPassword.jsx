@@ -79,6 +79,8 @@ export default function LoginPassword() {
           JSON.stringify(progressData)
         );
 
+        toast.success('Login successful');
+
         router.push('/dashboard');
       }
     } catch (error) {
