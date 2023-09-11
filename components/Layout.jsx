@@ -22,26 +22,32 @@ const Layout = ({ children }) => {
   const [isActive, setIsActive] = useState(true);
   const [info, setInfo] = useState(null);
   const [user, setUser] = useState({});
-  const [useData, setUserData] = useState({});
-  const [progressIndicator, setProgressIndicator] = useState({});
+  // const [useData, setUserData] = useState({});
+  // const [progressIndicator, setProgressIndicator] = useState({});
   const [defaultUserTab, setDefaultUSerTab] = useState('1');
   const router = useRouter();
 
-  // const [progressIndicator, setProgressIndicator] = useState(() => {
-  //   // Retrieve data from localStorage or set default value
-  //   const storedData = secureLocalStorage.getItem('progressIndicator');
-  //   return storedData ? JSON.parse(storedData) : {};
-  // });
+  const [progressIndicator, setProgressIndicator] = useState(() => {
+    // Retrieve data from localStorage or set default value
+    const storedData = secureLocalStorage.getItem('progressIndicator');
+    return storedData ? JSON.parse(storedData) : {};
+  });
 
-  useEffect(() => {
-    secureLocalStorage.setItem(
-      'progressIndicator',
-      JSON.stringify(progressIndicator)
-    );
-  }, [progressIndicator]);
+  const [useData, setUserData] = useState(() => {
+    // Retrieve data from localStorage or set default value
+    const storedData = secureLocalStorage.getItem('user');
+    return storedData ? JSON.parse(storedData) : {};
+  });
+
+  // useEffect(() => {
+  //   secureLocalStorage.setItem(
+  //     'progressIndicator',
+  //     JSON.stringify(progressIndicator)
+  //   );
+  // }, [progressIndicator]);
 
   const handleLogOut = () => {
-    secureLocalStorage.removeItem('Token');
+    secureLocalStorage.removeItem('token');
     secureLocalStorage.clear();
     router.push('/');
   };

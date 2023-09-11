@@ -14,6 +14,33 @@ import { OverlayContext } from './Layout';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+const progressData = {
+  recoveries: {
+    guage: 'Positive',
+    percentage: 54,
+    totalReportsForToday: 38,
+    totalRecoveries: 203,
+  },
+  admin: {
+    guage: 'Negative',
+    percentage: 20,
+    totalReportsForToday: 74,
+    totalAdminMembers: 1000,
+  },
+  reports: {
+    guage: 'Negative',
+    percentage: 13,
+    totalReportsForToday: 92,
+    totalReports: 3041,
+  },
+  users: {
+    guage: 'Positive',
+    percentage: 60,
+    totalUsersForToday: 12,
+    totalUsers: 101,
+  },
+};
+
 export default function LoginPassword() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -45,6 +72,13 @@ export default function LoginPassword() {
         console.log(res);
         Cookies.set('token', res?.token);
         setUser(res?.data);
+        secureLocalStorage.setItem('user', JSON.stringify(res?.data));
+        setProgressIndicator(progressData);
+        secureLocalStorage.setItem(
+          'progressIndicator',
+          JSON.stringify(progressData)
+        );
+
         router.push('/dashboard');
       }
     } catch (error) {
@@ -52,33 +86,6 @@ export default function LoginPassword() {
     } finally {
       setLoading(false);
     }
-
-    setProgressIndicator({
-      recoveries: {
-        guage: 'Positive',
-        percentage: 54,
-        totalReportsForToday: 38,
-        totalRecoveries: 203,
-      },
-      admin: {
-        guage: 'Negative',
-        percentage: 20,
-        totalReportsForToday: 74,
-        totalAdminMembers: 1000,
-      },
-      reports: {
-        guage: 'Negative',
-        percentage: 13,
-        totalReportsForToday: 92,
-        totalReports: 3041,
-      },
-      users: {
-        guage: 'Positive',
-        percentage: 60,
-        totalUsersForToday: 12,
-        totalUsers: 101,
-      },
-    });
 
     setLoading(false);
   };
