@@ -24,26 +24,93 @@ export default function NavBar() {
   const onFinish = async value => {
     setLoading(true);
 
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json', // Adjust content type if needed
+      },
+    };
+
+    console.log(requestOptions);
+
     try {
-      const res = await api.post(
+      const response = await fetch(
         `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/user/logout-admin/${user.id}`,
-        {},
-        {
-          Authorization: `Bearer ${token}`,
-        }
+        requestOptions
       );
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-      console.log(res);
-
-      toast.success(res?.data?.message);
-      handleLogOut();
-      setLogoutModal(false);
+      // Handle the response here if needed
+      const responseData = await response.json(); // Parse response data if it's JSON
+      console.log('Response Data:', responseData);
     } catch (error) {
-      console.log(error);
-      toast.error(error?.response?.data?.data?.message[0]);
-    } finally {
-      setLoading(false);
+      console.error('Error:', error);
     }
+
+    // fetch(
+    //   `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/user/logout-admin/${user.id}`,
+    //   requestOptions
+    // )
+    //   .then(response => {
+    //     if (!response.ok) {
+    //       throw new Error('Network response was not ok');
+    //     }
+    //     return response.json(); // You can remove this line if not expecting a response body
+    //   })
+    //   .then(data => {
+    //     // Handle the response data here
+    //     console.log('Response:', data);
+    //   })
+    //   .catch(error => {
+    //     // Handle errors here
+    //     console.error('Error:', error);
+    //   });
+
+    // const apiUrl = 'https://sea-turtle-app-7ta2e.ondigitalocean.app/api';
+    // const axiosInstance = axios.create({
+    //   baseURL: apiUrl,
+    //   headers: {
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // });
+    // axiosInstance
+    //   .post(`/api/user/logout-admin/${user.id}`)
+    //   .then(response => {
+    //     // Handle the response here
+    //     console.log('Response:', response.data);
+    //     handleLogOut();
+    //     setLogoutModal(false);
+    //   })
+    //   .catch(error => {
+    //     // Handle errors here
+    //     console.error('Error:', error);
+    //     setLoading(false);
+    //   });
+
+    // try {
+    //   const res = await api.post(
+    //     `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/user/logout-admin/${user.id}`,
+    //     {},
+    //     {
+    //       Authorization: `Bearer ${token}`,
+    //     }
+    //   );
+
+    //   console.log(res);
+
+    //   toast.success(res?.data?.message);
+    //   handleLogOut();
+    //   setLogoutModal(false);
+    // } catch (error) {
+    //   console.log(error);
+    // } finally {
+    //   setLoading(false);
+    // }
+
+    setLoading(false);
   };
 
   const items = [
@@ -61,6 +128,8 @@ export default function NavBar() {
     },
   ];
   console.log(user);
+
+  console.log(token);
   return (
     <header>
       <nav className="container">

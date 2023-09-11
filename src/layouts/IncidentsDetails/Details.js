@@ -109,7 +109,8 @@ export default function Details({ data }) {
       </div>
 
       <div className="actions">
-        {user?.entity === 'Vigilant' || user?.entity === 'Bank' ? (
+        {user?.role?.name === 'VIGILANT CUSTOMER SERVICE' ||
+        user?.role?.name === 'BANK' ? (
           <button className="btn" onClick={() => setIncidentModal(true)}>
             Assign
           </button>
@@ -189,11 +190,11 @@ export default function Details({ data }) {
           >
             <Radio.Group>
               <Space direction="vertical">
-                {user?.entity === 'Vigilant'
+                {user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
                   ? VigilantAssignOption?.map(item => (
                       <Radio value={item?.value}>{item?.label}</Radio>
                     ))
-                  : user?.entity === 'Bank'
+                  : user?.role?.name === 'BANK'
                   ? BankAssignOption?.map(item => (
                       <Radio value={item?.value}>{item?.label}</Radio>
                     ))

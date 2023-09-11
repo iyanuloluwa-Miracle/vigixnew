@@ -6,6 +6,7 @@ import { routesWithoutNavBars } from '../config';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import secureLocalStorage from 'react-secure-storage';
+import Cookies from 'js-cookie';
 
 const UserContext = createContext();
 
@@ -50,6 +51,7 @@ const Layout = ({ children }) => {
   const handleLogOut = () => {
     secureLocalStorage.removeItem('token');
     secureLocalStorage.clear();
+    Cookies.clear();
     router.push('/');
   };
 
