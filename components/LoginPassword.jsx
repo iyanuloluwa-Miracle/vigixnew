@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Button, Checkbox, Form, Input, Spin } from 'antd';
 import { ArrowRight } from '../utility/svg';
 import { useRouter } from 'next/router';
@@ -10,22 +10,48 @@ import { jsonToHex } from '../apis/util';
 import secureLocalStorage from 'react-secure-storage';
 import { useQuery } from '@tanstack/react-query';
 import { OverlayContext } from './Layout';
+// import axios from '../apis/axiosConfig';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export default function LoginPassword() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [csrfToken, setCsrfToken] = useState('');
   const { setUserData, useData, setUser, setProgressIndicator } =
     OverlayContext();
 
   const loginAccount = useMutation({
-    mutationFn: payload => api.loginAccount(payload),
+    mutationFn: payload => api.login(payload),
     onSuccess: () => {
       router.push('/dashboard');
     },
   });
 
   const onFinish = async values => {
-    console.log(values);
+    setLoading(true);
+
+    const payload = {
+      email: JSON.parse(secureLocalStorage.getItem('email')).email,
+      password: values.password,
+    };
+
+    try {
+      const res = await api.post(
+        'https://sea-turtle-app-7ta2e.ondigitalocean.app/api/user/login-admin',
+        payload
+      );
+      if (res) {
+        console.log(res);
+        Cookies.set('token', res?.token);
+        setUser(res?.data);
+        router.push('/dashboard');
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
 
     setProgressIndicator({
       recoveries: {
@@ -54,25 +80,12 @@ export default function LoginPassword() {
       },
     });
 
-    setUser({
-      email: 'specter.omojolowo@gmail.com',
-      names: 'specter omo',
-      entity: 'Vigilant',
-      role: 'Customer Service',
-      company: 'Vigilant',
-    });
-
-    setLoading(true);
-
-    router.push('/dashboard');
     setLoading(false);
   };
 
   const onFinishFailed = errorInfo => {
     console.error('Failed:', errorInfo);
   };
-
-  console.log({ useData });
 
   return (
     <div className="Login-page container-fluid">

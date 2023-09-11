@@ -8,19 +8,19 @@ import secureLocalStorage from 'react-secure-storage';
 import { message } from 'antd';
 
 axios.interceptors.response.use(undefined, err => {
-  // if (err.response.status != 200 || err.response.status != 201) {
-  //   if (err.code === 'ERR_NETWORK') {
-  //     message.error('Network Error, please try again');
-  //   }
-  //   if (err.response.status == 401) {
-  //     toast.error('Please login to continue');
-  //   } else {
-  //     console.log(err);
-  //   }
-  // }
-  // if (err.response.status == 401) {
-  //   Router.push('/');
-  // }
+  if (err.response.status != 200 || err.response.status != 201) {
+    if (err.code === 'ERR_NETWORK') {
+      message.error('Network Error, please try again');
+    }
+    if (err.response.status == 401) {
+      toast.error('Please login to continue');
+    } else {
+      console.log(err);
+    }
+  }
+  if (err.response.status == 401) {
+    Router.push('/');
+  }
 
   return Promise.reject(err);
 });
@@ -28,20 +28,26 @@ axios.interceptors.response.use(undefined, err => {
 const api = {
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/incident/incidents`;
+    const url = `${BASE_URL}/incident/incidents`;
     return api.get(url, headers);
   },
 
   fetchSingleIncidents: (token, id) => {
     const headers = createHTTPHeader(token);
-    const url = `https://sea-turtle-app-7ta2e.ondigitalocean.app/api/incident/incident/${id}`;
+    const url = `${BASE_URL}/incident/incident/${id}`;
     return api.get(url, headers);
+  },
+
+  login: payload => {
+    const headers = createHTTPHeader(null);
+    const url = `${BASE_URL}/user/login-admin`;
+    return api.post(url, payload, headers);
   },
 
   editMemberProfile: (payload, token, userId) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/profile/${userId}`;
-    return api.patch(url, payload, headers);
+    const url = `${BASE_URL}/user/${userId}`;
+    return api.post(url, payload, headers);
   },
 
   editMemberPassword: (payload, token, userId) => {

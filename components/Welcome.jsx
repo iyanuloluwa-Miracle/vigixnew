@@ -20,7 +20,8 @@ export default function Welcome() {
         <div className="subs row">
           <div className="col-auto">
             <span>
-              {user?.company} / {user?.role}
+              {/* {user?.company} */}
+              Vigilant / {user?.role?.name}
             </span>
           </div>
           <div className="col-auto left-to-right">

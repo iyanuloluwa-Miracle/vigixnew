@@ -33,12 +33,12 @@ const Layout = ({ children }) => {
   //   return storedData ? JSON.parse(storedData) : {};
   // });
 
-  // useEffect(() => {
-  //   secureLocalStorage.setItem(
-  //     'progressIndicator',
-  //     JSON.stringify(progressIndicator)
-  //   );
-  // }, [progressIndicator]);
+  useEffect(() => {
+    secureLocalStorage.setItem(
+      'progressIndicator',
+      JSON.stringify(progressIndicator)
+    );
+  }, [progressIndicator]);
 
   const handleLogOut = () => {
     secureLocalStorage.removeItem('Token');

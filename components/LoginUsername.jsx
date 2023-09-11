@@ -7,8 +7,8 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import api from '../apis';
 import { jsonToHex } from '../apis/util';
-import secureLocalStorage from 'react-secure-storage';
 import { useQuery } from '@tanstack/react-query';
+import secureLocalStorage from 'react-secure-storage';
 
 export default function LoginUsername() {
   const router = useRouter();
@@ -23,7 +23,11 @@ export default function LoginUsername() {
   });
 
   const onFinish = async values => {
+    console.log(values);
     setLoading(true);
+
+    secureLocalStorage.setItem('email', JSON.stringify(values));
+
     router.push('/login-password');
     setLoading(false);
   };
@@ -59,20 +63,20 @@ export default function LoginUsername() {
                 priority={true}
               />
             </div>
-            <p>Enter username or email.</p>
+            <p>Enter email.</p>
 
             <Form.Item
-              label="Username / Email address"
+              label="Email address"
               className={'username-input'}
-              name="username"
+              name="email"
               rules={[
                 {
                   required: true,
-                  message: 'Please input your email or username!',
+                  message: 'Please input your email!',
                 },
               ]}
             >
-              <Input placeholder="Input email or username" />
+              <Input placeholder="Input email" />
             </Form.Item>
 
             <Form.Item className="button-wrapper">
