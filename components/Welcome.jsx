@@ -19,7 +19,8 @@ export default function Welcome() {
         <div className="subs row">
           <div className="col-auto">
             <span>
-              {user?.entity_id == 1
+              {companyEnum[user?.entity_id]}
+              {/* {user?.entity_id == 1
                 ? 'CBN'
                 : user?.entity_id == 2
                 ? 'NPF'
@@ -28,7 +29,7 @@ export default function Welcome() {
                 : user?.entity_id == 4
                 ? 'BANK'
                 : ''}{' '}
-              / {user?.role?.name}
+              / {user?.role?.name} */}
             </span>
           </div>
           <div className="col-auto left-to-right">

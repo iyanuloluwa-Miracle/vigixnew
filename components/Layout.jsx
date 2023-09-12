@@ -49,10 +49,10 @@ const Layout = ({ children }) => {
   // }, [progressIndicator]);
 
   const handleLogOut = () => {
+    router.push('/');
     secureLocalStorage.removeItem('token');
     secureLocalStorage.clear();
-    Cookies.clear();
-    router.push('/');
+    // Cookies.clear();
   };
 
   return (

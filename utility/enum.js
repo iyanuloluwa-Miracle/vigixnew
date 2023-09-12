@@ -32,11 +32,11 @@ export const InternalControlBank = {
 
 export const VigilantAssignOption = [
   {
-    value: 'Bank',
+    value: 2,
     label: 'bank',
   },
   {
-    value: 'NPF',
+    value: 18,
     label: 'NPF',
   },
 ];

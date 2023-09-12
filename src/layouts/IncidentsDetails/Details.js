@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { DetailsWrapper } from './styles';
 import Image from 'next/image';
+
 import {
   Input,
   Select,
@@ -19,12 +20,16 @@ import {
 } from 'antd';
 import { VigilantAssignOption, BankAssignOption } from '../../../utility/enum';
 import { OverlayContext } from '../../../components/Layout';
+import api from '../../../apis';
+import { BASE_URL } from '../../../utility/constants';
+import Cookies from 'js-cookie';
 
 export default function Details({ data }) {
   const [incidentModal, setIncidentModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
+  const token = Cookies.get('token');
 
   function generateRandom20DigitNumber() {
     let randomNumber = '';
@@ -36,6 +41,25 @@ export default function Details({ data }) {
 
   const editBank = values => {
     console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+      api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+    }
   };
 
   useEffect(() => {
@@ -52,6 +76,8 @@ export default function Details({ data }) {
   };
 
   console.log({ user });
+
+  console.log({ data });
 
   return (
     <DetailsWrapper>
@@ -118,34 +144,6 @@ export default function Details({ data }) {
           ''
         )}
 
-        {user?.entity === 'NPF' && (
-          <>
-            <Popconfirm
-              title="Delete the task"
-              description="Are you sure to delete this task?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              {/* <button className="btn danger"> Proceed to arrest</button> */}
-              <Button danger>Investigate</Button>
-            </Popconfirm>
-
-            <Popconfirm
-              title="Delete the task"
-              description="Are you sure to delete this task?"
-              onConfirm={confirm}
-              onCancel={cancel}
-              okText="Yes"
-              cancelText="No"
-            >
-              {/* <button className="btn danger"> Proceed to arrest</button> */}
-              <Button danger>Proceed to arrest</Button>
-            </Popconfirm>
-          </>
-        )}
-
         {user?.role?.name === 'VIGILANT CUSTOMER SERVICE' && (
           <>
             <Popconfirm
@@ -160,7 +158,109 @@ export default function Details({ data }) {
             </Popconfirm>
           </>
         )}
+
+        {/* for NPF investigator  */}
+        {user?.entity_id === 2 && user?.role?.entity_id == 2 ? (
+          <>
+            <Button danger onClick={() => {}}>
+              Investigate
+            </Button>
+
+            <Button danger onClick={() => {}}>
+              Proceed to arrest
+            </Button>
+          </>
+        ) : (
+          ''
+        )}
       </div>
+
+      {/* assign modal  */}
+
+      <Modal
+        centered
+        open={incidentModal}
+        onOk={() => setIncidentModal(false)}
+        onCancel={() => {
+          setIncidentModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to assign incident.</p>
+        </div>
+        <Form layout="vertical" onFinish={editBank} form={formAssign}>
+          <Form.Item
+            name="entity"
+            label="Entity"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please select assign entity!',
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Space direction="vertical">
+                {user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
+                  ? VigilantAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : user?.role?.name === 'BANK'
+                  ? BankAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : ' '}
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="note"
+            label="Note"
+            className=""
+            row={4}
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={10} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              // loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Assign</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
 
       <Modal
         centered

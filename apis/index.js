@@ -50,6 +50,10 @@ const api = {
     return api.get(url, headers);
   },
 
+  updateAssignIncidents: () => {
+    const url = `${BASE_URL}/incident/update-incident-status/${id}`;
+  },
+
   editMemberProfile: (payload, token, userId) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/user/${userId}`;
@@ -310,6 +314,11 @@ const api = {
   post: (url, body, headers = createHTTPHeader()) => {
     return axios.post(url, body, { headers }).then(response => response.data);
   },
+
+  post2: (url, body, headers) => {
+    return axios.post(url, body, { headers }).then(response => response.data);
+  },
+
   put: (url, body, headers) => {
     return axios.put(url, body, { headers }).then(response => response.data);
   },

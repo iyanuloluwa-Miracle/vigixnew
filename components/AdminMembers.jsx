@@ -623,7 +623,7 @@ export default function AdminMembers() {
             />
           </Form.Item>
 
-          <Form.Item name="Role access" label="Role access">
+          <Form.Item name="role_id" label="Role access">
             <Select
               onChange={handleChange}
               options={[
@@ -632,23 +632,51 @@ export default function AdminMembers() {
                   label: 'CBN',
                 },
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: 2,
+                  label: 'Vigilant Customer Service',
                 },
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: 3,
+                  label: 'NPF investigator',
                 },
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: 4,
+                  label: 'Bank Fraud Desk',
                 },
                 {
-                  value: 'All',
-                  label: 'All',
+                  value: 5,
+                  label: 'Bank Treasury',
+                },
+                {
+                  value: 6,
+                  label: 'Bank Internal Control',
+                },
+                {
+                  value: 7,
+                  label: 'Bank Risk',
+                },
+                {
+                  value: 8,
+                  label: 'Bank Account',
+                },
+                {
+                  value: 9,
+                  label: 'Bank Internal Audit',
+                },
+                {
+                  value: 10,
+                  label: 'NPF prosecutor',
+                },
+                {
+                  value: 10,
+                  label: 'Bank Internal Control',
                 },
               ]}
             />
+          </Form.Item>
+
+          <Form.Item name="password" label="Password" className="heights">
+            <Input placeholder="Enter email" />
           </Form.Item>
 
           <Button
