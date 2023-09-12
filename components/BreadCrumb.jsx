@@ -56,16 +56,16 @@ export default function BreadCrumb({ tab, location }) {
               <li className={tab == 'reports' ? 'nav-item active' : 'nav-item'}>
                 <div className="parent">
                   <div>
-                    <a>Reports</a>
+                    <a>Incidents</a>
                     <div className="children">
                       <div className="backdrop" />
                       <ul className="transaction-list">
                         <li>
-                          <Link href={'/transaction-reports'}>
-                            Transaction reports
+                          <Link href={'/incident-reports'}>
+                            Incidents reports
                           </Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <Link href={'/transaction-report-authorized'}>
                             Authorized Transaction reports
                           </Link>
@@ -84,7 +84,7 @@ export default function BreadCrumb({ tab, location }) {
                           <Link href={'/transaction-type'}>
                             Transaction types
                           </Link>
-                        </li>
+                        </li> */}
                       </ul>
                     </div>
                   </div>
@@ -151,7 +151,8 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              <li
+
+              {/* <li
                 className={
                   tab == 'communications' ? 'nav-item active' : 'nav-item '
                 }
@@ -161,16 +162,12 @@ export default function BreadCrumb({ tab, location }) {
                     <a>Communications</a>
                     <div className="children">
                       <div className="backdrop" />
-                      {/* <ul className="">
-                        <li>
-                          <Link href={'/manage-users'}>Reports</Link>
-                        </li>
-                      </ul> */}
                     </div>
                   </div>
                 </div>
-              </li>
-              <li
+              </li> */}
+
+              {/* <li
                 className={
                   tab == 'notifications' ? 'nav-item active' : 'nav-item '
                 }
@@ -180,15 +177,11 @@ export default function BreadCrumb({ tab, location }) {
                     <a>Notifications</a>
                     <div className="children">
                       <div className="backdrop" />
-                      {/* <ul className="">
-                        <li>
-                          <Link href={'/manage-users'}>Reports</Link>
-                        </li>
-                      </ul> */}
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> */}
+
               <li
                 className={
                   tab == 'configurations' ? 'nav-item active' : 'nav-item '
