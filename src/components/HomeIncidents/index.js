@@ -4,16 +4,19 @@ import { Space, Table, Tag, Skeleton } from 'antd';
 import Link from 'next/link';
 import api from '../../../apis';
 import { useRouter } from 'next/router';
+import { OverlayContext } from '../../../components/Layout';
 
 // styles
 import { IncidentsWrapper } from './styles';
 import { useQuery } from '@tanstack/react-query';
+import { BASE_URL } from '../../../utility/constants';
 
 export default function HomeIncidents() {
   const [showButton, setShowButton] = useState(false);
   const [search_query, setSearchQuery] = useState(null);
   const [incidentsData, setIncidentsData] = useState([]);
   const router = useRouter();
+  const { user } = OverlayContext();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -189,10 +192,16 @@ export default function HomeIncidents() {
     return randomNumber;
   }
 
+  const url = `${BASE_URL}/incident/police-incidents/18`;
+  // const url = user `${BASE_URL}/incident/incidents`;
+
+  // return api.fetchIncidents(null, { search_query });
+  // return api.fetchNPFIncidents(null, { search_query });
+
   const { data: fetcIncidents, isLoading: loadingIncidents } = useQuery({
     queryKey: ['get_incidents', search_query],
     queryFn: () => {
-      return api.fetchIncidents(null, { search_query });
+      return api.fetchNPFIncidents(null, { search_query });
     },
     onSuccess: data => {
       setIncidentsData(

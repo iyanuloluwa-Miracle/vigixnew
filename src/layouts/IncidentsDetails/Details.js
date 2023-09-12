@@ -26,6 +26,7 @@ import Cookies from 'js-cookie';
 
 export default function Details({ data }) {
   const [incidentModal, setIncidentModal] = useState(false);
+  const [NPFModal, setNPFModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
@@ -73,6 +74,52 @@ export default function Details({ data }) {
   const cancel = e => {
     console.log(e);
     message.error('Click on No');
+  };
+
+  const proceedToArrest = values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+      api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+    }
+  };
+
+  const proceedToInvestigate = values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+      api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+    }
   };
 
   console.log({ user });
@@ -159,10 +206,20 @@ export default function Details({ data }) {
           </>
         )}
 
+        {/* 
+        user?.entity_id === 2 &&
+        user?.role?.entity_id == 2 &&
+        data?.incident?.incident_status_id == 18  */}
+
         {/* for NPF investigator  */}
-        {user?.entity_id === 2 && user?.role?.entity_id == 2 ? (
+        {data?.incident?.incident_status_id == 18 ? (
           <>
-            <Button danger onClick={() => {}}>
+            <Button
+              danger
+              onClick={() => {
+                setNPFModal(true);
+              }}
+            >
               Investigate
             </Button>
 
@@ -262,12 +319,14 @@ export default function Details({ data }) {
         </Form>
       </Modal>
 
+      {/* proceed to investigate  */}
+
       <Modal
         centered
-        open={incidentModal}
-        onOk={() => setIncidentModal(false)}
+        open={NPFModal}
+        onOk={() => setNPFModal(false)}
         onCancel={() => {
-          setIncidentModal(false);
+          setNPFModal(false);
         }}
         className="our-modal add-page-modal"
         footer={null}
@@ -276,42 +335,15 @@ export default function Details({ data }) {
           <h4>Assign Incident</h4>
           <p>Fill the fields below to assign incident.</p>
         </div>
-        <Form layout="vertical" onFinish={editBank} form={formAssign}>
+        <Form
+          layout="vertical"
+          onFinish={proceedToInvestigate}
+          form={formAssign}
+        >
           <Form.Item
-            name="entity"
-            label="Entity"
-            className="heights"
-            rules={[
-              {
-                required: true,
-                message: 'Please select assign entity!',
-              },
-            ]}
-          >
-            <Radio.Group>
-              <Space direction="vertical">
-                {user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
-                  ? VigilantAssignOption?.map((item, index) => (
-                      <Radio value={item?.value} key={index}>
-                        {item?.label}
-                      </Radio>
-                    ))
-                  : user?.role?.name === 'BANK'
-                  ? BankAssignOption?.map((item, index) => (
-                      <Radio value={item?.value} key={index}>
-                        {item?.label}
-                      </Radio>
-                    ))
-                  : ' '}
-              </Space>
-            </Radio.Group>
-          </Form.Item>
-
-          <Form.Item
-            name="note"
-            label="Note"
+            name="reason"
+            label="Reason for investigation"
             className=""
-            row={4}
             rules={[
               {
                 required: true,
@@ -319,7 +351,7 @@ export default function Details({ data }) {
               },
             ]}
           >
-            <Input.TextArea placeholder="Enter note" row={10} />
+            <Input.TextArea placeholder="Enter note" row={9} />
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">
@@ -331,7 +363,7 @@ export default function Details({ data }) {
                   ? 'our-btn-fade w-100 mt-4 mb-4'
                   : 'w-100 mt-4 mb-4'
               }
-              // loading={sunmitLoading}
+              loading={sunmitLoading}
               disabled={sunmitLoading}
             >
               {sunmitLoading ? (
@@ -340,7 +372,63 @@ export default function Details({ data }) {
                   style={{ color: 'white' }}
                 />
               ) : (
-                <>Assign</>
+                <>Proceed to Investigate</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
+      {/* proceed to arrest  */}
+
+      <Modal
+        centered
+        open={NPFModal}
+        onOk={() => setNPFModal(false)}
+        onCancel={() => {
+          setNPFModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to assign incident.</p>
+        </div>
+        <Form layout="vertical" onFinish={proceedToArrest} form={formAssign}>
+          <Form.Item
+            name="reason"
+            label="Reason for arrest"
+            className=""
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={9} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Proceed to Investigate</>
               )}
             </Button>
           </div>

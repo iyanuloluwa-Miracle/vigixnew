@@ -52,7 +52,7 @@ export default function NavBar() {
     } catch (error) {
       console.error(error);
     } finally {
-      setSunmitLoading(false);
+      setLoading(false);
     }
 
     // try {
