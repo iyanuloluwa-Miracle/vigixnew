@@ -201,7 +201,13 @@ export default function HomeIncidents() {
   const { data: fetcIncidents, isLoading: loadingIncidents } = useQuery({
     queryKey: ['get_incidents', search_query],
     queryFn: () => {
-      return api.fetchNPFIncidents(null, { search_query });
+      return user?.entity_id === 2
+        ? api.fetchNPFIncidents(null, { search_query })
+        : user?.entity_id === 3
+        ? api.fetchIncidents(null, { search_query })
+        : user?.entity_id === 4
+        ? api.fetchBanksIncidents
+        : '';
     },
     onSuccess: data => {
       setIncidentsData(
