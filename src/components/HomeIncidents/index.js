@@ -206,7 +206,7 @@ export default function HomeIncidents() {
         : user?.entity_id === 3
         ? api.fetchIncidents(null, { search_query })
         : user?.entity_id === 4
-        ? api.fetchBanksIncidents
+        ? api.fetchBanksIncidents(null, { search_query })
         : '';
     },
     onSuccess: data => {
