@@ -28,8 +28,8 @@ export default function Welcome() {
                 ? 'VIGILANT'
                 : user?.entity_id == 4
                 ? 'BANK'
-                : ''}{' '}
-              / {user?.role?.name} */}
+                : ''}{' '}*/}
+              / {user?.role?.name}
             </span>
           </div>
           <div className="col-auto left-to-right">
