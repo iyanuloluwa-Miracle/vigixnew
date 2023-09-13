@@ -19,7 +19,7 @@ export default function Welcome() {
         <div className="subs row">
           <div className="col-auto">
             <span>
-              {companyEnum[user?.entity_id]}
+              {companyEnum[user?.role?.entity_id]}
               {/* {user?.entity_id == 1
                 ? 'CBN'
                 : user?.entity_id == 2
