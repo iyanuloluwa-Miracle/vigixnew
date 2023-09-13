@@ -26,6 +26,9 @@ axios.interceptors.response.use(undefined, err => {
 });
 
 const api = {
+
+
+
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/incident/incidents`;
@@ -45,7 +48,9 @@ const api = {
   },
 
   fetchSingleIncidents: (token, id) => {
+    console.log("THE TOKEN:", token)
     const headers = createHTTPHeader(token);
+    console.log("THE HEADER:", headers)
     const url = `${BASE_URL}/incident/incident/${id}`;
     return api.get(url, headers);
   },
@@ -327,20 +332,20 @@ const api = {
     return axios.post(url, body, { headers }).then(response => response.data);
   },
 
-  post2: (url, body, headers) => {
+  post2: (url, body, headers = createHTTPHeader()) => {
     return axios.post(url, body, { headers }).then(response => response.data);
   },
 
-  put: (url, body, headers) => {
+  put: (url, body, headers = createHTTPHeader()) => {
     return axios.put(url, body, { headers }).then(response => response.data);
   },
-  patch: (url, body, headers) => {
+  patch: (url, body, headers = createHTTPHeader()) => {
     return axios.patch(url, body, { headers }).then(response => response.data);
   },
-  get: (url, headers) => {
+  get: (url, headers = createHTTPHeader()) => {
     return axios.get(url, { headers }).then(response => response.data);
   },
-  delete: (url, body, headers) => {
+  delete: (url, body, headers = createHTTPHeader()) => {
     return axios
       .delete(url, { data: body }, { headers })
       .then(response => response.data);

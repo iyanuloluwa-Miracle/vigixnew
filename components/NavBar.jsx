@@ -16,7 +16,10 @@ import { BASE_URL } from '../utility/constants';
 export default function NavBar() {
   const { user, handleLogOut, setUser } = OverlayContext();
   const [loading, setLoading] = useState(false);
+
   const token = Cookies.get('token');
+  // const token = secureLocalStorage.getItem('token');
+  console.log(token)
 
   const router = useRouter();
 
@@ -30,8 +33,13 @@ export default function NavBar() {
     },
   });
 
+
+
+
+
   const onFinish = async value => {
     setLoading(true);
+    console.log("Token inside unfinished:", token)
 
     const requestOptions = {
       method: 'POST',
@@ -47,7 +55,7 @@ export default function NavBar() {
         {},
         requestOptions
       );
-
+      router.push('/');
       console.log(res);
     } catch (error) {
       console.error(error);
