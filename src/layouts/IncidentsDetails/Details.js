@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { DetailsWrapper } from './styles';
 import Image from 'next/image';
+import { toast } from 'sonner';
 import {
   Input,
   Select,
@@ -12,16 +13,27 @@ import {
   Radio,
   Skeleton,
   DatePicker,
-  Switch,
+  Popconfirm,
   Spin,
   Button,
   message,
 } from 'antd';
+import { VigilantAssignOption, BankAssignOption } from '../../../utility/enum';
+import { OverlayContext } from '../../../components/Layout';
+import api from '../../../apis';
+import { BASE_URL } from '../../../utility/constants';
+import Cookies from 'js-cookie';
 
 export default function Details({ data }) {
   const [incidentModal, setIncidentModal] = useState(false);
+  const [voidModal, setVoidModal] = useState(false);
+  const [banksModal, setBanksModal] = useState(false);
+  const [NPFModal, setNPFModal] = useState(false);
+  const [arrestModal, setArrestModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [formAssign] = Form.useForm();
+  const { user } = OverlayContext();
+  const token = Cookies.get('token');
 
   function generateRandom20DigitNumber() {
     let randomNumber = '';
@@ -31,13 +43,169 @@ export default function Details({ data }) {
     return randomNumber;
   }
 
-  const editBank = values => {
+  const customerAssign = async values => {
     console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+     const res = await api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+
+      if(res){
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setIncidentModal(false)
+    }
+  };
+
+  const assignBank = async values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+     const res = await api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+
+      if(res){
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setBanksModal(false)
+    }
   };
 
   useEffect(() => {
     formAssign.resetFields();
   }, [formAssign]);
+
+  const confirm = e => {
+    console.log(e);
+    message.success('Click on Yes');
+  };
+  const cancel = e => {
+    console.log(e);
+    message.error('Click on No');
+  };
+
+  const proceedToArrest = async values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+     const res = await api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+
+ if(res){
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setNPFModal(false)
+    }
+  };
+
+  const proceedToInvestigate = async values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+     const res = await api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+
+ if(res){
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setArrestModal(false)
+    }
+  };
+
+  const proceedToVoid = async values => {
+    console.log(values);
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      new_incident_status_id: values.entity,
+    };
+    try {
+     const res = await api.post2(
+        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        payload,
+        headers
+      );
+
+ if(res){
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setVoidModal(false)
+    }
+  };
+
+
+
+  // console.log({ user });
+
+  // console.log({ data });
 
   return (
     <DetailsWrapper>
@@ -50,7 +218,7 @@ export default function Details({ data }) {
 
               <h4>Reported By:</h4>
               <p>
-                {data?.user?.first_name} {data?.user?.last_name}`
+                {data?.user?.first_name} {data?.user?.last_name}
               </p>
 
               <h4>Transaction Reference</h4>
@@ -95,11 +263,56 @@ export default function Details({ data }) {
       </div>
 
       <div className="actions">
-        <button className="btn" onClick={() => setIncidentModal(true)}>
-          Assign
-        </button>
-        <button className="btn void">Void</button>
+        {user?.entity_id === 3 ||
+        user?.entity_id === 4 ? (
+          <button className="btn" onClick={() => user?.entity_id==3 ? setIncidentModal(true) : user?.entity_id == 4 ?setBanksModal(true): ""}>
+            Assign
+          </button>
+        ) : (
+          ''
+        )}
+
+
+
+        {user?.entity_id === 3 ||
+        user?.entity_id === 4 ? (
+          <button className="btn void" onClick={()=>setVoidModal(true)}>Void</button>
+        ) : (
+          ''
+        )}
+
+        {/* {user?.entity_id === 3 ||
+        user?.entity_id === 4 ? (
+              <button className="btn void" onClick={()=>setVoidModal(true)}>Void</button>
+        ): ""} */}
+
+        {/* 
+        user?.entity_id === 2 &&
+        user?.role?.entity_id == 2 &&
+        data?.incident?.incident_status_id == 18  */}
+
+        {/* for NPF investigator  */}
+        {data?.incident?.incident_status_id == 18 && user?.entity_id === 2? ( 
+          <>
+            <Button
+              danger
+              onClick={() => {
+                setNPFModal(true);
+              }}
+            >
+              Investigate
+            </Button>
+
+            <Button danger onClick={() => {setArrestModal(true)}}>
+              Proceed to arrest
+            </Button>
+          </>
+        ) : (
+          ''
+        )}
       </div>
+
+      {/* assign modal  */}
 
       <Modal
         centered
@@ -115,48 +328,42 @@ export default function Details({ data }) {
           <h4>Assign Incident</h4>
           <p>Fill the fields below to assign incident.</p>
         </div>
-        <Form layout="vertical" onFinish={editBank} form={formAssign}>
+    
+        <Form layout="vertical" onFinish={customerAssign} form={formAssign}>
           <Form.Item
-            name="segment"
-            label="Segment"
+            name="entity"
+            label="Entity"
             className="heights"
             rules={[
               {
                 required: true,
-                message: 'Please select assign segment!',
+                message: 'Please select assign entity!',
               },
             ]}
           >
-            <Select
-              placeholder="Enter segment name"
-              style={{
-                width: '100%',
-              }}
-              options={[
-                {
-                  value: 'All',
-                  label: 'All',
-                },
-                {
-                  value: 'Vigilant',
-                  label: 'Vigilant',
-                },
-                {
-                  value: 'Bank',
-                  label: 'Bank',
-                },
-                {
-                  value: 'NPF',
-                  label: 'NPF',
-                },
-              ]}
-            />
+            <Radio.Group>
+              <Space direction="vertical">
+                {user?.entity_id === 3 && user?.role?.entity_id == 2
+                  ? VigilantAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : user?.role?.name === 'BANK'
+                  ? BankAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : ' '}
+              </Space>
+            </Radio.Group>
           </Form.Item>
 
           <Form.Item
             name="note"
             label="Note"
-            className="heights"
+            className=""
             row={4}
             rules={[
               {
@@ -187,6 +394,264 @@ export default function Details({ data }) {
                 />
               ) : (
                 <>Assign</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
+      {/* assign for bank modal  */}
+
+      <Modal
+        centered
+        open={banksModal}
+        onOk={() => setBanksModal(false)}
+        onCancel={() => {
+          setBanksModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to assign incident.</p>
+        </div>
+        <Form layout="vertical" onFinish={assignBank} >
+          <Form.Item
+            name="entity"
+            label="Entity"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please select assign entity!',
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Space direction="vertical">
+                {user?.entity_id === 3 && user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
+                  ? VigilantAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : user?.role?.name === 'BANK'
+                  ? BankAssignOption?.map((item, index) => (
+                      <Radio value={item?.value} key={index}>
+                        {item?.label}
+                      </Radio>
+                    ))
+                  : ' '}
+              </Space>
+            </Radio.Group>
+          </Form.Item>
+
+          <Form.Item
+            name="note"
+            label="Note"
+            className=""
+            row={4}
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={10} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              // loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Assign</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
+      {/* proceed to investigate  */}
+
+      <Modal
+        centered
+        open={NPFModal}
+        onOk={() => setNPFModal(false)}
+        onCancel={() => {
+          setNPFModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to proceed to investigate.</p>
+        </div>
+        <Form
+          layout="vertical"
+          onFinish={proceedToInvestigate}
+        >
+          <Form.Item
+            name="reason"
+            label="Reason for investigation"
+            className=""
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={9} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Proceed to Investigate</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
+      {/* proceed to arrest  */}
+
+      <Modal
+        centered
+        open={arrestModal}
+        onOk={() => setArrestModal(false)}
+        onCancel={() => {
+          setArrestModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to proceed to arrest.</p>
+        </div>
+        <Form layout="vertical" onFinish={proceedToArrest} >
+          <Form.Item
+            name="reason"
+            label="Reason for arrest"
+            className=""
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={9} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Proceed to Investigate</>
+              )}
+            </Button>
+          </div>
+        </Form>
+      </Modal>
+
+      {/* void modal  */}
+
+      <Modal
+        centered
+        open={voidModal}
+        onOk={() => setVoidModal(false)}
+        onCancel={() => {
+          setVoidModal(false);
+        }}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Assign Incident</h4>
+          <p>Fill the fields below to void incident.</p>
+        </div>
+        <Form layout="vertical" onFinish={proceedToVoid}>
+          <Form.Item
+            name="reason"
+            label="Reason for Voiding incident"
+            className=""
+            rules={[
+              {
+                required: true,
+                message: 'Please input a short note!',
+              },
+            ]}
+          >
+            <Input.TextArea placeholder="Enter note" row={9} />
+          </Form.Item>
+
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <>Void</>
               )}
             </Button>
           </div>
