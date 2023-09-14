@@ -35,6 +35,9 @@ export default function Details({ data }) {
   const { user } = OverlayContext();
   const token = Cookies.get('token');
 
+
+  // console.log("ENTITY:", user.entity_id)
+
   function generateRandom20DigitNumber() {
     let randomNumber = '';
     for (let i = 0; i < 20; i++) {
@@ -54,13 +57,13 @@ export default function Details({ data }) {
       new_incident_status_id: values.entity,
     };
     try {
-     const res = await api.post2(
+      const res = await api.post2(
         `${BASE_URL}/incident/update-incident-status/${user?.id}`,
         payload,
         headers
       );
 
-      if(res){
+      if (res) {
         toast.success(res.message)
       }
 
@@ -83,13 +86,13 @@ export default function Details({ data }) {
       new_incident_status_id: values.entity,
     };
     try {
-     const res = await api.post2(
+      const res = await api.post2(
         `${BASE_URL}/incident/update-incident-status/${user?.id}`,
         payload,
         headers
       );
 
-      if(res){
+      if (res) {
         toast.success(res.message)
       }
 
@@ -125,13 +128,13 @@ export default function Details({ data }) {
       new_incident_status_id: values.entity,
     };
     try {
-     const res = await api.post2(
+      const res = await api.post2(
         `${BASE_URL}/incident/update-incident-status/${user?.id}`,
         payload,
         headers
       );
 
- if(res){
+      if (res) {
         toast.success(res.message)
       }
 
@@ -154,13 +157,13 @@ export default function Details({ data }) {
       new_incident_status_id: values.entity,
     };
     try {
-     const res = await api.post2(
+      const res = await api.post2(
         `${BASE_URL}/incident/update-incident-status/${user?.id}`,
         payload,
         headers
       );
 
- if(res){
+      if (res) {
         toast.success(res.message)
       }
 
@@ -183,13 +186,13 @@ export default function Details({ data }) {
       new_incident_status_id: values.entity,
     };
     try {
-     const res = await api.post2(
+      const res = await api.post2(
         `${BASE_URL}/incident/update-incident-status/${user?.id}`,
         payload,
         headers
       );
 
- if(res){
+      if (res) {
         toast.success(res.message)
       }
 
@@ -264,8 +267,8 @@ export default function Details({ data }) {
 
       <div className="actions">
         {user?.entity_id === 3 ||
-        user?.entity_id === 4 ? (
-          <button className="btn" onClick={() => user?.entity_id==3 ? setIncidentModal(true) : user?.entity_id == 4 ?setBanksModal(true): ""}>
+          user?.entity_id === 4 ? (
+          <button className="btn" onClick={() => user?.entity_id == 3 ? setIncidentModal(true) : user?.entity_id == 4 ? setBanksModal(true) : ""}>
             Assign
           </button>
         ) : (
@@ -275,8 +278,8 @@ export default function Details({ data }) {
 
 
         {user?.entity_id === 3 ||
-        user?.entity_id === 4 ? (
-          <button className="btn void" onClick={()=>setVoidModal(true)}>Void</button>
+          user?.entity_id === 4 ? (
+          <button className="btn void" onClick={() => setVoidModal(true)}>Void</button>
         ) : (
           ''
         )}
@@ -292,7 +295,7 @@ export default function Details({ data }) {
         data?.incident?.incident_status_id == 18  */}
 
         {/* for NPF investigator  */}
-        {data?.incident?.incident_status_id == 18 && user?.entity_id === 2? ( 
+        {data?.incident?.incident_status_id == 18 && user?.entity_id === 2 ? (
           <>
             <Button
               danger
@@ -303,7 +306,7 @@ export default function Details({ data }) {
               Investigate
             </Button>
 
-            <Button danger onClick={() => {setArrestModal(true)}}>
+            <Button danger onClick={() => { setArrestModal(true) }}>
               Proceed to arrest
             </Button>
           </>
@@ -328,7 +331,7 @@ export default function Details({ data }) {
           <h4>Assign Incident</h4>
           <p>Fill the fields below to assign incident.</p>
         </div>
-    
+
         <Form layout="vertical" onFinish={customerAssign} form={formAssign}>
           <Form.Item
             name="entity"
@@ -343,19 +346,19 @@ export default function Details({ data }) {
           >
             <Radio.Group>
               <Space direction="vertical">
-                {user?.entity_id === 3 && user?.role?.entity_id == 2
+                {user?.entity_id == 3 && user?.role?.entity_id == 2
                   ? VigilantAssignOption?.map((item, index) => (
+                    <Radio value={item?.value} key={index}>
+                      {item?.label}
+                    </Radio>
+                  ))
+                  : user?.role?.name == 'BANK'
+                    ? BankAssignOption?.map((item, index) => (
                       <Radio value={item?.value} key={index}>
                         {item?.label}
                       </Radio>
                     ))
-                  : user?.role?.name === 'BANK'
-                  ? BankAssignOption?.map((item, index) => (
-                      <Radio value={item?.value} key={index}>
-                        {item?.label}
-                      </Radio>
-                    ))
-                  : ' '}
+                    : ' '}
               </Space>
             </Radio.Group>
           </Form.Item>
@@ -432,17 +435,17 @@ export default function Details({ data }) {
               <Space direction="vertical">
                 {user?.entity_id === 3 && user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
                   ? VigilantAssignOption?.map((item, index) => (
-                      <Radio value={item?.value} key={index}>
-                        {item?.label}
-                      </Radio>
-                    ))
+                    <Radio value={item?.value} key={index}>
+                      {item?.label}
+                    </Radio>
+                  ))
                   : user?.role?.name === 'BANK'
-                  ? BankAssignOption?.map((item, index) => (
+                    ? BankAssignOption?.map((item, index) => (
                       <Radio value={item?.value} key={index}>
                         {item?.label}
                       </Radio>
                     ))
-                  : ' '}
+                    : ''}
               </Space>
             </Radio.Group>
           </Form.Item>
