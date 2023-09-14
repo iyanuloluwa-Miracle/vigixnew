@@ -43,7 +43,7 @@ const api = {
 
   fetchBanksIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incident/incident-by-bank/10`;
+    const url = `${BASE_URL}/incident/incident-by-bank-id/10`;
     return api.get(url, headers);
   },
 
