@@ -36,7 +36,9 @@ export default function Details({ data }) {
   const token = Cookies.get('token');
 
 
+
   // console.log("ENTITY:", user.entity_id)
+  // console.log(VigilantAssignOption)
 
   function generateRandom20DigitNumber() {
     let randomNumber = '';
@@ -346,19 +348,23 @@ export default function Details({ data }) {
           >
             <Radio.Group>
               <Space direction="vertical">
-                {user?.entity_id == 3 && user?.role?.entity_id == 2
+                {user?.entity_id == 3
+                  // && user?.role?.entity_id == 2
+
                   ? VigilantAssignOption?.map((item, index) => (
                     <Radio value={item?.value} key={index}>
                       {item?.label}
                     </Radio>
                   ))
-                  : user?.role?.name == 'BANK'
+                  : user?.entity_id == 4
+                    // && user?.role?.entity_id == 2
+
                     ? BankAssignOption?.map((item, index) => (
                       <Radio value={item?.value} key={index}>
                         {item?.label}
                       </Radio>
                     ))
-                    : ' '}
+                    : ''}
               </Space>
             </Radio.Group>
           </Form.Item>
@@ -433,13 +439,16 @@ export default function Details({ data }) {
           >
             <Radio.Group>
               <Space direction="vertical">
-                {user?.entity_id === 3 && user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
+                {user?.entity_id === 3
+                  // && user?.role?.name === 'VIGILANT CUSTOMER SERVICE'
                   ? VigilantAssignOption?.map((item, index) => (
                     <Radio value={item?.value} key={index}>
                       {item?.label}
                     </Radio>
                   ))
-                  : user?.role?.name === 'BANK'
+                  : user?.entity_id == 4
+                    // && user?.role?.entity_id == 2
+
                     ? BankAssignOption?.map((item, index) => (
                       <Radio value={item?.value} key={index}>
                         {item?.label}

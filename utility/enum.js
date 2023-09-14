@@ -47,8 +47,27 @@ export const BankAssignOption = [
     value: 'fraud_unit',
   },
   {
-    label: 'Internal Control',
-    value: 'internal_control',
+    label: 'Internal Control Department',
+    value: 'internal_control Department',
+  },
+  {
+    label: 'Treasury Department',
+    value: 'Treasury Department',
+  },
+
+  {
+    label: 'Risk Department',
+    value: 'Risk Department',
+  },
+
+  {
+    label: 'Internal Audit Department',
+    value: 'Internal Audit Department',
+  },
+
+  {
+    label: 'Accounts Department',
+    value: 'Accounts Department',
   },
 ];
 
