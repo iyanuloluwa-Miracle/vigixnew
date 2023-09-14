@@ -37,8 +37,15 @@ const Layout = ({ children }) => {
   const [user, setUser] = useState(() => {
     // Retrieve data from localStorage or set default value
     const storedUser = secureLocalStorage.getItem('user');
-    console.log(storedUser);
-    return storedUser ? JSON.parse(storedUser) : null;
+    let parsedUser = null;
+
+    try {
+      parsedUser = JSON.parse(storedUser);
+    } catch (error) {
+      console.error('Error parsing JSON:', error);
+    }
+
+    return parsedUser;
   });
 
   // useEffect(() => {

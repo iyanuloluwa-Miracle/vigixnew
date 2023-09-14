@@ -15,8 +15,8 @@ export default function Home() {
       <Welcome />
       <BreadCrumb tab={'home'} />
       <Cards />
-      <HomeGraph />
       <HomeIncidents />
+      <HomeGraph />
     </>
   );
 }

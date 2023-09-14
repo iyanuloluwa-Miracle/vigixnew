@@ -31,13 +31,13 @@ const api = {
 
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incident/incidents`;
+    const url = `${BASE_URL}/incident//incident-statuses/16`;
     return api.get(url, headers);
   },
 
   fetchNPFIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incident/police-incidents/18`;
+    const url = `${BASE_URL}/incident/incident-statuses/18`;
     return api.get(url, headers);
   },
 

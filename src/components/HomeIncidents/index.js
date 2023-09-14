@@ -17,6 +17,7 @@ export default function HomeIncidents() {
   const [incidentsData, setIncidentsData] = useState([]);
   const router = useRouter();
   const { user } = OverlayContext();
+  console.log("USER:", user)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -198,16 +199,16 @@ export default function HomeIncidents() {
   // return api.fetchIncidents(null, { search_query });
   // return api.fetchNPFIncidents(null, { search_query });
 
-  const { data: fetcIncidents, isLoading: loadingIncidents } = useQuery({
+  const { data: fetchIncidents, isLoading: loadingIncidents } = useQuery({
     queryKey: ['get_incidents', search_query],
     queryFn: () => {
       return user?.entity_id === 2
         ? api.fetchNPFIncidents(null, { search_query })
         : user?.entity_id === 3
-        ? api.fetchIncidents(null, { search_query })
-        : user?.entity_id === 4
-        ? api.fetchBanksIncidents(null, { search_query })
-        : '';
+          ? api.fetchIncidents(null, { search_query })
+          : user?.entity_id === 4
+            ? api.fetchBanksIncidents(null, { search_query })
+            : '';
     },
     onSuccess: data => {
       setIncidentsData(
