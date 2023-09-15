@@ -3,7 +3,7 @@ import Head from 'next/head';
 import IncidentsDetails from '../../src/layouts/IncidentsDetails';
 import { useRouter } from 'next/router';
 
-export default function incidentDetails() {
+export default function IncidentDetail() {
   const router = useRouter();
   const { incidentId } = router.query;
 
