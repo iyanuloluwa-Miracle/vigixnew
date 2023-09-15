@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { DetailsWrapper } from './styles';
 import Image from 'next/image';
 import { toast } from 'sonner';
+import { useRouter } from 'next/router';
 import {
   Input,
   Select,
@@ -31,11 +32,27 @@ export default function Details({ data, incidentId }) {
   const [NPFModal, setNPFModal] = useState(false);
   const [arrestModal, setArrestModal] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+  const [investigateMessage, setInvestigateMessage] = useState('')
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
   const token = Cookies.get('token');
+  console.log(user.id)
+  const router = useRouter();
 
-  console.log(incidentId)
+
+
+  const handleInputChange = (e) => {
+
+    setInputValue(e.target.value);
+  };
+
+
+  const handleInvestigateChange = (e) => {
+
+    setInvestigateMessage(e.target.value);
+  };
+
 
 
 
@@ -131,17 +148,21 @@ export default function Details({ data, incidentId }) {
       'Content-Type': 'application/json', // Adjust content type if needed
     };
     const payload = {
-      new_incident_status_id: values.entity,
+      "incident_id": `${incidentId}`,
+      "sender_id": `${user.id}`,
+      "post": inputValue
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+        `${BASE_URL}/incident/indicent-comments`,
         payload,
         headers
       );
 
       if (res) {
         toast.success(res.message)
+        router.push('/dashboard');
+
       }
 
     } catch (error) {
@@ -160,17 +181,20 @@ export default function Details({ data, incidentId }) {
       'Content-Type': 'application/json', // Adjust content type if needed
     };
     const payload = {
-      new_incident_status_id: values.entity,
+      "incident_id": `${incidentId}`,
+      "sender_id": `${user.id}`,
+      "post": investigateMessage
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+        `${BASE_URL}/incident/indicent-comments`,
         payload,
         headers
       );
 
       if (res) {
         toast.success(res.message)
+        router.push('/dashboard');
       }
 
     } catch (error) {
@@ -189,11 +213,13 @@ export default function Details({ data, incidentId }) {
       'Content-Type': 'application/json', // Adjust content type if needed
     };
     const payload = {
-      new_incident_status_id: values.entity,
+      "incident_id": `${incidentId}`,
+      "sender_id": `${user.id}`,
+      "post": values
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+        `${BASE_URL}/incident/indicent-comments`,
         payload,
         headers
       );
@@ -517,7 +543,7 @@ export default function Details({ data, incidentId }) {
       >
         <div className="headings text-center">
           <h4>Assign Incident</h4>
-          <p>Fill the fields below to proceed to investigate.</p>
+          <p>Please state why you are taking this action.</p>
         </div>
         <Form
           layout="vertical"
@@ -534,7 +560,7 @@ export default function Details({ data, incidentId }) {
               },
             ]}
           >
-            <Input.TextArea placeholder="Enter note" row={9} />
+            <Input.TextArea placeholder="Enter note" row={9} value={investigateMessage} onChange={handleInvestigateChange} />
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">
@@ -590,7 +616,7 @@ export default function Details({ data, incidentId }) {
               },
             ]}
           >
-            <Input.TextArea placeholder="Enter note" row={9} />
+            <Input.TextArea placeholder="Enter note" row={9} value={inputValue} onChange={handleInputChange} />
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">

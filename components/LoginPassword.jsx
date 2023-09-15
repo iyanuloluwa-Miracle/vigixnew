@@ -44,6 +44,7 @@ const progressData = {
 export default function LoginPassword() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [message, setmessage] = useState('')
   const [csrfToken, setCsrfToken] = useState('');
   const { setUserData, useData, setUser, setProgressIndicator } =
     OverlayContext();
@@ -79,9 +80,17 @@ export default function LoginPassword() {
           JSON.stringify(progressData)
         );
 
-        toast.success('Login successful');
 
-        router.push('/dashboard');
+
+        if (res?.token == null) {
+          toast.error("Admin user already logged In")
+          setmessage("Admin user already logged In")
+        } else {
+          toast.success('Login successful');
+          router.push('/dashboard');
+        }
+
+
       }
     } catch (error) {
       console.error(error);
@@ -141,6 +150,8 @@ export default function LoginPassword() {
               />
             </Form.Item>
 
+
+            <p style={{ color: "red" }}>{message}</p>
             <Form.Item className="button-wrapper">
               <Button
                 type="primary"
