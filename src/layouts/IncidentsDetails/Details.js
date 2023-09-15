@@ -24,7 +24,7 @@ import api from '../../../apis';
 import { BASE_URL } from '../../../utility/constants';
 import Cookies from 'js-cookie';
 
-export default function Details({ data }) {
+export default function Details({ data, incidentId }) {
   const [incidentModal, setIncidentModal] = useState(false);
   const [voidModal, setVoidModal] = useState(false);
   const [banksModal, setBanksModal] = useState(false);
@@ -34,6 +34,10 @@ export default function Details({ data }) {
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
   const token = Cookies.get('token');
+
+  console.log(incidentId)
+
+
 
 
 
@@ -60,7 +64,7 @@ export default function Details({ data }) {
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
         payload,
         headers
       );
@@ -89,7 +93,7 @@ export default function Details({ data }) {
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
         payload,
         headers
       );
@@ -131,7 +135,7 @@ export default function Details({ data }) {
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
         payload,
         headers
       );
@@ -160,7 +164,7 @@ export default function Details({ data }) {
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
         payload,
         headers
       );
@@ -189,7 +193,7 @@ export default function Details({ data }) {
     };
     try {
       const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${user?.id}`,
+        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
         payload,
         headers
       );

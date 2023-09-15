@@ -74,7 +74,7 @@ export default function HomeIncidents() {
       title: 'Action',
       dataIndex: 'action',
       key: 'action',
-      render: text => <span className="image-action">IMAGE</span>,
+      render: text => <span className="image-action">Veiw</span>,
     },
   ];
 

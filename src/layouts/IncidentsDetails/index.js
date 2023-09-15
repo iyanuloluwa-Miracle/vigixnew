@@ -17,7 +17,7 @@ import Status from './Status';
 import api from '../../../apis';
 import { useQuery } from '@tanstack/react-query';
 
-export default function IncidentsDetails() {
+export default function IncidentsDetails({ incidentId }) {
   const router = useRouter();
   const { query } = router;
   const { defaultUserTab } = OverlayContext();
@@ -76,7 +76,7 @@ export default function IncidentsDetails() {
             <div className="user-details-content">
               <Tabs defaultActiveKey={defaultUserTab}>
                 <Tabs.TabPane tab="Details" key="1">
-                  <Details data={incidentData} />
+                  <Details data={incidentData} incidentId={incidentId} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Comments" key="2">
                   <Comments data={incidentData} />
