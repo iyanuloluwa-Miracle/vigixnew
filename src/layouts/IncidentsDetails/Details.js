@@ -37,7 +37,6 @@ export default function Details({ data, incidentId }) {
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
   const token = Cookies.get('token');
-  console.log(user.id)
   const router = useRouter();
 
 
@@ -140,8 +139,8 @@ export default function Details({ data, incidentId }) {
     message.error('Click on No');
   };
 
-  const proceedToArrest = async values => {
-    console.log(values);
+  const proceedToArrest = async () => {
+
     setSunmitLoading(true);
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -173,7 +172,7 @@ export default function Details({ data, incidentId }) {
     }
   };
 
-  const proceedToInvestigate = async values => {
+  const proceedToInvestigate = async () => {
     console.log(values);
     setSunmitLoading(true);
     const headers = {
@@ -205,8 +204,8 @@ export default function Details({ data, incidentId }) {
     }
   };
 
-  const proceedToVoid = async values => {
-    console.log(values);
+  const proceedToVoid = async () => {
+
     setSunmitLoading(true);
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -215,7 +214,7 @@ export default function Details({ data, incidentId }) {
     const payload = {
       "incident_id": `${incidentId}`,
       "sender_id": `${user.id}`,
-      "post": values
+      "post": ""
     };
     try {
       const res = await api.post2(
