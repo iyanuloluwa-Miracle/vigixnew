@@ -28,7 +28,7 @@ export default function Welcome() {
 
           </div>
           <div className="col-auto">
-            <h1>{formattedTime}</h1>
+            <h3>{formattedTime}</h3>
           </div>
         </div>
         <span class="mb-5">

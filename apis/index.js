@@ -7,6 +7,9 @@ import { BASE_URL } from '../utility/constants';
 import secureLocalStorage from 'react-secure-storage';
 import { message } from 'antd';
 
+
+
+
 axios.interceptors.response.use(undefined, err => {
   if (err.response.status != 200 || err.response.status != 201) {
     if (err.code === 'ERR_NETWORK') {
@@ -41,9 +44,9 @@ const api = {
     return api.get(url, headers);
   },
 
-  fetchBanksIncidents: (token, query) => {
+  fetchBanksIncidents: (token, id) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incident/incident-by-bank-id/10`;
+    const url = `${BASE_URL}/incident/incident-by-bank-id/${id}`;
     return api.get(url, headers);
   },
 

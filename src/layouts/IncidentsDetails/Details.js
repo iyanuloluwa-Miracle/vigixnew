@@ -87,6 +87,7 @@ export default function Details({ data, incidentId }) {
 
       if (res) {
         toast.success(res.message)
+        router.push('/dashboard');
       }
 
     } catch (error) {

@@ -90,7 +90,7 @@ export default function BreadCrumb({ tab, location }) {
                   </div>
                 </div>
               </li>
-              <li
+              {/* <li
                 className={
                   tab == 'pageManagement' ? 'nav-item active' : 'nav-item'
                 }
@@ -108,7 +108,7 @@ export default function BreadCrumb({ tab, location }) {
                     </div>
                   </div>
                 </div>
-              </li>
+              </li> */}
               <li
                 className={
                   tab == 'adminMembers' ? 'nav-item active' : 'nav-item'

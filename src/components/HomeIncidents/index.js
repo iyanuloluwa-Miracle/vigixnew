@@ -17,7 +17,8 @@ export default function HomeIncidents() {
   const [incidentsData, setIncidentsData] = useState([]);
   const router = useRouter();
   const { user } = OverlayContext();
-  console.log("USER:", user)
+
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -207,7 +208,7 @@ export default function HomeIncidents() {
         : user?.entity_id === 3
           ? api.fetchIncidents(null, { search_query })
           : user?.entity_id === 4
-            ? api.fetchBanksIncidents(null, { search_query })
+            ? api.fetchBanksIncidents(null, user?.bank_id)
             : '';
     },
     onSuccess: data => {
@@ -241,7 +242,7 @@ export default function HomeIncidents() {
             <h4 className="our-h4">Recent Incidents</h4>
           </div>
         </div>
-        <div className="table-wrapper pb-5">
+        <div className="table-wrapper pb-5" style={{ overflowX: 'auto' }}>
           {loadingIncidents ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
