@@ -50,6 +50,16 @@ const api = {
     return api.get(url, headers);
   },
 
+  fetchBanksIncidentByStatuses: (token, id, status) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/incident/bank-incidents-by-statuses/${id}/${status}`;
+    return api.get(url, headers);
+  },
+
+
+
+
+
   fetchSingleIncidents: (token, id) => {
     console.log("THE TOKEN:", token)
     const headers = createHTTPHeader(token);

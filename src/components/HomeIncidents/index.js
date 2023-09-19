@@ -20,6 +20,7 @@ export default function HomeIncidents() {
 
 
 
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.pageYOffset;
@@ -208,7 +209,7 @@ export default function HomeIncidents() {
         : user?.entity_id === 3
           ? api.fetchIncidents(null, { search_query })
           : user?.entity_id === 4
-            ? api.fetchBanksIncidents(null, user?.bank_id)
+            ? api.fetchBanksIncidentByStatuses(null, user?.bank_id, user?.role.role_statuses[0].id)
             : '';
     },
     onSuccess: data => {

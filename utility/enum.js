@@ -30,9 +30,13 @@ export const InternalControlBank = {
   company: 'Access Bank',
 };
 
+
+
+
+// 
 export const VigilantAssignOption = [
   {
-    value: 2,
+    value: 17,
     label: 'bank',
   },
   {
@@ -44,30 +48,30 @@ export const VigilantAssignOption = [
 export const BankAssignOption = [
   {
     label: 'Fraud unit',
-    value: 'fraud_unit',
+    value: 17,
   },
   {
     label: 'Internal Control Department',
-    value: 'internal_control Department',
+    value: 4,
   },
   {
-    label: 'Treasury Department',
-    value: 'Treasury Department',
+    label: 'Treasury',
+    value: 19,
   },
 
   {
     label: 'Risk Department',
-    value: 'Risk Department',
+    value: 5,
   },
 
   {
     label: 'Internal Audit Department',
-    value: 'Internal Audit Department',
+    value: 3,
   },
 
   {
     label: 'Accounts Department',
-    value: 'Accounts Department',
+    value: 6,
   },
 ];
 

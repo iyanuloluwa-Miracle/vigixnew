@@ -117,6 +117,7 @@ export default function Details({ data, incidentId }) {
 
       if (res) {
         toast.success(res.message)
+        router.push('/dashboard');
       }
 
     } catch (error) {
@@ -455,7 +456,7 @@ export default function Details({ data, incidentId }) {
           <h4>Assign Incident</h4>
           <p>Fill the fields below to assign incident.</p>
         </div>
-        <Form layout="vertical" onFinish={assignBank} >
+        <Form layout="vertical" onFinish={assignBank}>
           <Form.Item
             name="entity"
             label="Entity"
