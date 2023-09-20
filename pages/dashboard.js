@@ -6,7 +6,11 @@ import HomeTable from '../components/HomeTable';
 import Welcome from '../components/Welcome';
 import HomeIncidents from '../src/components/HomeIncidents';
 
+
 export default function Home() {
+ 
+
+
   return (
     <>
       <Head>

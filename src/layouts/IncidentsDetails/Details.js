@@ -290,9 +290,9 @@ export default function Details({ data, incidentId }) {
                 width={370}
                 height={600}
               />
-              <div className="text-center mt-3 pt-3">
+              {/* <div className="text-center mt-3 pt-3">
                 <button className="toggle-show status btn">Hide Media</button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
@@ -328,7 +328,8 @@ export default function Details({ data, incidentId }) {
         data?.incident?.incident_status_id == 18  */}
 
         {/* for NPF investigator  */}
-        {data?.incident?.incident_status_id == 18 && user?.entity_id === 2 ? (
+
+        {data?.incident?.incident_status_id == 1 && user?.entity_id === 2 ? (
           <>
             <Button
               danger
@@ -336,16 +337,50 @@ export default function Details({ data, incidentId }) {
                 setNPFModal(true);
               }}
             >
-              Investigate
+              Proceed to Investigation
             </Button>
 
             <Button danger onClick={() => { setArrestModal(true) }}>
-              Proceed to arrest
+              Void
+            </Button>
+          </>
+        ) : user?.entity_id === 3 ||
+          user?.entity_id === 4 ? (null) : (
+          <>
+            <Button
+              danger
+              onClick={() => {
+                setNPFModal(true);
+              }}
+            >
+              Proceed to Arrest
+            </Button>
+
+            <Button danger onClick={() => { setArrestModal(true) }}>
+              Void
+            </Button>
+          </>
+        )}
+
+
+        {/* {data?.incident?.incident_status_id == 18 && user?.entity_id === 2 ? (
+          <>
+            <Button
+              danger
+              onClick={() => {
+                setNPFModal(true);
+              }}
+            >
+              Proceed to Investigation
+            </Button>
+
+            <Button danger onClick={() => { setArrestModal(true) }}>
+              Void
             </Button>
           </>
         ) : (
           ''
-        )}
+        )} */}
       </div>
 
       {/* assign modal  */}

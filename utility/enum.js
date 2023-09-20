@@ -40,7 +40,7 @@ export const VigilantAssignOption = [
     label: 'bank',
   },
   {
-    value: 18,
+    value: 1,
     label: 'NPF',
   },
 ];

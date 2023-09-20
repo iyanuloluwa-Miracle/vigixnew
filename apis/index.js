@@ -28,9 +28,46 @@ axios.interceptors.response.use(undefined, err => {
   return Promise.reject(err);
 });
 
+
+export const fetchTotalUsers = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/total-users`, { headers });
+  return response.data;
+};
+
+export const fetchTotalAdminUsers = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/total-admin-users`, { headers });
+  return response.data;
+};
+
+export const fetchTotalIncidents = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/total-incidents`, { headers });
+  return response.data;
+};
+
+export const fetchTotalRecoveries = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/total-recoveries`, { headers });
+  return response.data;
+};
+
+
+
 const api = {
-
-
 
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
@@ -38,9 +75,16 @@ const api = {
     return api.get(url, headers);
   },
 
-  fetchNPFIncidents: (token, query) => {
+  // fetchNPFIncidents: (token, query) => {
+  //   const headers = createHTTPHeader(token);
+  //   const url = `${BASE_URL}/incident/police-incidents/10,18`;
+  //   return api.get(url, headers);
+  // },
+
+
+  fetchNPFIncidents: (token, id) => {
     const headers = createHTTPHeader(token);
-    const url = `${BASE_URL}/incident/police-incidents/10,18`;
+    const url = `${BASE_URL}/incident/police-incidents/${id}`;
     return api.get(url, headers);
   },
 

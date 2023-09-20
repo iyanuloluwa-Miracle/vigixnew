@@ -17,6 +17,8 @@ export default function HomeIncidents() {
   const [incidentsData, setIncidentsData] = useState([]);
   const router = useRouter();
   const { user } = OverlayContext();
+  const idString = user?.role.role_statuses.map(status => status.id).join(',')
+ 
 
 
 
@@ -205,7 +207,7 @@ export default function HomeIncidents() {
     queryKey: ['get_incidents', search_query],
     queryFn: () => {
       return user?.entity_id === 2
-        ? api.fetchNPFIncidents(null, { search_query })
+        ? api.fetchNPFIncidents(null, idString)
         : user?.entity_id === 3
           ? api.fetchIncidents(null, { search_query })
           : user?.entity_id === 4
