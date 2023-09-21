@@ -69,6 +69,12 @@ export const fetchTotalRecoveries = async (token) => {
 
 const api = {
 
+  fetchAllIncidents: (token, query) => {
+    const headers = createHTTPHeader(token);
+    const url = `${BASE_URL}/incident/incidents`;
+    return api.get(url, headers);
+  },
+
   fetchIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
     const url = `${BASE_URL}/incident/incident-statuses/16`;
