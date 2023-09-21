@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ExportZone from './ExportZone';
+import { ArrowUp } from '../utility/svg';
 import {
   SearchIcon,
   FilterIcon,
@@ -30,48 +31,51 @@ import { useRouter } from 'next/router';
 import moment from 'moment';
 
 
-const plainOptions = [
-  { label: 'Approved', value: 'Approved' },
-  { label: 'Awaiting Confirmation', value: 'Awaiting Confirmation' },
-  { label: 'Declined', value: 'Declined' },
-  { label: 'Failed', value: 'Failed' },
-  { label: 'Processed', value: 'Processed' },
-  { label: 'Initiated', value: 'Initiated' },
-];
+// const plainOptions = [
+//   { label: 'Approved', value: 'Approved' },
+//   { label: 'Awaiting Confirmation', value: 'Awaiting Confirmation' },
+//   { label: 'Declined', value: 'Declined' },
+//   { label: 'Failed', value: 'Failed' },
+//   { label: 'Processed', value: 'Processed' },
+//   { label: 'Initiated', value: 'Initiated' },
+// ];
 
-const transactionOptions = [
-  { label: 'Bank debit', value: 1 },
-  { label: 'Wrong Transfer', value: 2 },
-  { label: 'Card Fraud', value: 3 },
-];
+// const transactionOptions = [
+//   { label: 'Bank debit', value: 1 },
+//   { label: 'Wrong Transfer', value: 2 },
+//   { label: 'Card Fraud', value: 3 },
+// ];
 
-const options = [
-  {
-    label: 'All',
-    value: 'All',
-  },
-  {
-    label: 'Pending',
-    value: 'Pending',
-  },
-  {
-    label: 'On Tracking',
-    value: 'On Tracking',
-  },
-  {
-    label: 'Recovery',
-    value: 'Recovery',
-  },
-  {
-    label: 'Completed',
-    value: 'Completed',
-  },
-];
+// const options = [
+//   {
+//     label: 'All',
+//     value: 'All',
+//   },
+//   {
+//     label: 'Pending',
+//     value: 'Pending',
+//   },
+//   {
+//     label: 'On Tracking',
+//     value: 'On Tracking',
+//   },
+//   {
+//     label: 'Recovery',
+//     value: 'Recovery',
+//   },
+//   {
+//     label: 'Completed',
+//     value: 'Completed',
+//   },
+// ];
 
 const dateFormat = 'YYYY-MM-DD';
 
 export default function TransactionReports() {
   const { Search } = Input;
+  const [showButton, setShowButton] = useState(false);
+  const [incidentsData, setIncidentsData] = useState([]);
+  const [search_query, setSearchQuery] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalReport, setModalReport] = useState(false);
   const [modalsignature, setModalSignature] = useState(false);
@@ -100,8 +104,28 @@ export default function TransactionReports() {
 
   const router = useRouter();
 
-  const handleChange = value => {
-    console.log(`selected ${value}`);
+  // const handleChange = value => {
+  //   console.log(`selected ${value}`);
+  // };
+
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.pageYOffset;
+
+      if (scrollPosition > 500) {
+        setShowButton(true);
+      } else {
+        setShowButton(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const onFinish = async values => {
@@ -121,16 +145,75 @@ export default function TransactionReports() {
     setSearch(value);
   };
 
+  // const columns = [
+  //   {
+  //     title: 'Tracking ID',
+  //     dataIndex: 'trackID',
+  //     key: 'trackID',
+  //   },
+  //   {
+  //     title: 'Username',
+  //     dataIndex: 'username',
+  //     key: 'username',
+  //   },
+  //   {
+  //     title: 'Transaction Type',
+  //     dataIndex: 'transactionType',
+  //     key: 'transactionType',
+  //   },
+  //   {
+  //     title: 'Transaction Reference',
+  //     dataIndex: 'referenceID',
+  //     key: 'referenceID',
+  //   },
+  //   {
+  //     title: 'Status',
+  //     dataIndex: 'status',
+  //     key: 'status',
+  //     render: text => <span className={`status ${text}`}>{text}</span>,
+  //   },
+  //   {
+  //     title: 'Date Reported',
+  //     dataIndex: 'createdAt',
+  //     key: 'createdAt',
+  //   },
+  //   {
+  //     title: ' ',
+  //     dataIndex: 'details',
+  //     key: 'details',
+  //     // render: text => (
+  //     //   <div className="view-btn">
+  //     //     <Button className="view-profile" onClick={() => setModalReport(true)}>
+  //     //       View details
+  //     //     </Button>
+
+  //     //     <Button
+  //     //       className="view-report"
+  //     //       onClick={() => setModalSignature(true)}
+  //     //     >
+  //     //       Signatures
+  //     //     </Button>
+  //     //   </div>
+  //     // ),
+  //   },
+  // ];
+
+
   const columns = [
     {
-      title: 'Tracking ID',
-      dataIndex: 'trackID',
-      key: 'trackID',
+      title: 'Incident ID',
+      dataIndex: 'incidentID',
+      key: 'incidentID',
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
+      title: 'Reported By',
+      dataIndex: 'reportedby',
+      key: 'reportedby',
+    },
+    {
+      title: 'Date Reported',
+      dataIndex: 'datereported',
+      key: 'datereported',
     },
     {
       title: 'Transaction Type',
@@ -139,8 +222,8 @@ export default function TransactionReports() {
     },
     {
       title: 'Transaction Reference',
-      dataIndex: 'referenceID',
-      key: 'referenceID',
+      dataIndex: 'transactionReference',
+      key: 'transactionReference',
     },
     {
       title: 'Status',
@@ -149,50 +232,80 @@ export default function TransactionReports() {
       render: text => <span className={`status ${text}`}>{text}</span>,
     },
     {
-      title: 'Date Reported',
-      dataIndex: 'createdAt',
-      key: 'createdAt',
-    },
-    {
-      title: ' ',
-      dataIndex: 'details',
-      key: 'details',
-      // render: text => (
-      //   <div className="view-btn">
-      //     <Button className="view-profile" onClick={() => setModalReport(true)}>
-      //       View details
-      //     </Button>
-
-      //     <Button
-      //       className="view-report"
-      //       onClick={() => setModalSignature(true)}
-      //     >
-      //       Signatures
-      //     </Button>
-      //   </div>
-      // ),
+      title: 'Action',
+      dataIndex: 'action',
+      key: 'action',
+      render: text => <span className="image-action">Veiw</span>,
     },
   ];
 
+  const handleRowClick = record => {
+    router.push(`/incident-details/${record?.incidentID}`);
+  };
+
+  const rowProps = record => {
+    return {
+      onClick: () => handleRowClick(record),
+    };
+  };
+
+  function generateRandom20DigitNumber() {
+    let randomNumber = '';
+    for (let i = 0; i < 20; i++) {
+      randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+    }
+    return randomNumber;
+  }
+
+
+  const { data: fetchIncidents, isLoading: loadingIncidents } = useQuery({
+    queryKey: ['get_incidents', search_query],
+    queryFn: () => {
+      return api.fetchIncidents(null, { search_query })
+
+    },
+    onSuccess: data => {
+      setIncidentsData(
+        data?.data?.map((incident, index) => ({
+          key: index,
+          incidentID: incident?.incident?.id,
+          reportedby: `${incident?.user?.first_name} ${incident?.user?.last_name}`,
+          datereported: incident?.incident?.created_at,
+          transactionType: incident?.transaction?.name,
+          transactionReference: generateRandom20DigitNumber(),
+          status: incident?.incident?.status_name,
+        }))
+      );
+    },
+    onError: err => {
+      console.log(err);
+    },
+
+    retry: false,
+    refetchInterval: Infinity,
+    refetchOnWindowFocus: false,
+    refetchOnMount: true,
+  });
+
   const dataType = reportData?.data?.map((el, index) => ({
     ...el,
-    details: (
-      <div className="view-btn">
-        <Button
-          className="view-profile"
-          onClick={() => {
-            setReportDetails(el);
-            setModalReport(true);
-          }}
-        >
-          View details
-        </Button>
+    // details: (
+    //   // <div className="view-btn">
+    //   //   <Button
+    //   //     className="view-profile"
+    //   //     onClick={() => {
+    //   //       setReportDetails(el);
+    //   //       setModalReport(true);
+    //   //     }}
+    //   //   >
+    //   //     View details
+    //   //   </Button>
 
-        <Button className="view-report" onClick={() => setModalSignature(true)}>
-          Signatures
-        </Button>
-      </div>
-    ),
+    //   //   <Button className="view-report" onClick={() => setModalSignature(true)}>
+    //   //     Signatures
+    //   //   </Button>
+    //   // </div>
+    // ),
   }));
 
   const handlePerPage = value => {
@@ -360,15 +473,26 @@ export default function TransactionReports() {
 
       <div className="container">
         <div className="table-wrapper ">
-          {loading ? (
+          {loadingIncidents ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
             <Table
               columns={columns}
-              dataSource={dataType}
-              pagination={{ pageSize: rows }}
+              dataSource={incidentsData}
+              onRow={rowProps}
             />
           )}
+
+          <button
+            onClick={handleClick}
+            className={
+              showButton
+                ? 'show-button scroll-to-top'
+                : 'hide-button scroll-to-top'
+            }
+          >
+            <div>{ArrowUp}</div>
+          </button>
 
           <div className="our-pagination d-flex justify-content-center">
             {!loading && (
@@ -410,7 +534,7 @@ export default function TransactionReports() {
 
       {/* filter modal  */}
 
-      <Modal
+      {/* <Modal
         title="Filter by:"
         centered
         open={modalOpen}
@@ -485,11 +609,11 @@ export default function TransactionReports() {
             </Button>
           </Form.Item>
         </Form>
-      </Modal>
+      </Modal> */}
 
       {/* notification modal  */}
 
-      <Modal
+      {/* <Modal
         title={<div className="text-center">Report Details</div>}
         centered
         open={approvalModal}
@@ -537,11 +661,11 @@ export default function TransactionReports() {
             Go back to report details
           </Button>
         </Form.Item>
-      </Modal>
+      </Modal> */}
 
       {/* view details modals  */}
 
-      <Modal
+      {/* <Modal
         title={<div className="text-center">Report Details</div>}
         centered
         open={modalReport}
@@ -662,11 +786,11 @@ export default function TransactionReports() {
             </Button>
           </Form.Item>
         </div>
-      </Modal>
+      </Modal> */}
 
       {/* signature modal  */}
 
-      <Modal
+      {/* <Modal
         title={<div className="text-center">Signatures</div>}
         centered
         open={modalsignature}
@@ -757,7 +881,7 @@ export default function TransactionReports() {
             </div>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </section>
   );
 }

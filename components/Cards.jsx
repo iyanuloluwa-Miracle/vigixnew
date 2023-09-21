@@ -27,25 +27,24 @@ export default function Cards() {
   const token = Cookies.get('token');
   console.log(totalUsers, totalAdminUsers, totalIncidents, totalRecoveries)
 
-  {
-    user?.entity_id == 3 ? (useEffect(() => {
-      // Fetch data when the component mounts
-      const fetchData = async () => {
-        const usersData = await fetchTotalUsers(token);
-        const adminUsersData = await fetchTotalAdminUsers(token);
-        const incidentsData = await fetchTotalIncidents(token);
-        const recoveriesData = await fetchTotalRecoveries(token);
+  useEffect(() => {
+    // Fetch data when the component mounts
+    const fetchData = async () => {
+      const usersData = await fetchTotalUsers(token);
+      const adminUsersData = await fetchTotalAdminUsers(token);
+      const incidentsData = await fetchTotalIncidents(token);
+      const recoveriesData = await fetchTotalRecoveries(token);
 
-        setTotalUsers(usersData.data);
-        setTotalAdminUsers(adminUsersData.data);
-        setTotalIncidents(incidentsData.data);
-        setTotalRecoveries(recoveriesData.data);
-      };
+      setTotalUsers(usersData.data);
+      setTotalAdminUsers(adminUsersData.data);
+      setTotalIncidents(incidentsData.data);
+      setTotalRecoveries(recoveriesData.data);
+    };
 
+    if (user?.entity_id === 3) {
       fetchData();
-    }, [token])) : (null)
-  }
-
+    }
+  }, [token, user?.entity_id]);
 
   return (
     <div className="container">
