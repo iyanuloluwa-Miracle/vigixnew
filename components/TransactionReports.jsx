@@ -30,6 +30,7 @@ import { useQuery } from '@tanstack/react-query';
 import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
 import moment from 'moment';
+import { OverlayContext } from './Layout';
 
 
 
@@ -42,6 +43,8 @@ export default function TransactionReports() {
   const [paginatedIncidentsData, setPaginatedIncidentsData] = useState([]);
   const [search_query, setSearchQuery] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const { user } = OverlayContext();
+  const idString = user?.role.role_statuses.map(status => status.id).join(',')
 
 
 
@@ -80,6 +83,12 @@ export default function TransactionReports() {
 
 
   const columns = [
+
+    {
+      title: 'Incidents',
+      dataIndex: 'incidents',
+      key: 'incidents',
+    },
     {
       title: 'Incident ID',
       dataIndex: 'incidentID',
@@ -140,11 +149,18 @@ export default function TransactionReports() {
   const { data: fetchIncidents, isLoading: loadingIncidents } = useQuery({
     queryKey: ['get_incidents', search_query],
     queryFn: () => {
-      return api.fetchAllIncidents(null, { search_query });
+      return user?.entity_id === 3
+        ? api.fetchAllIncidents(null, { search_query })
+        : user?.entity_id === 2
+          ? api.fetchNPFIncidents(null, idString)
+          : user?.entity_id === 4
+            ? api.fetchBanksIncidentByStatuses(null, user?.bank_id, user?.role.role_statuses[0].id)
+            : "";
     },
     onSuccess: data => {
       const mappedIncidents = data?.data?.map((incident, index) => ({
         key: index,
+        incidents: index + 1,
         incidentID: incident?.incident?.id,
         reportedby: `${incident?.user?.first_name} ${incident?.user?.last_name}`,
         datereported: incident?.incident?.created_at,
@@ -176,12 +192,12 @@ export default function TransactionReports() {
     const { current, pageSize } = pagination;
     const startIndex = (current - 1) * pageSize;
     const endIndex = startIndex + pageSize;
-  
+
     // Fetch data for the new page based on the startIndex and endIndex
     const paginatedData = incidentsData.slice(startIndex, endIndex);
-  
+
     setPaginatedIncidentsData(paginatedData);
-  
+
     setPagination({
       ...pagination,
       current,

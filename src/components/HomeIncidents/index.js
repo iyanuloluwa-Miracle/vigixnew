@@ -18,7 +18,7 @@ export default function HomeIncidents() {
   const router = useRouter();
   const { user } = OverlayContext();
   const idString = user?.role.role_statuses.map(status => status.id).join(',')
- 
+
 
 
 
@@ -245,7 +245,7 @@ export default function HomeIncidents() {
             <h4 className="our-h4">Recent Incidents</h4>
           </div>
         </div>
-        <div className="table-wrapper pb-5" style={{ overflowX: 'auto' }}>
+        <div className="table-wrapper pb-5 table-responsive">
           {loadingIncidents ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
