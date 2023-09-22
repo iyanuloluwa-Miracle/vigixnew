@@ -34,12 +34,21 @@ export default function Details({ data, incidentId }) {
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const [investigateMessage, setInvestigateMessage] = useState('')
+  const [customerMessage, SetCustomerMessage] = useState("")
+  const [bankMessage, setBankMessage] = useState("")
   const [formAssign] = Form.useForm();
   const { user } = OverlayContext();
   const token = Cookies.get('token');
   const router = useRouter();
+  console.log(customerMessage)
 
+  const handleBankMessageChange = (e) => {
+    setBankMessage(e.target.value)
+  };
 
+  const handleCustomerMessageChange = (e) => {
+    SetCustomerMessage(e.target.value)
+  };
 
   const handleInputChange = (e) => {
 
@@ -78,16 +87,35 @@ export default function Details({ data, incidentId }) {
     const payload = {
       new_incident_status_id: values.entity,
     };
+
+    const payload2 = {
+      "incident_id": incidentId,
+      "sender_id": user.id,
+      "post": customerMessage
+    };
     try {
-      const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
-        payload,
+      const res1 = await api.post2(
+        `${BASE_URL}/incident/indicent-comments`,
+        payload2,
         headers
       );
 
-      if (res) {
-        toast.success(res.message)
-        router.push('/dashboard');
+      if (res1) {
+        toast.success(res1.message);
+        try {
+          const res2 = await api.post2(
+            `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+            payload,
+            headers
+          );
+
+          if (res2) {
+            toast.success(res2.message);
+            router.push('/dashboard');
+          }
+        } catch (error2) {
+          console.error(error2);
+        }
       }
 
     } catch (error) {
@@ -108,19 +136,39 @@ export default function Details({ data, incidentId }) {
     const payload = {
       new_incident_status_id: values.entity,
     };
+
+    const payload2 = {
+      "incident_id": incidentId,
+      "sender_id": user.id,
+      "post": customerMessage
+    };
+    
     try {
-      const res = await api.post2(
-        `${BASE_URL}/incident/update-incident-status/${incidentId}`,
-        payload,
+      const res1 = await api.post2(
+        `${BASE_URL}/incident/indicent-comments`,
+        payload2,
         headers
       );
 
-      if (res) {
-        toast.success(res.message)
-        router.push('/dashboard');
+      if (res1) {
+        toast.success(res1.message);
+        try {
+          const res2 = await api.post2(
+            `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+            payload,
+            headers
+          );
+
+          if (res2) {
+            toast.success(res2.message);
+            router.push('/dashboard');
+          }
+        } catch (error2) {
+          console.error(error2);
+        }
       }
 
-    } catch (error) {
+    }catch (error) {
       console.error(error);
     } finally {
       setSunmitLoading(false);
@@ -153,17 +201,32 @@ export default function Details({ data, incidentId }) {
       "sender_id": `${user.id}`,
       "post": inputValue
     };
+    const payload2 = {
+      new_incident_status_id: 12,
+    };
     try {
-      const res = await api.post2(
+      const res1 = await api.post2(
         `${BASE_URL}/incident/indicent-comments`,
         payload,
         headers
       );
 
-      if (res) {
-        toast.success(res.message)
-        router.push('/dashboard');
+      if (res1) {
+        toast.success(res1.message);
+        try {
+          const res2 = await api.post2(
+            `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+            payload2,
+            headers
+          );
 
+          if (res2) {
+            toast.success(res2.message);
+            router.push('/dashboard');
+          }
+        } catch (error2) {
+          console.error(error2);
+        }
       }
 
     } catch (error) {
@@ -175,27 +238,43 @@ export default function Details({ data, incidentId }) {
   };
 
   const proceedToInvestigate = async () => {
-    console.log(values);
+
     setSunmitLoading(true);
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json', // Adjust content type if needed
     };
     const payload = {
-      "incident_id": `${incidentId}`,
-      "sender_id": `${user.id}`,
+      "incident_id": incidentId,
+      "sender_id": user.id,
       "post": investigateMessage
     };
+    const payload2 = {
+      new_incident_status_id: 12,
+    };
     try {
-      const res = await api.post2(
+      const res1 = await api.post2(
         `${BASE_URL}/incident/indicent-comments`,
         payload,
         headers
       );
 
-      if (res) {
-        toast.success(res.message)
-        router.push('/dashboard');
+      if (res1) {
+        toast.success(res1.message);
+        try {
+          const res2 = await api.post2(
+            `${BASE_URL}/incident/update-incident-status/${incidentId}`,
+            payload2,
+            headers
+          );
+
+          if (res2) {
+            toast.success(res2.message);
+            router.push('/dashboard');
+          }
+        } catch (error2) {
+          console.error(error2);
+        }
       }
 
     } catch (error) {
@@ -336,6 +415,7 @@ export default function Details({ data, incidentId }) {
               onClick={() => {
                 setNPFModal(true);
               }}
+              style={{ background: '#7D0003', color: '#FFF' }}
             >
               Proceed to Investigation
             </Button>
@@ -352,6 +432,7 @@ export default function Details({ data, incidentId }) {
               onClick={() => {
                 setNPFModal(true);
               }}
+
             >
               Proceed to Arrest
             </Button>
@@ -447,7 +528,7 @@ export default function Details({ data, incidentId }) {
               },
             ]}
           >
-            <Input.TextArea placeholder="Enter note" row={10} />
+            <Input.TextArea placeholder="Enter note" row={10} value={customerMessage} onChange={handleCustomerMessageChange} />
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">
@@ -537,7 +618,7 @@ export default function Details({ data, incidentId }) {
               },
             ]}
           >
-            <Input.TextArea placeholder="Enter note" row={10} />
+            <Input.TextArea placeholder="Enter note" row={10} value={bankMessage} onChange={handleBankMessageChange} />
           </Form.Item>
 
           <div className="pt-lg-5 pt-4">
