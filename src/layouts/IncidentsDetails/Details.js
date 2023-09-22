@@ -140,7 +140,7 @@ export default function Details({ data, incidentId }) {
     const payload2 = {
       "incident_id": incidentId,
       "sender_id": user.id,
-      "post": customerMessage
+      "post": bankMessage
     };
     
     try {
