@@ -19,7 +19,7 @@ import {
   Button,
   message,
 } from 'antd';
-import { VigilantAssignOption, BankAssignOption } from '../../../utility/enum';
+import { VigilantAssignOption, BankAssignOption, ProsecutorAssignOption } from '../../../utility/enum';
 import { OverlayContext } from '../../../components/Layout';
 import api from '../../../apis';
 import { BASE_URL } from '../../../utility/constants';
@@ -40,7 +40,8 @@ export default function Details({ data, incidentId }) {
   const { user } = OverlayContext();
   const token = Cookies.get('token');
   const router = useRouter();
-  console.log(customerMessage)
+
+
 
   const handleBankMessageChange = (e) => {
     setBankMessage(e.target.value)
@@ -78,7 +79,7 @@ export default function Details({ data, incidentId }) {
   }
 
   const customerAssign = async values => {
-    console.log(values);
+    console.log(values)
     setSunmitLoading(true);
     const headers = {
       Authorization: `Bearer ${token}`,
@@ -142,7 +143,7 @@ export default function Details({ data, incidentId }) {
       "sender_id": user.id,
       "post": bankMessage
     };
-    
+
     try {
       const res1 = await api.post2(
         `${BASE_URL}/incident/indicent-comments`,
@@ -168,7 +169,7 @@ export default function Details({ data, incidentId }) {
         }
       }
 
-    }catch (error) {
+    } catch (error) {
       console.error(error);
     } finally {
       setSunmitLoading(false);
@@ -189,7 +190,8 @@ export default function Details({ data, incidentId }) {
     message.error('Click on No');
   };
 
-  const proceedToArrest = async () => {
+  const proceedToArrest = async (values) => {
+
 
     setSunmitLoading(true);
     const headers = {
@@ -202,7 +204,7 @@ export default function Details({ data, incidentId }) {
       "post": inputValue
     };
     const payload2 = {
-      new_incident_status_id: 12,
+      new_incident_status_id: values.entity,
     };
     try {
       const res1 = await api.post2(
@@ -250,7 +252,7 @@ export default function Details({ data, incidentId }) {
       "post": investigateMessage
     };
     const payload2 = {
-      new_incident_status_id: 12,
+      new_incident_status_id: 11,
     };
     try {
       const res1 = await api.post2(
@@ -420,7 +422,7 @@ export default function Details({ data, incidentId }) {
               Proceed to Investigation
             </Button>
 
-            <Button danger onClick={() => { setArrestModal(true) }}>
+            <Button danger onClick={() => { setVoidModal(true) }}>
               Void
             </Button>
           </>
@@ -430,14 +432,14 @@ export default function Details({ data, incidentId }) {
             <Button
               danger
               onClick={() => {
-                setNPFModal(true);
+                setArrestModal(true);
               }}
 
             >
               Proceed to Arrest
             </Button>
 
-            <Button danger onClick={() => { setArrestModal(true) }}>
+            <Button danger onClick={() => { setVoidModal(true) }}>
               Void
             </Button>
           </>
@@ -495,23 +497,12 @@ export default function Details({ data, incidentId }) {
           >
             <Radio.Group>
               <Space direction="vertical">
-                {user?.entity_id == 3
-                  // && user?.role?.entity_id == 2
-
-                  ? VigilantAssignOption?.map((item, index) => (
-                    <Radio value={item?.value} key={index}>
-                      {item?.label}
-                    </Radio>
-                  ))
-                  : user?.entity_id == 4
-                    // && user?.role?.entity_id == 2
-
-                    ? BankAssignOption?.map((item, index) => (
-                      <Radio value={item?.value} key={index}>
-                        {item?.label}
-                      </Radio>
-                    ))
-                    : ''}
+                {VigilantAssignOption?.map((item, index) => (
+                  <Radio value={item?.value} key={index}>
+                    {item?.label}
+                  </Radio>
+                ))
+                }
               </Space>
             </Radio.Group>
           </Form.Item>
@@ -722,6 +713,30 @@ export default function Details({ data, incidentId }) {
           <p>Fill the fields below to proceed to arrest.</p>
         </div>
         <Form layout="vertical" onFinish={proceedToArrest} >
+
+
+          <Form.Item
+            name="entity"
+            label="Entity"
+            className="heights"
+            rules={[
+              {
+                required: true,
+                message: 'Please select assign entity!',
+              },
+            ]}
+          >
+            <Radio.Group>
+              <Space direction="vertical">
+                {ProsecutorAssignOption?.map((item, index) => (
+                  <Radio value={item?.value} key={index}>
+                    {item?.label}
+                  </Radio>
+                ))
+                }
+              </Space>
+            </Radio.Group>
+          </Form.Item>
           <Form.Item
             name="reason"
             label="Reason for arrest"

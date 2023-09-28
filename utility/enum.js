@@ -45,6 +45,16 @@ export const VigilantAssignOption = [
   },
 ];
 
+export const ProsecutorAssignOption = [
+  {
+    value: 12,
+    label: "Assign to Judiciary: Order of Arrest",
+  }, {
+    value: 13,
+    label: "Assign to Judiciary: Order of Recovery",
+  }
+]
+
 export const BankAssignOption = [
   {
     label: 'Fraud unit',

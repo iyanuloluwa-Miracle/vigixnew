@@ -12,6 +12,23 @@ const UserContext = createContext();
 
 export const OverlayContext = () => useContext(UserContext);
 
+function generateRandom20DigitNumber() {
+  let randomNumber = '';
+  for (let i = 0; i < 20; i++) {
+    randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+  }
+  return randomNumber;
+}
+
+const fixedRandomNumber = Cookies.get('fixedRandomNumber');
+  if (!fixedRandomNumber) {
+    const randomNumber = generateRandom20DigitNumber();
+    Cookies.set('fixedRandomNumber', randomNumber, { expires: 365 }); // Set the cookie to expire in 365 days
+  }
+
+
+
+
 // export const OverlayContext = React.createContext();
 
 const Layout = ({ children }) => {
@@ -62,6 +79,30 @@ const Layout = ({ children }) => {
     // Cookies.clear();
   };
 
+
+  const generateFixed20DigitNumber = (() => {
+    // This variable will hold the fixed 20-digit number
+    let fixedNumber;
+
+    // Check if the number has been generated already; if not, generate it
+    if (!fixedNumber) {
+      let randomNumber = '';
+      for (let i = 0; i < 20; i++) {
+        randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+      }
+      fixedNumber = randomNumber;
+    }
+
+    // Return a function that always returns the same fixed number
+    return () => fixedNumber;
+  })();
+
+  const fixedRandomNumber = generateFixed20DigitNumber();
+  // const fixedRandomNumber = generateRandom20DigitNumber();
+
+
+
+
   return (
     <UserContext.Provider
       value={{
@@ -84,6 +125,7 @@ const Layout = ({ children }) => {
         defaultUserTab,
         setDefaultUSerTab,
         handleLogOut,
+        fixedRandomNumber,
       }}
     >
       {!routesWithoutNavBars.includes(router.pathname) && <NavBar />}

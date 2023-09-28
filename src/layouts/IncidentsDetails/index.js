@@ -20,17 +20,17 @@ import { useQuery } from '@tanstack/react-query';
 export default function IncidentsDetails({ incidentId }) {
   const router = useRouter();
   const { query } = router;
-  const { defaultUserTab } = OverlayContext();
+  const { defaultUserTab, generateRandom20DigitNumber } = OverlayContext();
   const [search_query, setSearchQuery] = useState(null);
   const [incidentData, setIncidentData] = useState([]);
 
-  function generateRandom20DigitNumber() {
-    let randomNumber = '';
-    for (let i = 0; i < 20; i++) {
-      randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
-    }
-    return randomNumber;
-  }
+  // function generateRandom20DigitNumber() {
+  //   let randomNumber = '';
+  //   for (let i = 0; i < 20; i++) {
+  //     randomNumber += Math.floor(Math.random() * 10); // Generates a random digit between 0 and 9
+  //   }
+  //   return randomNumber;
+  // }
 
   const { data: fetcIncident, isLoading: loadingIncident } = useQuery({
     queryKey: ['get_incidents', search_query],
@@ -79,7 +79,7 @@ export default function IncidentsDetails({ incidentId }) {
                   <Details data={incidentData} incidentId={incidentId} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Comments" key="2">
-                  <Comments data={incidentData} />
+                  <Comments data={incidentData} incidentId={incidentId} />
                 </Tabs.TabPane>
                 <Tabs.TabPane tab="Incident Logs" key="3">
                   <Logs data={incidentData} />

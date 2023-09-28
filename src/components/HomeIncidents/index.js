@@ -11,6 +11,8 @@ import { IncidentsWrapper } from './styles';
 import { useQuery } from '@tanstack/react-query';
 import { BASE_URL } from '../../../utility/constants';
 
+
+
 export default function HomeIncidents() {
   const [showButton, setShowButton] = useState(false);
   const [search_query, setSearchQuery] = useState(null);
@@ -18,6 +20,7 @@ export default function HomeIncidents() {
   const router = useRouter();
   const { user } = OverlayContext();
   const idString = user?.role.role_statuses.map(status => status.id).join(',')
+
 
 
 

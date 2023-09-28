@@ -31,6 +31,7 @@ import secureLocalStorage from 'react-secure-storage';
 import { useRouter } from 'next/router';
 import moment from 'moment';
 import { OverlayContext } from './Layout';
+import { CSVLink } from 'react-csv';
 
 
 
@@ -209,7 +210,9 @@ export default function TransactionReports() {
 
   return (
     <section>
-      <ExportZone h4="Incidents" />
+      <CSVLink data={incidentsData} filename={'exported-data.csv'}>
+        <ExportZone h4="Incidents" />
+      </CSVLink>
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">
@@ -229,7 +232,6 @@ export default function TransactionReports() {
             </div>
           </div>
           <div className="col-md-auto d-flex justify-content-end gap-lg-5 gap-4">
-
             <div>
               <Space className="pagination-control" align="center">
                 <Pagination

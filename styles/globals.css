@@ -802,6 +802,25 @@ button:hover {
   max-width: 100%;
 }
 
+
+.token {
+  color: #1C1C1C;
+  font-size: 22.5px;
+  font-weight: 500;
+  margin-bottom: 27px;
+}
+
+.no-otp {
+  color: #1C1C1C;
+  font-size: 14.4px;
+  font-weight: 400;
+  margin-top: 27px;
+}
+
+.no-otp-snap {
+  color: #757575;
+}
+
 .Login-page label {
   font-weight: 500;
   font-size: 14.4px;
@@ -819,6 +838,22 @@ button:hover {
 
 .Login-page .logo-wrapper {
   margin-bottom: 24px;
+}
+
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  display: none;
+}
+
+.input-with-value {
+  border-radius: 8px;
+  border: 2px solid #7D0003;
+  background: #FFFCFC;
+}
+
+.input-without-value {
+  background: #F5F5F5;
+  border: none;
 }
 
 .Login-page form {

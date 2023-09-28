@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AddIcon from './Vectors/AddIcon';
+import SettingsVector2 from './Vectors/settings2';
 import Link from 'next/link';
 import {
   Button,
@@ -325,23 +326,25 @@ export default function AdminMembers() {
           </div>
           <div className="col-auto d-flex gap-4">
             <Button
-              icon={<AddIcon />}
-              style={{ background: '#7D0003', color: '#fff' }}
-              onClick={() => setModalAddMember(true)}
-            >
-              Add member
-            </Button>
-            {/* <Button
-              icon={<AddIcon color="#7D0003" />}
+              icon={<SettingsVector2 color="#7D0003" />}
               style={{
                 color: '#7D0003',
                 background: '#fff',
                 border: '1px solid #7D0003',
               }}
-              onClick={() => openModal()}
+            // onClick={() => openModal()}
             >
-              Add multiple
-            </Button> */}
+              Manage Roles
+            </Button>
+
+            <Button
+              icon={<AddIcon />}
+              style={{ background: '#7D0003', color: '#fff' }}
+              onClick={() => setModalAddMember(true)}
+            >
+              Add Bank
+            </Button>
+
           </div>
         </div>
       </div>
@@ -580,23 +583,29 @@ export default function AdminMembers() {
         footer={null}
       >
         <div className="headings text-center">
-          <h4>Add New Member</h4>
-          <p>Fill the fields below to add a new member.</p>
+          <h4>Add New User</h4>
+          <p>Fill the fields below to add a new user.</p>
         </div>
         <Form layout="vertical" onFinish={onFinish}>
-          <Form.Item name="first_name" label="First Name" className="heights">
-            <Input placeholder="Enter full name" />
-          </Form.Item>
+          <div className="d-flex align-items-center justify-content-center gap-3">
+            <Form.Item name="first_name" label="First Name" className="heights">
+              <Input placeholder="Enter full name" />
+            </Form.Item>
 
-          <Form.Item name="last_name" label="Last Name" className="heights">
-            <Input placeholder="Enter full name" />
+            <Form.Item name="last_name" label="Last Name" className="heights">
+              <Input placeholder="Enter full name" />
+            </Form.Item>
+          </div>
+
+          <Form.Item name="phone_number" label="Personal Phone Number" className="heights">
+            <Input placeholder="Enter Personal Phone Number" />
           </Form.Item>
 
           <Form.Item name="email" label="Email address" className="heights">
             <Input placeholder="Enter email" type="email" />
           </Form.Item>
 
-          <Form.Item name="entity_id" label="Entity Id">
+          <Form.Item name="entity_id" label="Entity">
             <Select
               style={{
                 width: '100%',
@@ -673,10 +682,6 @@ export default function AdminMembers() {
                 },
               ]}
             />
-          </Form.Item>
-
-          <Form.Item name="password" label="Password" className="heights">
-            <Input placeholder="Enter email" />
           </Form.Item>
 
           <Button

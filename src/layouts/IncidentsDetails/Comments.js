@@ -1,52 +1,86 @@
-import React, { useState } from 'react';
-import { ReplyIcon } from '../../../utility/svg';
+import React, { useState, useEffect } from 'react';
 import { CommentsWrapper } from './styles';
-import { Input } from 'antd';
+import { Input, Button } from 'antd';
+import { fetchCommentsId } from "../../../apis"
+import Cookies from 'js-cookie';
+import { OverlayContext } from '../../../components/Layout';
+import api from '../../../apis';
+import { BASE_URL } from '../../../utility/constants';
 
-const chatData = [
-  {
-    userName: 'danFinn',
-    time: '8:57am',
-    commentText:
-      "This is not acceptable! this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-  },
-  {
-    userName: 'specterSegun',
-    time: '9:57am',
-    commentText:
-      "This is not acceptable! this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-  },
-  {
-    userName: 'anthonyMajor',
-    time: '10:57am',
-    commentText:
-      "This is not acceptable! this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-    reply: {
-      userName: 'specterSegun',
-      time: '11:57am',
-      commentText:
-        "This is not normal, this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-    },
-  },
-  {
-    userName: 'nelsonSemedo',
-    time: '12:57am',
-    commentText:
-      "This is not acceptable! this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-  },
-  {
-    userName: 'winnerMartins',
-    time: '1:57am',
-    commentText:
-      "This is not acceptable! this is a total fraud! I won't accept  it, i can never accept it! We should take some actions ASAP!",
-  },
-];
 
-export default function Comments() {
-  const [comments, useComments] = useState(chatData);
+
+export default function Comments({ incidentId }) {
+  const [message, setMessage] = useState("")
+  const [comments, setComments] = useState([])
   const [commentText, setCommentText] = useState('');
+  const token = Cookies.get('token');
+  const { user } = OverlayContext();
+  console.log(incidentId)
 
-  console.log(commentText);
+  const formatTimestamp = (timestamp) => {
+    const formattedDate = new Date(timestamp).toLocaleString(); // You can adjust the format as needed
+    return formattedDate;
+  };
+
+
+
+
+  // Function to fetch comments when the component mounts
+  useEffect(() => {
+    // Check if incidentId is available (assuming it's passed as a prop)
+    if (incidentId) {
+      // Call your fetchCommentsId API function
+      async function fetchComments() {
+        try {
+          const commentsData = await fetchCommentsId(token, incidentId);
+          // Set the retrieved comments in the state
+          setComments(commentsData.data);
+        } catch (error) {
+          console.error('Error fetching comments:', error);
+        }
+      }
+
+      // Call the function to fetch comments
+      fetchComments();
+    }
+  }, [incidentId, token]);
+
+
+  const handleMessageChange = (e) => {
+    setMessage(e.target.value)
+  };
+
+  const sendComment = async (e) => {
+    e.preventDefault();
+
+
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+
+    const payload2 = {
+      "incident_id": incidentId,
+      "sender_id": user.id,
+      "post": message
+    };
+    try {
+      const res1 = await api.post2(
+        `${BASE_URL}/incident/indicent-comments`,
+        payload2,
+        headers
+      );
+      if (res1) {
+        setComments((prevComments) => [...prevComments, res1.data]);
+        setMessage('');
+      }
+
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
 
   return (
     <CommentsWrapper>
@@ -54,10 +88,11 @@ export default function Comments() {
         <div className="chat-wrapper d-flex gap-lg-3 gap-2">
           <Input
             placeholder="Add comment"
-            onChange={e => setCommentText(e.terget.vale)}
+            value={message}
+            onChange={handleMessageChange}
           />
           <div>
-            <button className="btn">send</button>
+            <Button className="btn" onClick={sendComment}>send</Button>
           </div>
         </div>
 
@@ -71,29 +106,18 @@ export default function Comments() {
             >
               <div className="chat">
                 <div className="chat-header">
-                  <h5>@{comment?.userName}</h5>{' '}
-                  <div className="time">{comment?.time}</div>
+                  <h5>@{comment?.sender?.first_name} {comment?.sender?.last_name}</h5>{' '}
+                  <div className="time">{formatTimestamp(comment?.created_at)}</div>
                 </div>
 
                 <div className="details">
-                  <p className="col">{comment?.commentText}</p>
-                  <div className="share col-auto">
-                    <button>{ReplyIcon}</button>
-                  </div>
+                  <p className="col">{comment?.post}</p>
+                  {/* <div className="share col-auto">
+                  <button>{ReplyIcon}</button>
+                </div> */}
                 </div>
 
-                {comment?.reply && (
-                  <div className="chat reply">
-                    <div className="chat-header">
-                      <h5>@{comment?.reply?.userName}</h5>{' '}
-                      <div className="time">{comment?.reply?.time}</div>
-                    </div>
 
-                    <div className="details">
-                      <p className="col">{comment?.reply?.commentText}</p>
-                    </div>
-                  </div>
-                )}
               </div>
             </div>
           </>
@@ -151,6 +175,6 @@ export default function Comments() {
           </div>
         </div> */}
       </div>
-    </CommentsWrapper>
+    </CommentsWrapper >
   );
 }

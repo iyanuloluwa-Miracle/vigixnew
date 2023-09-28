@@ -66,8 +66,29 @@ export const fetchTotalRecoveries = async (token) => {
 };
 
 
+export const fetchCommentsId = async (token, id) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/incident/get-indicent-comment/${id}`, { headers });
+  return response.data;
+};
+
+
+export const fetchAllBanks = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/bank/banks`, { headers });
+  return response.data;
+};
+
+
 
 const api = {
+
 
   fetchAllIncidents: (token, query) => {
     const headers = createHTTPHeader(token);
