@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Spin } from "antd";
 
-
+function createRef() {
+    return useRef(null);
+}
 
 const OTPField = () => {
     const [otp, setOtp] = useState(new Array(6).fill(""));
@@ -10,9 +12,7 @@ const OTPField = () => {
 
     // const inputRefs = Array.from({ length: 6 }, () => useRef(null));
 
-    function createRef() {
-        return useRef(null);
-    }
+  
 
     const inputRefs = Array.from({ length: 6 }, createRef);
 
