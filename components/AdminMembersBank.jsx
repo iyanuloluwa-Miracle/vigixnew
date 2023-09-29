@@ -302,9 +302,9 @@ export default function AdminMembersBank() {
     }
   };
 
-  useEffect(() => {
-    getBanks();
-  }, [router, page, rows, search]);
+  // useEffect(() => {
+  //   getBanks();
+  // }, [router, page, rows, search]);
 
   const handleInputChange = (event, key) => {
     setEditBankData(prevState => ({

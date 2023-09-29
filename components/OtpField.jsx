@@ -8,7 +8,14 @@ const OTPField = () => {
     const [activeOTPIndex, setActiveOTPIndex] = useState(0);
     const [loading, setLoading] = useState(false);
 
-    const inputRefs = Array.from({ length: 6 }, () => useRef(null));
+    // const inputRefs = Array.from({ length: 6 }, () => useRef(null));
+
+    function createRef() {
+        return useRef(null);
+    }
+
+    const inputRefs = Array.from({ length: 6 }, createRef);
+
 
     const handleOnChange = ({ target }, index) => {
         const { value } = target;
