@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AddIcon from './Vectors/AddIcon';
 import SettingsVector2 from './Vectors/settings2';
 import Link from 'next/link';
+import { toast } from 'sonner';
 import {
   Button,
   Input,
   Select,
   Space,
   Checkbox,
+  Spin,
   Table,
   Modal,
   Form,
@@ -16,14 +18,39 @@ import {
   Switch,
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
+import api from '../apis';
+import { BASE_URL } from '../utility/constants';
+
+import { fetchAllAdminUsers } from "../apis"
+import Cookies from 'js-cookie';
 
 export default function AdminMembers() {
   const { Search } = Input;
+  const token = Cookies.get('token');
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [sunmitLoading, setSunmitLoading] = useState(false);
   const [modalAddMember, setModalAddMember] = useState(false);
   const [modalEditMember, setModalEditMember] = useState(false);
   const [value, setValue] = useState('all');
+  const [data2, setData2] = useState([]);
+  const [firstName, setFirstName] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [phoneNumber, setPhoneNumber] = useState("")
+  const [email, setEmail] = useState("")
+  const [pagination, setPagination] = useState({
+    pageSize: 10,
+    current: 1,
+});
+
+
+  const handleFirstName = (e) => {
+    setFirstName(e.target.value)
+  };
+
+  const handleLastName = (e) => {
+    setLastName(e.target.value)
+  };
 
   const onFinish = values => {
     console.log('Success:', values);
@@ -32,7 +59,13 @@ export default function AdminMembers() {
   const onSearch = value => console.log(value);
   const handleChange = value => {
     console.log(`selected ${value}`);
-  };
+    if (value === 'all') {
+
+        setPagination({ pageSize: 9999 });
+    } else {
+        setPagination({ pageSize: parseInt(value, 10) });
+    }
+};
 
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
@@ -43,264 +76,164 @@ export default function AdminMembers() {
     setValue(e.target.value);
   };
 
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const bankData = await fetchAllAdminUsers(token);
+        setData2(bankData.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [token]);
+
+
+  const AddAdminUser = async (values) => {
+    console.log(values.first_name, values.last_name, values.email, values.phone_number)
+
+    setSunmitLoading(true);
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json', // Adjust content type if needed
+    };
+    const payload = {
+      "first_name": values.first_name,
+      "last_name": values.last_name,
+      "email": values.email,
+      "phone": values.phone_number,
+      "password": "admin",
+      "entity_id": values.entity_id,
+      "role_id": values.role_id,
+    }
+    try {
+      const res = await api.post2(
+        `${BASE_URL}/user/register-admin`,
+        payload,
+        headers
+      );
+
+      if (res) {
+        toast.success(res.message)
+      }
+
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setSunmitLoading(false);
+      setModalAddMember(false)
+    }
+  };
+
+
+
+  const generateViewsContent = (record) => (
+    <div className="view-btn">
+      <Link href={`/admin-details/${record.id}`} passHref>
+        <Button className="view-profile">View details</Button>
+      </Link>
+      <Button
+        className="view-report"
+        onClick={() => setModalEditMember(true)}
+      >
+        Edit member
+      </Button>
+    </div>
+  );
+
+
   const columns = [
     {
-      title: ' ',
-      dataIndex: 'checkbox',
-      key: 'checkbox',
-      render: text => (
-        <div>
-          <Checkbox onChange={onChange} />
-        </div>
-      ),
+      title: 'Id',
+      dataIndex: 'id',
+      key: 'id',
     },
     {
-      title: 'Username',
-      dataIndex: 'username',
-      key: 'username',
-    },
-    {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
+      title: 'First Name',
+      dataIndex: 'first_name',
+      key: 'first_name',
       render: text => <span className="max-content">{text}</span>,
     },
     {
-      title: 'Role Access',
-      dataIndex: 'role',
-      key: 'role',
-      render: text => <div className="max-content">{text}</div>,
+      title: 'Last Name',
+      dataIndex: 'last_name',
+      key: 'last_name',
+      render: text => <span className="max-content">{text}</span>,
     },
     {
-      title: 'Status',
-      dataIndex: 'status',
-      key: 'status',
-      render: text => (
-        <div>
-          <span className={`user-status ${text}`}>{text}</span>
-        </div>
-      ),
+      title: 'Role',
+      dataIndex: 'name',
+      key: 'name',
+      render: text => <span className="max-content">{text}</span>,
     },
+
     {
       title: 'Date Created',
       dataIndex: 'DateTime',
       key: 'DateTime',
     },
+
+    {
+      title: 'status',
+      dataIndex: 'status',
+      key: 'status',
+      render: text => <span className="max-content">{text}</span>,
+    },
+
     {
       title: ' ',
       dataIndex: 'views',
       key: 'views',
+      render: (_, record) => generateViewsContent(record),
     },
-  ];
 
-  const data = [
-    {
-      key: '1',
-      fullName: 'Atanda Damilare',
-      username: 'dammy',
-      company: 'Vigilant',
-      role: 'Customer support',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '2',
-      fullName: 'Jide Ola',
-      username: 'Ola',
-      company: 'CBN',
-      role: 'Consumer protection',
-      DateTime: 'Jun 12, 2020 22:15',
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '3',
-      fullName: 'Specter Omo',
-      username: 'Specter',
-      company: 'NPF',
-      role: 'Inspector general',
-      DateTime: 'May 8, 2021 18:30',
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '4',
-      fullName: 'Jesse Finn',
-      username: 'Finn',
-      company: 'E-tranzact',
-      role: 'E-tranzact',
-      DateTime: 'Aug 16, 2020 13:17',
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '5',
-      fullName: 'Atanda Damilare',
-      username: 'Ola',
-      company: 'Vigilant',
-      role: 'Customer support',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '6',
-      fullName: 'Jide Ola',
-      username: 'Damilare',
-      company: 'CBN',
-      role: 'Consumer protection',
-      DateTime: 'Jun 12, 2020 22:15',
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '7',
-      fullName: 'Henry Etta',
-      username: 'Omo',
-      company: 'NPF',
-      role: 'Inspector general',
-      DateTime: 'May 8, 2021 18:30',
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '8',
-      fullName: 'Jesse Finn',
-      username: 'Ola',
-      company: 'E-tranzact',
-      role: 'E-tranzact',
-      DateTime: 'Aug 16, 2020 13:17',
-      status: 'Inactive',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '9',
-      fullName: 'Specter Omo',
-      username: 'Finn',
-      company: 'Vigilant',
-      role: 'Customer support',
-      DateTime: 'Sept 17, 2022 11:20',
-      status: 'Active',
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    },
-    {
-      key: '10',
-      fullName: 'Atanda Damilare',
-      username: 'Etta',
-      company: 'CBN',
-      role: 'Consumer protection',
-      DateTime: 'Jun 12, 2020 22:15',
 
-      status: 'Inactive',
+  ]
+
+  // const columns = [
+  //   {
+  //     title: 'Username',
+  //     dataIndex: 'username',
+  //     key: 'username',
+  //   },
+  //   {
+  //     title: 'Company',
+  //     dataIndex: 'company',
+  //     key: 'company',
+  //     render: text => <span className="max-content">{text}</span>,
+  //   },
+  //   {
+  //     title: 'Role Access',
+  //     dataIndex: 'role',
+  //     key: 'role',
+  //     render: text => <div className="max-content">{text}</div>,
+  //   },
+  //   {
+  //     title: 'Status',
+  //     dataIndex: 'status',
+  //     key: 'status',
+  //     render: text => (
+  //       <div>
+  //         <span className={`user-status ${text}`}>{text}</span>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     title: 'Date Created',
+  //     dataIndex: 'DateTime',
+  //     key: 'DateTime',
+  //   },
+  //   {
+  //     title: ' ',
+  //     dataIndex: 'views',
+  //     key: 'views',
+  //   },
+  // ];
+
+  const manuallyAddedData = [
+    {
       views: (
         <div className="view-btn">
           <Link href={'/admin-details'} passHref>
@@ -314,15 +247,241 @@ export default function AdminMembers() {
           </Button>
         </div>
       ),
-    },
-  ];
+    }
+  ]
+
+
+
+  // const data = [
+  //   {
+  //     key: '1',
+  //     fullName: 'Atanda Damilare',
+  //     username: 'dammy',
+  //     company: 'Vigilant',
+  //     role: 'Customer support',
+  //     DateTime: 'Sept 17, 2022 11:20',
+  //     status: 'Active',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '2',
+  //     fullName: 'Jide Ola',
+  //     username: 'Ola',
+  //     company: 'CBN',
+  //     role: 'Consumer protection',
+  //     DateTime: 'Jun 12, 2020 22:15',
+  //     status: 'Inactive',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '3',
+  //     fullName: 'Specter Omo',
+  //     username: 'Specter',
+  //     company: 'NPF',
+  //     role: 'Inspector general',
+  //     DateTime: 'May 8, 2021 18:30',
+  //     status: 'Active',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '4',
+  //     fullName: 'Jesse Finn',
+  //     username: 'Finn',
+  //     company: 'E-tranzact',
+  //     role: 'E-tranzact',
+  //     DateTime: 'Aug 16, 2020 13:17',
+  //     status: 'Inactive',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '5',
+  //     fullName: 'Atanda Damilare',
+  //     username: 'Ola',
+  //     company: 'Vigilant',
+  //     role: 'Customer support',
+  //     DateTime: 'Sept 17, 2022 11:20',
+  //     status: 'Active',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '6',
+  //     fullName: 'Jide Ola',
+  //     username: 'Damilare',
+  //     company: 'CBN',
+  //     role: 'Consumer protection',
+  //     DateTime: 'Jun 12, 2020 22:15',
+  //     status: 'Inactive',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '7',
+  //     fullName: 'Henry Etta',
+  //     username: 'Omo',
+  //     company: 'NPF',
+  //     role: 'Inspector general',
+  //     DateTime: 'May 8, 2021 18:30',
+  //     status: 'Active',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '8',
+  //     fullName: 'Jesse Finn',
+  //     username: 'Ola',
+  //     company: 'E-tranzact',
+  //     role: 'E-tranzact',
+  //     DateTime: 'Aug 16, 2020 13:17',
+  //     status: 'Inactive',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '9',
+  //     fullName: 'Specter Omo',
+  //     username: 'Finn',
+  //     company: 'Vigilant',
+  //     role: 'Customer support',
+  //     DateTime: 'Sept 17, 2022 11:20',
+  //     status: 'Active',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  //   {
+  //     key: '10',
+  //     fullName: 'Atanda Damilare',
+  //     username: 'Etta',
+  //     company: 'CBN',
+  //     role: 'Consumer protection',
+  //     DateTime: 'Jun 12, 2020 22:15',
+
+  //     status: 'Inactive',
+  //     views: (
+  //       <div className="view-btn">
+  //         <Link href={'/admin-details'} passHref>
+  //           <Button className="view-profile">View details</Button>
+  //         </Link>
+  //         <Button
+  //           className="view-report"
+  //           onClick={() => setModalEditMember(true)}
+  //         >
+  //           Edit member
+  //         </Button>
+  //       </div>
+  //     ),
+  //   },
+  // ];
 
   return (
     <section>
       <div className="container">
         <div className="row _tabs-wrapper">
           <div className="col-auto">
-            <h4 className="_tabs">Admin Members</h4>
+            <h4 className="_tabs">Admin Users</h4>
           </div>
           <div className="col-auto d-flex gap-4">
             <Button
@@ -342,7 +501,7 @@ export default function AdminMembers() {
               style={{ background: '#7D0003', color: '#fff' }}
               onClick={() => setModalAddMember(true)}
             >
-              Add Bank
+              Add Users
             </Button>
 
           </div>
@@ -415,7 +574,7 @@ export default function AdminMembers() {
 
       <div className="container">
         <div className="table-wrapper ">
-          <Table columns={columns} dataSource={data} />
+          <Table columns={columns} dataSource={data2} pagination={pagination} />
           <div className="our-pagination d-flex justify-content-center">
             <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
@@ -572,7 +731,7 @@ export default function AdminMembers() {
         </Form>
       </Modal>
 
-      {/* add member modal */}
+      {/* add user modal */}
 
       <Modal
         centered
@@ -586,23 +745,23 @@ export default function AdminMembers() {
           <h4>Add New User</h4>
           <p>Fill the fields below to add a new user.</p>
         </div>
-        <Form layout="vertical" onFinish={onFinish}>
+        <Form layout="vertical" onFinish={AddAdminUser}>
           <div className="d-flex align-items-center justify-content-center gap-3">
             <Form.Item name="first_name" label="First Name" className="heights">
-              <Input placeholder="Enter full name" />
+              <Input placeholder="Enter full name" value={firstName} onChange={handleFirstName} />
             </Form.Item>
 
             <Form.Item name="last_name" label="Last Name" className="heights">
-              <Input placeholder="Enter full name" />
+              <Input placeholder="Enter full name" value={lastName} onChange={handleLastName} />
             </Form.Item>
           </div>
 
           <Form.Item name="phone_number" label="Personal Phone Number" className="heights">
-            <Input placeholder="Enter Personal Phone Number" />
+            <Input placeholder="Enter Personal Phone Number" value={phoneNumber} onChange={setPhoneNumber} />
           </Form.Item>
 
           <Form.Item name="email" label="Email address" className="heights">
-            <Input placeholder="Enter email" type="email" />
+            <Input placeholder="Enter email" type="email" value={email} onChange={setEmail} />
           </Form.Item>
 
           <Form.Item name="entity_id" label="Entity">
@@ -684,13 +843,36 @@ export default function AdminMembers() {
             />
           </Form.Item>
 
-          <Button
+          <div className="pt-lg-5 pt-4">
+            <Button
+              htmlType="submit"
+              style={{ background: '#7D0003', color: '#FFF' }}
+              className={
+                sunmitLoading
+                  ? 'our-btn-fade w-100 mt-4 mb-4'
+                  : 'w-100 mt-4 mb-4'
+              }
+              // loading={sunmitLoading}
+              disabled={sunmitLoading}
+            >
+              {sunmitLoading ? (
+                <Spin
+                  className="white-spinner d-flex align-items-center justify-content-center"
+                  style={{ color: 'white' }}
+                />
+              ) : (
+                <> Add Member</>
+              )}
+            </Button>
+          </div>
+
+          {/* <Button
             htmlType="submit"
             style={{ background: '#7D0003', color: '#FFF' }}
             className="w-100 mt-4 mb-4"
           >
             Add Member
-          </Button>
+          </Button> */}
         </Form>
       </Modal>
 

@@ -86,6 +86,20 @@ export const fetchAllBanks = async (token) => {
 };
 
 
+export const fetchAllAdminUsers = async (token) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/admin-users`, { headers });
+  return response.data;
+};
+
+
+
+
+
+
 
 const api = {
 

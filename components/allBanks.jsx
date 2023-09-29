@@ -17,7 +17,6 @@ import {
 } from 'antd';
 import { SearchIcon, FilterIcon, DirLeft, DirRight } from '../utility/svg';
 import Image from 'next/image';
-import axios from 'axios';
 import Cookies from 'js-cookie';
 
 
@@ -33,6 +32,10 @@ export default function AllBanks() {
     const [modalEditMember, setModalEditMember] = useState(false);
     const [value, setValue] = useState('all');
     const [data, setData] = useState([]);
+    const [pagination, setPagination] = useState({
+        pageSize: 10,
+        current: 1,
+    });
     console.log(data)
 
 
@@ -42,9 +45,6 @@ export default function AllBanks() {
     };
 
     const onSearch = value => console.log(value);
-    const handleChange = value => {
-        console.log(`selected ${value}`);
-    };
 
     const onChange = e => {
         console.log(`checked = ${e.target.checked}`);
@@ -53,6 +53,17 @@ export default function AllBanks() {
     const onChangeCheck = e => {
         console.log('radio checked', e.target.value);
         setValue(e.target.value);
+    };
+
+
+    const handleChange = value => {
+        console.log(`selected ${value}`);
+        if (value === 'all') {
+
+            setPagination({ pageSize: 9999 });
+        } else {
+            setPagination({ pageSize: parseInt(value, 10) });
+        }
     };
 
 
@@ -73,39 +84,39 @@ export default function AllBanks() {
 
     const columns = [
         {
-          title: 'S/N',
-          dataIndex: 'id',
-          key: 'id',
+            title: 'S/N',
+            dataIndex: 'id',
+            key: 'id',
         },
         {
-          title: 'Bank Name',
-          dataIndex: 'bank_name',
-          key: 'bank_name',
-          render: text => <span className="max-content">{text}</span>,
+            title: 'Bank Name',
+            dataIndex: 'bank_name',
+            key: 'bank_name',
+            render: text => <span className="max-content">{text}</span>,
         },
         {
-          title: 'Bank Code',
-          dataIndex: 'bank_code',
-          key: 'bank_code',
-          render: text => <div className="max-content">{text}</div>,
+            title: 'Bank Code',
+            dataIndex: 'bank_code',
+            key: 'bank_code',
+            render: text => <div className="max-content">{text}</div>,
         },
         {
-          title: 'Bank Logo',
-          dataIndex: 'bank_logo_url',
-          key: 'bank_logo_url',
-          render: text => (
-            <div>
-              <Image src={text} alt='img' width={100} height={100} />
-            </div>
-          ),
+            title: 'Bank Logo',
+            dataIndex: 'bank_logo_url',
+            key: 'bank_logo_url',
+            render: text => (
+                <div>
+                    <Image src={text} alt='img' width={100} height={100} />
+                </div>
+            ),
         },
         {
-          title: 'Date Created',
-          dataIndex: 'created_at',
-          key: 'created_at',
+            title: 'Date Created',
+            dataIndex: 'created_at',
+            key: 'created_at',
         },
-      ];
-      
+    ];
+
 
 
 
@@ -166,12 +177,16 @@ export default function AllBanks() {
                         <div>
                             <Space wrap>
                                 <Select
-                                    defaultValue="10 per page'"
+                                    defaultValue="All per page"
                                     style={{
                                         width: 120,
                                     }}
                                     onChange={handleChange}
                                     options={[
+                                        {
+                                            value: 'all',
+                                            label: 'All per page',
+                                        },
                                         {
                                             value: '10',
                                             label: '10 per page',
@@ -186,6 +201,7 @@ export default function AllBanks() {
                                         },
                                     ]}
                                 />
+
                             </Space>
                         </div>
                     </div>
@@ -197,7 +213,7 @@ export default function AllBanks() {
 
             <div className="container">
                 <div className="table-wrapper ">
-                    <Table columns={columns} dataSource={data} />
+                    <Table columns={columns} dataSource={data} pagination={pagination} />
                     <div className="our-pagination d-flex justify-content-center">
                         <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
                             <p className="det">
