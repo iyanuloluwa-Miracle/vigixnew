@@ -23,10 +23,12 @@ import { BASE_URL } from '../utility/constants';
 
 import { fetchAllAdminUsers } from "../apis"
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 export default function AdminMembers() {
   const { Search } = Input;
   const token = Cookies.get('token');
+  const router = useRouter();
 
   const [modalOpen, setModalOpen] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
@@ -39,9 +41,24 @@ export default function AdminMembers() {
   const [phoneNumber, setPhoneNumber] = useState("")
   const [email, setEmail] = useState("")
   const [pagination, setPagination] = useState({
-    pageSize: 10,
+    pageSize: 100,
     current: 1,
-});
+  });
+  console.log(data2)
+
+
+
+  const rolesArray = data2.map(item => item.role);
+  const rolesArray2 = rolesArray.map(item => item.name)
+
+  const rolesArray3 = rolesArray.map(item => item.role_statuses)
+  const rolesArray4 = rolesArray3.map(item => item.created_at)
+  console.log(rolesArray4)
+
+
+
+
+
 
 
   const handleFirstName = (e) => {
@@ -61,11 +78,11 @@ export default function AdminMembers() {
     console.log(`selected ${value}`);
     if (value === 'all') {
 
-        setPagination({ pageSize: 9999 });
+      setPagination({ pageSize: 9999 });
     } else {
-        setPagination({ pageSize: parseInt(value, 10) });
+      setPagination({ pageSize: parseInt(value, 10) });
     }
-};
+  };
 
   const onChange = e => {
     console.log(`checked = ${e.target.checked}`);
@@ -82,6 +99,7 @@ export default function AdminMembers() {
       try {
         const bankData = await fetchAllAdminUsers(token);
         setData2(bankData.data);
+        setRole(bankData.data.role)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -134,12 +152,12 @@ export default function AdminMembers() {
       <Link href={`/admin-details/${record.id}`} passHref>
         <Button className="view-profile">View details</Button>
       </Link>
-      <Button
+      {/* <Button
         className="view-report"
         onClick={() => setModalEditMember(true)}
       >
         Edit member
-      </Button>
+      </Button> */}
     </div>
   );
 
@@ -164,8 +182,8 @@ export default function AdminMembers() {
     },
     {
       title: 'Role',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'role',
+      key: 'role',
       render: text => <span className="max-content">{text}</span>,
     },
 
@@ -232,249 +250,28 @@ export default function AdminMembers() {
   //   },
   // ];
 
-  const manuallyAddedData = [
-    {
-      views: (
-        <div className="view-btn">
-          <Link href={'/admin-details'} passHref>
-            <Button className="view-profile">View details</Button>
-          </Link>
-          <Button
-            className="view-report"
-            onClick={() => setModalEditMember(true)}
-          >
-            Edit member
-          </Button>
-        </div>
-      ),
-    }
-  ]
+
+
+  const handleRowClick = record => {
+    router.push(`/admin-details/${record?.id}`);
+  };
+
+  const rowProps = record => {
+    return {
+      onClick: () => handleRowClick(record),
+    };
+  };
+
+
+  const combinedData = data2.map((item, index) => {
+    return {
+      ...item,
+      role: rolesArray2[index], // Assuming rolesArray2 and data2 have the same length
+    };
+  });
 
 
 
-  // const data = [
-  //   {
-  //     key: '1',
-  //     fullName: 'Atanda Damilare',
-  //     username: 'dammy',
-  //     company: 'Vigilant',
-  //     role: 'Customer support',
-  //     DateTime: 'Sept 17, 2022 11:20',
-  //     status: 'Active',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '2',
-  //     fullName: 'Jide Ola',
-  //     username: 'Ola',
-  //     company: 'CBN',
-  //     role: 'Consumer protection',
-  //     DateTime: 'Jun 12, 2020 22:15',
-  //     status: 'Inactive',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '3',
-  //     fullName: 'Specter Omo',
-  //     username: 'Specter',
-  //     company: 'NPF',
-  //     role: 'Inspector general',
-  //     DateTime: 'May 8, 2021 18:30',
-  //     status: 'Active',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '4',
-  //     fullName: 'Jesse Finn',
-  //     username: 'Finn',
-  //     company: 'E-tranzact',
-  //     role: 'E-tranzact',
-  //     DateTime: 'Aug 16, 2020 13:17',
-  //     status: 'Inactive',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '5',
-  //     fullName: 'Atanda Damilare',
-  //     username: 'Ola',
-  //     company: 'Vigilant',
-  //     role: 'Customer support',
-  //     DateTime: 'Sept 17, 2022 11:20',
-  //     status: 'Active',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '6',
-  //     fullName: 'Jide Ola',
-  //     username: 'Damilare',
-  //     company: 'CBN',
-  //     role: 'Consumer protection',
-  //     DateTime: 'Jun 12, 2020 22:15',
-  //     status: 'Inactive',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '7',
-  //     fullName: 'Henry Etta',
-  //     username: 'Omo',
-  //     company: 'NPF',
-  //     role: 'Inspector general',
-  //     DateTime: 'May 8, 2021 18:30',
-  //     status: 'Active',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '8',
-  //     fullName: 'Jesse Finn',
-  //     username: 'Ola',
-  //     company: 'E-tranzact',
-  //     role: 'E-tranzact',
-  //     DateTime: 'Aug 16, 2020 13:17',
-  //     status: 'Inactive',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '9',
-  //     fullName: 'Specter Omo',
-  //     username: 'Finn',
-  //     company: 'Vigilant',
-  //     role: 'Customer support',
-  //     DateTime: 'Sept 17, 2022 11:20',
-  //     status: 'Active',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  //   {
-  //     key: '10',
-  //     fullName: 'Atanda Damilare',
-  //     username: 'Etta',
-  //     company: 'CBN',
-  //     role: 'Consumer protection',
-  //     DateTime: 'Jun 12, 2020 22:15',
-
-  //     status: 'Inactive',
-  //     views: (
-  //       <div className="view-btn">
-  //         <Link href={'/admin-details'} passHref>
-  //           <Button className="view-profile">View details</Button>
-  //         </Link>
-  //         <Button
-  //           className="view-report"
-  //           onClick={() => setModalEditMember(true)}
-  //         >
-  //           Edit member
-  //         </Button>
-  //       </div>
-  //     ),
-  //   },
-  // ];
 
   return (
     <section>
@@ -573,10 +370,10 @@ export default function AdminMembers() {
       </div>
 
       <div className="container">
-        <div className="table-wrapper ">
-          <Table columns={columns} dataSource={data2} pagination={pagination} />
+        <div className="table-wrapper">
+          <Table columns={columns} dataSource={combinedData} pagination={pagination} onRow={rowProps} className='cursor-pointer' />
           <div className="our-pagination d-flex justify-content-center">
-            <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
+            {/* <div className="d-flex gap-lg-4 gap-3 align-items-center flex-wrap">
               <p className="det">
                 Page <span className="our-color">2</span> of{' '}
                 <span className="our-color">1000</span>
@@ -589,7 +386,7 @@ export default function AdminMembers() {
                   <span className="">{DirRight}</span>
                 </a>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
