@@ -112,6 +112,7 @@ export default function AdminMembers() {
     console.log(values.first_name, values.last_name, values.email, values.phone_number)
 
     setSunmitLoading(true);
+    window.location.reload();
     const headers = {
       Authorization: `Bearer ${token}`,
       'Content-Type': 'application/json', // Adjust content type if needed

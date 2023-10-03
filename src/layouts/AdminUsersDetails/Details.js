@@ -20,22 +20,29 @@ import { useRouter } from 'next/router';
 import api from "../../../apis";
 import { BASE_URL } from "../../../utility/constants";
 import { approveAdminId } from "../../../apis";
+import Cookies from 'js-cookie';
 
 
-async function fetchAdminData() {
-    try {
-      const adminData = await fetchAdminId(token, router.query?.adminId);
-      setData(adminData.data);
-    } catch (error) {
-      console.error('Error fetching admin:', error);
-    }
-  }
+
 
 
 
 export default function Details({ data }) {
+    const router = useRouter();
     const statusValue = data[0]?.is_active === 1 ? "Active" : "Inactive";
     const statusColor = data[0]?.is_active === 1 ? "green" : "red";
+    const token = Cookies.get('token');
+
+
+    async function fetchAdminData() {
+        try {
+            const adminData = await approveAdminId(token, router.query?.adminId);
+            toast.success(adminData.message);
+            window.location.reload();
+        } catch (error) {
+            console.error('Error fetching admin:', error);
+        }
+    }
 
 
     return (
@@ -67,10 +74,12 @@ export default function Details({ data }) {
                     <p style={{ color: statusColor }}>• {statusValue}</p>
                 </div>
 
-                <div className="d-flex gap-5">
+
+                {data[0]?.is_active === 0 && <div className="d-flex gap-5">
                     <Button
                         danger
                         style={{ background: '#7D0003', color: '#FFF' }}
+                        onClick={fetchAdminData}
                     >
                         Approve User
                     </Button>
@@ -81,7 +90,8 @@ export default function Details({ data }) {
                     >
                         Decline
                     </Button>
-                </div>
+                </div>}
+
 
             </div>
 
