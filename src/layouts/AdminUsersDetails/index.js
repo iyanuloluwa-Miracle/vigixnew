@@ -6,10 +6,12 @@ import { Tabs, Button } from 'antd';
 import { useRouter } from "next/router";
 import { OverlayContext } from "../../../components/Layout";
 import { IncidentsDetailsWrapper } from "../IncidentsDetails/styles";
-import api from "../../../apis";
-import { useQuery } from "@tanstack/react-query";
 import Details from "./Details";
 import Logs from "./activityLog";
+import { useQuery } from '@tanstack/react-query';
+import api from "../../../apis";
+import Cookies from 'js-cookie';
+import { fetchAdminId } from "../../../apis";
 
 
 export default function AdminUsersDetails() {
@@ -17,6 +19,40 @@ export default function AdminUsersDetails() {
     const { defaultUserTab } = OverlayContext();
     const [search_query, setSearchQuery] = useState(null);
     const [data, setData] = useState([]);
+    const token = Cookies.get('token');
+
+    console.log(token)
+    console.log(data)
+
+
+    // const { data: fetcIncident, isLoading: loadingIncident } = useQuery({
+    //     queryKey: ['get_users', search_query],
+    //     queryFn: () => {
+    //         return api.fetchSingleUser(token, router.query?.adminId);
+    //     },
+    //     onSuccess: data => {
+    //         setData(data?.data[0]);
+    //     },
+    //     onError: err => {
+    //         console.log(err);
+    //     },
+    // });
+
+    useEffect(() => {
+        if (router.query?.adminId) {
+          async function fetchAdmin() {
+            try {
+              const adminData = await fetchAdminId(token, router.query?.adminId);
+             
+              setData(adminData.data);
+            } catch (error) {
+              console.error('Error fetching admin:', error);
+            }
+          }
+    
+          fetchAdmin();
+        }
+      }, [router.query?.adminId, token]);
 
 
 
@@ -48,7 +84,7 @@ export default function AdminUsersDetails() {
 
                             <Tabs defaultActiveKey={defaultUserTab}>
                                 <Tabs.TabPane tab="Details" key="1">
-                                    <Details />
+                                    <Details data={data} />
                                 </Tabs.TabPane>
 
 

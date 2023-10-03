@@ -53,7 +53,7 @@ export default function AdminMembers() {
 
   const rolesArray3 = rolesArray.map(item => item.role_statuses)
   const rolesArray4 = rolesArray3.map(item => item.created_at)
-  console.log(rolesArray4)
+
 
 
 
@@ -99,7 +99,6 @@ export default function AdminMembers() {
       try {
         const bankData = await fetchAllAdminUsers(token);
         setData2(bankData.data);
-        setRole(bankData.data.role)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -188,16 +187,26 @@ export default function AdminMembers() {
     },
 
     {
-      title: 'Date Created',
-      dataIndex: 'DateTime',
-      key: 'DateTime',
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+      render: text => <span className="max-content">{text}</span>,
     },
 
     {
       title: 'status',
-      dataIndex: 'status',
-      key: 'status',
-      render: text => <span className="max-content">{text}</span>,
+      dataIndex: 'is_active',
+      key: 'is_active',
+      render: (text) => {
+        const statusText = text === 1 ? 'Active' : 'Inactive';
+        const statusColor = text === 1 ? 'green' : 'red';
+
+        return (
+          <span className="max-content" style={{ color: statusColor }}>
+            {statusText}
+          </span>
+        );
+      },
     },
 
     {

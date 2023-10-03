@@ -76,6 +76,25 @@ export const fetchCommentsId = async (token, id) => {
 };
 
 
+export const fetchAdminId = async (token, id) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/admin-user/${id}`, { headers });
+  return response.data;
+};
+
+export const approveAdminId = async (token, id) => {
+  const headers = {
+    Authorization: `Bearer ${token}`,
+  };
+
+  const response = await axios.get(`${BASE_URL}/admin/approve-user/${id}`, { headers });
+  return response.data;
+};
+
+
 export const fetchAllBanks = async (token) => {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -146,12 +165,22 @@ const api = {
 
 
   fetchSingleIncidents: (token, id) => {
-    console.log("THE TOKEN:", token)
     const headers = createHTTPHeader(token);
     console.log("THE HEADER:", headers)
     const url = `${BASE_URL}/incident/incident/${id}`;
     return api.get(url, headers);
   },
+
+
+  fetchSingleUser: (token, id) => {
+    const headers = createHTTPHeader(token);
+    console.log("THE HEADER:", headers)
+    const url = `${BASE_URL}/admin/admin-user/${id}`;
+    return api.get(url, headers);
+  },
+
+
+
 
   login: payload => {
     const headers = createHTTPHeader(null);
