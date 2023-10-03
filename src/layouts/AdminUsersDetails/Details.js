@@ -21,6 +21,7 @@ import api from "../../../apis";
 import { BASE_URL } from "../../../utility/constants";
 import { approveAdminId } from "../../../apis";
 import Cookies from 'js-cookie';
+import { OverlayContext } from "../../../components/Layout";
 
 
 
@@ -28,6 +29,7 @@ import Cookies from 'js-cookie';
 
 
 export default function Details({ data }) {
+    const { user } = OverlayContext();
     const router = useRouter();
     const statusValue = data[0]?.is_active === 1 ? "Active" : "Inactive";
     const statusColor = data[0]?.is_active === 1 ? "green" : "red";
@@ -75,7 +77,7 @@ export default function Details({ data }) {
                 </div>
 
 
-                {data[0]?.is_active === 0 && <div className="d-flex gap-5">
+                {user?.role_id === 11 && <div className="d-flex gap-5">
                     <Button
                         danger
                         style={{ background: '#7D0003', color: '#FFF' }}
