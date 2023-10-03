@@ -24,8 +24,10 @@ import { BASE_URL } from '../utility/constants';
 import { fetchAllAdminUsers } from "../apis"
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { OverlayContext } from './Layout';
 
 export default function AdminMembers() {
+  const { user } = OverlayContext();
   const { Search } = Input;
   const token = Cookies.get('token');
   const router = useRouter();
@@ -44,7 +46,7 @@ export default function AdminMembers() {
     pageSize: 100,
     current: 1,
   });
-  console.log(data2)
+
 
 
 
@@ -280,6 +282,8 @@ export default function AdminMembers() {
     };
   });
 
+  console.log(user?.role_id)
+
 
 
 
@@ -303,13 +307,17 @@ export default function AdminMembers() {
               Manage Roles
             </Button>
 
-            <Button
-              icon={<AddIcon />}
-              style={{ background: '#7D0003', color: '#fff' }}
-              onClick={() => setModalAddMember(true)}
-            >
-              Add Users
-            </Button>
+
+            {
+              user?.role_id === 11 || user?.role_id === 13 ? (<Button
+                icon={<AddIcon />}
+                style={{ background: '#7D0003', color: '#fff' }}
+                onClick={() => setModalAddMember(true)}
+              >
+                Add Users
+              </Button>) : (null)
+            }
+
 
           </div>
         </div>
