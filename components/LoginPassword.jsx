@@ -88,36 +88,38 @@ export default function LoginPassword() {
           toast.error("Admin user already logged In")
           setmessage("Admin user already logged In")
         } else {
-          toast.success('Login credentials correct. Now, enter OTP');
-          try {
+          toast.success('Login successful');
+          router.push("/dashboard");
+          // try {
 
-            axios
-              .get('https://sea-turtle-app-7ta2e.ondigitalocean.app/sanctum/csrf-cookie')
-              .then(response => {
-                // Once the CSRF cookie is set, you can make your authenticated requests.
-                console.log("THE CSRF TOKEN:", response)
-                axios
-                  .get('https://sea-turtle-app-7ta2e.ondigitalocean.app/user/two-factor-qr-code', {
-                    withCredentials: true, // Include cookies in the request.
-                  })
-                  .then(response => {
-                    // Handle the response of your authenticated request.
-                    console.log(response)
-                  })
-                  .catch(error => {
-                    // Handle errors.
-                    console.error(error)
-                  });
-              })
-              .catch(error => {
-                // Handle errors.
-                console.error(error)
-              });
+          //   axios
+          //     .get('https://sea-turtle-app-7ta2e.ondigitalocean.app/sanctum/csrf-cookie')
+          //     .then(response => {
+          //       // Once the CSRF cookie is set, you can make your authenticated requests.
+          //       console.log("THE CSRF TOKEN:", response)
+          //       axios
+          //         .post('https://sea-turtle-app-7ta2e.ondigitalocean.app/user/two-factor-authentication', {
+          //           withCredentials: false,
 
-          }
-          catch (error) {
-            console.error(error)
-          }
+          //         })
+          //         .then(response => {
+          //           // Handle the response of your authenticated request.
+          //           console.log(response)
+          //         })
+          //         .catch(error => {
+          //           // Handle errors.
+          //           console.error(error)
+          //         });
+          //     })
+          //     .catch(error => {
+          //       // Handle errors.
+          //       console.error(error)
+          //     });
+
+          // }
+          // catch (error) {
+          //   console.error(error)
+          // }
 
 
         }
