@@ -1,3 +1,5 @@
+//This is the brain behind all the 
+
 import React, { useState, useEffect, useContext } from 'react';
 import { DetailsWrapper } from './styles';
 import Image from 'next/image';

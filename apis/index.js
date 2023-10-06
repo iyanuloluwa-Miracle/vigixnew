@@ -28,7 +28,7 @@ axios.interceptors.response.use(undefined, err => {
   return Promise.reject(err);
 });
 
-
+//Called in card
 export const fetchTotalUsers = async (token) => {
   const headers = {
     Authorization: `Bearer ${token}`,
@@ -64,7 +64,7 @@ export const fetchTotalRecoveries = async (token) => {
   const response = await axios.get(`${BASE_URL}/admin/total-recoveries`, { headers });
   return response.data;
 };
-
+//end card.
 
 export const fetchCommentsId = async (token, id) => {
   const headers = {

@@ -24,6 +24,7 @@ export default function IncidentsDetails({ incidentId }) {
   const [search_query, setSearchQuery] = useState(null);
   const [incidentData, setIncidentData] = useState([]);
 
+
   // function generateRandom20DigitNumber() {
   //   let randomNumber = '';
   //   for (let i = 0; i < 20; i++) {

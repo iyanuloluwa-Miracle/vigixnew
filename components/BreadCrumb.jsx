@@ -123,11 +123,11 @@ export default function BreadCrumb({ tab, location }) {
                       <div className="backdrop" />
                       <ul className="">
                         <li>
-                          <Link href={'/admin-members'}>Members</Link>
+                          <Link href={'/admin-members'}>Users</Link>
                         </li>
-                        <li>
+                        {/* <li>
                           <Link href={'/banks'}>Banks</Link>
-                        </li>
+                        </li> */}
                         <li>
                           <Link href={'/partners'}>Partners</Link>
                         </li>

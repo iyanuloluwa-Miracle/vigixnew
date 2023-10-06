@@ -1,3 +1,4 @@
+// The logic behind the radio button
 export const VigilantCS = {
   email: 'specter.omojolowo@gmail.com',
   names: 'specter omo',

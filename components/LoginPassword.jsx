@@ -71,6 +71,7 @@ export default function LoginPassword() {
       );
       if (res) {
         console.log(res);
+        //Setting the token for password
         Cookies.set('token', res?.token);
         setUser(res?.data);
         secureLocalStorage.setItem('user', JSON.stringify(res?.data));
