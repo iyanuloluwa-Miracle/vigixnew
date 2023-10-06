@@ -42,11 +42,15 @@ export default function TransactionReports() {
   const [showButton, setShowButton] = useState(false);
   const [incidentsData, setIncidentsData] = useState([]);
   const [paginatedIncidentsData, setPaginatedIncidentsData] = useState([]);
-  const [search_query, setSearchQuery] = useState(null);
+  const [search_query, setSearchQuery] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const { user } = OverlayContext();
   const idString = user?.role.role_statuses.map(status => status.id).join(',')
 
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
 
 
   const [filterForm] = Form.useForm();
@@ -208,6 +212,8 @@ export default function TransactionReports() {
 
 
 
+
+
   return (
     <section>
       <CSVLink data={incidentsData} filename={'exported-data.csv'}>
@@ -221,8 +227,8 @@ export default function TransactionReports() {
               <Search
                 prefix={SearchIcon}
                 placeholder="Search by Username, tracking ID, reference..."
-                // onSearch={onSearch}
                 className="searching"
+                onChange={handleSearch}
               />
             </div>
             {/* <div className="filter-btn-wrapper">
@@ -257,9 +263,10 @@ export default function TransactionReports() {
           {loadingIncidents ? (
             <Skeleton active paragraph={{ rows: 12 }} />
           ) : (
+
             <Table
               columns={columns}
-              dataSource={paginatedIncidentsData}
+              dataSource={incidentsData}
               onRow={rowProps}
               pagination={pagination} // Add the pagination configuration here
               onChange={handleTableChange} // Handle pagination changes

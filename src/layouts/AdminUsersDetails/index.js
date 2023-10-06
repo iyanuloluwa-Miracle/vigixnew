@@ -59,7 +59,7 @@ export default function AdminUsersDetails() {
     return (
         <>
             <IncidentsDetailsWrapper>
-                <BreadCrumb />
+                <BreadCrumb location={[{ link: '', location: 'Admin Members' }]} />
                 <section>
                     <div className="container">
                         <div className="row justify-content-between details-header">
