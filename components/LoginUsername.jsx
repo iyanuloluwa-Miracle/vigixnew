@@ -34,6 +34,10 @@ export default function LoginUsername() {
 
   const onFinishFailed = errorInfo => {
     console.error('Failed:', errorInfo);
+    const emailError = errorInfo.errorFields.find(field => field.name[0] === 'email');
+    if (emailError) {
+      toast.error('Email format is not correct.');
+    }
   };
 
   return (
@@ -73,6 +77,10 @@ export default function LoginUsername() {
                 {
                   required: true,
                   message: 'Please input your email!',
+                },
+                {
+                  type: 'email',
+                  message: 'Please input a valid email address!',
                 },
               ]}
             >

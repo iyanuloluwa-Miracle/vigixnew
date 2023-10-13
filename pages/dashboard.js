@@ -7,6 +7,7 @@ import Welcome from '../components/Welcome';
 import HomeIncidents from '../src/components/HomeIncidents';
 
 
+
 export default function Home() {
  
 
@@ -17,6 +18,7 @@ export default function Home() {
         <title>Vigilant|home</title>
       </Head>
       <Welcome />
+
       <BreadCrumb tab={'home'} />
       <Cards />
       <HomeIncidents />

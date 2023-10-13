@@ -24,11 +24,13 @@ import axios from 'axios';
 import NodeRSA from 'node-rsa';
 import CryptoJS from 'crypto-js';
 import { OverlayContext } from './Layout';
+import { CSVLink } from 'react-csv';
 
 const key = new NodeRSA({ b: 256 });
 
 export default function ManageUsers() {
   const { setDefaultUSerTab } = OverlayContext();
+  const [incidentsData, setIncidentsData] = useState([]);
   const { Search } = Input;
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -56,6 +58,40 @@ export default function ManageUsers() {
     setOutputText(encrypted);
     console.log(encrypted);
   };
+
+
+  
+
+  const handleExportToCSV = () => {
+    const csvData = [
+      ["Full Name", "Username", "Email Address", "Mobile", "Date Registered", "Total Reports", "Status"],
+      ...data.map(item => [
+        item.fullName,
+        item.username,
+        item.email,
+        item.phone,
+        item.dateRegistered,
+        item.report,
+        item.status,
+      ]),
+    ];
+  
+    // Create a data URI for the CSV file
+    const csvDataURI = "data:text/csv;charset=utf-8," + encodeURIComponent(csvData.map(row => row.join(",")).join("\n"));
+  
+    // Create an anchor element and simulate a click to trigger the download
+    const link = document.createElement("a");
+    link.setAttribute("href", csvDataURI);
+    link.setAttribute("download", "user_data.csv");
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+  
+
+
+
 
   const handleDecrypt = () => {
     // const decryptedData = key.decrypt(encrypted, 'utf8');
@@ -479,45 +515,15 @@ export default function ManageUsers() {
 
   return (
     <section>
-      <ExportZone h4="All Users" />
 
-      {/* <div>
-        <input
-          type="text"
-          value={plaintext}
-          onChange={e => setPlaintext(e.target.value)}
-        />
-        <button onClick={handleEncrypt}>Encrypt</button>
-        <button onClick={handleDecrypt}>Decrypt</button>
-        <br />
-        <br />
-        <div>Encrypted: {encrypted}</div>
-        <div>Decrypted: {decrypted}</div>
-      </div> */}
+      <CSVLink data={incidentsData} filename={'exported-data.csv'}>
+        <ExportZone h4="All Users" />
+      </CSVLink>
 
-      {/* <div>
-        <h1>AES Encryption/Decryption</h1>
-        <label htmlFor="input-text">Input Text:</label>
-        <input
-          id="input-text"
-          value={inputText}
-          onChange={e => setInputText(e.target.value)}
-        />
-        <label htmlFor="passphrase">Passphrase:</label>
-        <input
-          id="passphrase"
-          value={passphrase}
-          onChange={e => setPassphrase(e.target.value)}
-        />
-        <button onClick={handleEncrypt}>Encrypt</button>
-        <button onClick={handleDecrypt}>Decrypt</button>
-        <label htmlFor="output-text">Output Text:</label>
-        <input
-          id="output-text"
-          value={outputText}
-          onChange={e => setOutputText(e.target.value)}
-        />
-      </div> */}
+   
+
+    
+    
 
       <div className="container search-filter">
         <div className="row justify-content-between gap-3">

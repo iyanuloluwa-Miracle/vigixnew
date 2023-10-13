@@ -14,6 +14,7 @@ import { OverlayContext } from './Layout';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 
+
 const progressData = {
   recoveries: {
     guage: 'Positive',
@@ -56,6 +57,7 @@ export default function LoginPassword() {
     },
   });
 
+
   const onFinish = async values => {
     setLoading(true);
 
@@ -71,7 +73,6 @@ export default function LoginPassword() {
       );
       if (res) {
         console.log(res);
-        //Setting the token for password
         Cookies.set('token', res?.token);
         setUser(res?.data);
         secureLocalStorage.setItem('user', JSON.stringify(res?.data));
@@ -88,7 +89,39 @@ export default function LoginPassword() {
           setmessage("Admin user already logged In")
         } else {
           toast.success('Login successful');
-          router.push('/dashboard');
+          router.push("/dashboard");
+          // try {
+
+          //   axios
+          //     .get('https://sea-turtle-app-7ta2e.ondigitalocean.app/sanctum/csrf-cookie')
+          //     .then(response => {
+          //       // Once the CSRF cookie is set, you can make your authenticated requests.
+          //       console.log("THE CSRF TOKEN:", response)
+          //       axios
+          //         .post('https://sea-turtle-app-7ta2e.ondigitalocean.app/user/two-factor-authentication', {
+          //           withCredentials: false,
+
+          //         })
+          //         .then(response => {
+          //           // Handle the response of your authenticated request.
+          //           console.log(response)
+          //         })
+          //         .catch(error => {
+          //           // Handle errors.
+          //           console.error(error)
+          //         });
+          //     })
+          //     .catch(error => {
+          //       // Handle errors.
+          //       console.error(error)
+          //     });
+
+          // }
+          // catch (error) {
+          //   console.error(error)
+          // }
+
+
         }
 
 

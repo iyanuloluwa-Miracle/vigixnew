@@ -33,6 +33,7 @@ export default function AdminMembers() {
   const token = Cookies.get('token');
   const router = useRouter();
 
+  const [modalAddPage, setModalAddPage] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [sunmitLoading, setSunmitLoading] = useState(false);
   const [modalAddMember, setModalAddMember] = useState(false);
@@ -308,7 +309,13 @@ export default function AdminMembers() {
               Manage Roles
             </Button>
 
-
+            <Button
+              icon={<AddIcon />}
+              style={{ background: '#7D0003', color: '#fff' }}
+              onClick={() => setModalAddPage(true)}
+            >
+              Add Users
+            </Button>
             {
               user?.role_id === 11 || user?.role_id === 13 ? (<Button
                 icon={<AddIcon />}
@@ -318,6 +325,11 @@ export default function AdminMembers() {
                 Add Users
               </Button>) : (null)
             }
+
+
+
+
+
 
 
           </div>
@@ -792,6 +804,46 @@ export default function AdminMembers() {
           </Button>
         </Form>
       </Modal>
+
+
+      {/* add User modal  */}
+
+      <Modal
+        centered
+        open={modalAddPage}
+        onOk={() => setModalAddPage(false)}
+        onCancel={() => setModalAddPage(false)}
+        className="our-modal add-page-modal"
+        footer={null}
+      >
+        <div className="headings text-center">
+          <h4>Add New users</h4>
+          <p>Fill the fields below to add a new users.</p>
+        </div>
+        <Form layout="vertical" onFinish={onFinish}>
+          <Form.Item name="First Name" label="First Name" className="heights">
+            <Input placeholder="Enter First Name" />
+          </Form.Item>
+          <Form.Item name="Last Name" label="Last Name" className="heights">
+            <Input placeholder="Last Name" />
+          </Form.Item>
+          <Form.Item name="Phone" label="Phone" className="heights">
+            <Input placeholder="Phone" />
+          </Form.Item>
+
+          <Button
+            htmlType="submit"
+            style={{ background: '#7D0003', color: '#FFF' }}
+            className="w-100 mt-4"
+          >
+            Add User
+          </Button>
+        </Form>
+      </Modal>
+
+
+
+
     </section>
   );
 }
