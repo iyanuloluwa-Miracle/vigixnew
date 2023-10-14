@@ -9,7 +9,7 @@ import HomeIncidents from '../src/components/HomeIncidents';
 
 
 export default function Home() {
- 
+
 
 
   return (
